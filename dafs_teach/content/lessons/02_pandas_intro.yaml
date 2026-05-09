@@ -1,0 +1,242 @@
+title: Introduction to Pandas
+description: Learn to load, explore, and manipulate tabular data with pandas — the core library for data analysis in Python.
+
+exercises:
+
+  - id: create_df
+    title: "Creating a DataFrame"
+    instructions: |
+      **pandas** is the go-to library for working with tabular data.
+      A `DataFrame` is like a spreadsheet — rows and columns.
+
+      You can create one from a Python dictionary:
+
+      ```python
+      import pandas as pd
+
+      df = pd.DataFrame({
+          "column_a": [1, 2, 3],
+          "column_b": ["x", "y", "z"],
+      })
+      ```
+
+      **Your task:**
+      Create a DataFrame called `df` with these columns and values:
+
+      | name    | age | city      |
+      |---------|-----|-----------|
+      | Alice   | 28  | Utrecht   |
+      | Bob     | 34  | Amsterdam |
+      | Charlie | 22  | Rotterdam |
+
+      Then print the DataFrame.
+    starter_code: |
+      import pandas as pd
+
+      df = pd.DataFrame({
+          # fill in the columns here
+      })
+
+      print(df)
+    tests:
+      - type: output_contains
+        value: "Alice"
+      - type: output_contains
+        value: "Amsterdam"
+      - type: assert
+        code: |
+          assert list(df.columns) == ['name', 'age', 'city'], 'columns should be name, age, city'
+          assert len(df) == 3, 'DataFrame should have 3 rows'
+          assert df['age'].tolist() == [28, 34, 22], 'age values are wrong'
+        description: "DataFrame should have columns name/age/city and 3 rows"
+    hints:
+      - "Each key in the dict becomes a column, each list becomes the column values"
+      - "Make sure column names match exactly: 'name', 'age', 'city'"
+    solution: |
+      import pandas as pd
+
+      df = pd.DataFrame({
+          "name": ["Alice", "Bob", "Charlie"],
+          "age": [28, 34, 22],
+          "city": ["Utrecht", "Amsterdam", "Rotterdam"],
+      })
+
+      print(df)
+
+  - id: explore
+    title: "Exploring a DataFrame"
+    instructions: |
+      Before analysing data, you need to understand its shape and contents.
+      Key methods:
+
+      | Method / attribute | What it shows |
+      |--------------------|---------------|
+      | `df.shape`         | (rows, columns) |
+      | `df.head(n)`       | First n rows |
+      | `df.columns`       | Column names |
+      | `df.dtypes`        | Data types per column |
+
+      **Your task:**
+      The DataFrame `df` below contains sales data.
+      1. Print the **shape** of the DataFrame
+      2. Print the **column names**
+      3. Print the **first 3 rows**
+    starter_code: |
+      import pandas as pd
+
+      df = pd.DataFrame({
+          "product": ["Laptop", "Mouse", "Keyboard", "Monitor", "Webcam"],
+          "price":   [999.99, 29.99, 79.99, 349.99, 89.99],
+          "sold":    [15, 120, 60, 25, 45],
+      })
+
+      # 1. Print the shape
+
+
+      # 2. Print the column names
+
+
+      # 3. Print the first 3 rows
+
+
+    tests:
+      - type: output_contains
+        value: "(5, 3)"
+      - type: output_contains
+        value: "product"
+      - type: output_contains
+        value: "Laptop"
+      - type: output_contains
+        value: "Mouse"
+      - type: output_contains
+        value: "Keyboard"
+    hints:
+      - "print(df.shape) prints the shape tuple"
+      - "print(df.columns) prints an Index of column names"
+      - "print(df.head(3)) prints the first 3 rows"
+    solution: |
+      import pandas as pd
+
+      df = pd.DataFrame({
+          "product": ["Laptop", "Mouse", "Keyboard", "Monitor", "Webcam"],
+          "price":   [999.99, 29.99, 79.99, 349.99, 89.99],
+          "sold":    [15, 120, 60, 25, 45],
+      })
+
+      print(df.shape)
+      print(df.columns)
+      print(df.head(3))
+
+  - id: select_filter
+    title: "Selecting and Filtering"
+    instructions: |
+      pandas makes it easy to select columns and filter rows.
+
+      **Selecting a column:**
+      ```python
+      df["price"]          # returns a Series
+      df[["name", "price"]] # returns a DataFrame with two columns
+      ```
+
+      **Filtering rows** (boolean indexing):
+      ```python
+      df[df["price"] > 100]   # rows where price > 100
+      ```
+
+      **Your task:**
+      Using the products DataFrame from the previous exercise:
+      1. Create `expensive` — a filtered DataFrame containing only products with `price > 100`
+      2. Print the `product` column of `expensive`
+    starter_code: |
+      import pandas as pd
+
+      df = pd.DataFrame({
+          "product": ["Laptop", "Mouse", "Keyboard", "Monitor", "Webcam"],
+          "price":   [999.99, 29.99, 79.99, 349.99, 89.99],
+          "sold":    [15, 120, 60, 25, 45],
+      })
+
+      # Filter rows where price > 100
+      expensive =
+
+      # Print only the product column of expensive
+      print(expensive["product"])
+    tests:
+      - type: output_contains
+        value: "Laptop"
+      - type: output_contains
+        value: "Monitor"
+      - type: assert
+        code: |
+          assert len(expensive) == 2, 'expensive should have 2 rows (Laptop and Monitor)'
+          assert "Mouse" not in expensive["product"].values, 'Mouse should not be in expensive'
+        description: "`expensive` should contain only Laptop and Monitor"
+    hints:
+      - "Boolean filter: expensive = df[df[\"price\"] > 100]"
+      - "Then print(expensive[\"product\"]) for just that column"
+    solution: |
+      import pandas as pd
+
+      df = pd.DataFrame({
+          "product": ["Laptop", "Mouse", "Keyboard", "Monitor", "Webcam"],
+          "price":   [999.99, 29.99, 79.99, 349.99, 89.99],
+          "sold":    [15, 120, 60, 25, 45],
+      })
+
+      expensive = df[df["price"] > 100]
+      print(expensive["product"])
+
+  - id: aggregation
+    title: "Aggregating Data"
+    instructions: |
+      pandas has built-in methods for summary statistics:
+
+      | Method       | Result            |
+      |--------------|-------------------|
+      | `.sum()`     | Total             |
+      | `.mean()`    | Average           |
+      | `.max()`     | Largest value     |
+      | `.min()`     | Smallest value    |
+      | `.describe()`| Full summary      |
+
+      **Your task:**
+      Using the products DataFrame:
+      1. Calculate and print the **total revenue** (price × sold) for all products combined.
+         Store the result in a variable called `total_revenue`.
+      2. Print it rounded to 2 decimal places.
+
+      Expected answer: **32224.4**
+    starter_code: |
+      import pandas as pd
+
+      df = pd.DataFrame({
+          "product": ["Laptop", "Mouse", "Keyboard", "Monitor", "Webcam"],
+          "price":   [999.99, 29.99, 79.99, 349.99, 89.99],
+          "sold":    [15, 120, 60, 25, 45],
+      })
+
+      # Calculate revenue per product, then sum it up
+      total_revenue =
+
+      print(round(total_revenue, 2))
+    tests:
+      - type: output_equals
+        value: "32224.4"
+      - type: assert
+        code: "assert abs(total_revenue - 32224.4) < 0.01, f'total_revenue should be ~32224.4, got {total_revenue}'"
+        description: "`total_revenue` should be approximately 32224.4"
+    hints:
+      - "First compute a 'revenue' column: df['revenue'] = df['price'] * df['sold']"
+      - "Then sum it: total_revenue = df['revenue'].sum()"
+      - "Or in one line: total_revenue = (df['price'] * df['sold']).sum()"
+    solution: |
+      import pandas as pd
+
+      df = pd.DataFrame({
+          "product": ["Laptop", "Mouse", "Keyboard", "Monitor", "Webcam"],
+          "price":   [999.99, 29.99, 79.99, 349.99, 89.99],
+          "sold":    [15, 120, 60, 25, 45],
+      })
+
+      total_revenue = (df["price"] * df["sold"]).sum()
+      print(round(total_revenue, 2))

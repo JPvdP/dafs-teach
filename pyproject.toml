@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dafs-teach"
+version = "0.1.0"
+description = "Interactive Python for Data Analysis — teaching app"
+requires-python = ">=3.10"
+dependencies = [
+    "streamlit>=1.35.0",
+    "pyyaml>=6.0",
+    "pandas>=2.0",
+    "numpy>=1.24",
+    "matplotlib>=3.7",
+]
+
+[project.scripts]
+dafs-teach = "dafs_teach.__main__:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["dafs_teach*"]
+
+[tool.setuptools.package-data]
+dafs_teach = ["content/lessons/*.yaml"]

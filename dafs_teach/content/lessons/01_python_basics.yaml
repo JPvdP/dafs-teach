@@ -1,0 +1,194 @@
+# ─────────────────────────────────────────────────────────────
+# Lesson file format
+#   title       : shown in the lesson browser
+#   description : short summary shown in the lesson card
+#   exercises   : list of exercise objects (see below)
+#
+# Each exercise:
+#   id           : unique string key (used for progress tracking)
+#   title        : exercise heading
+#   instructions : markdown-formatted prompt shown to the student
+#   starter_code : pre-filled code in the editor (optional)
+#   tests        : list of checks run after the student's code
+#     - type: output_contains  →  stdout must contain `value`
+#     - type: output_equals    →  stdout (stripped) must equal `value`
+#     - type: assert           →  `code` is appended to student code
+#                                  and must not raise an exception
+#   hints        : list of progressive hints (revealed one at a time)
+#   solution     : reference solution (shown on request)
+# ─────────────────────────────────────────────────────────────
+
+title: Python Basics
+description: Learn the fundamental building blocks of Python — variables, data types, lists, loops, and functions.
+
+exercises:
+
+  - id: variables
+    title: "Variables and Data Types"
+    instructions: |
+      In Python you store values in **variables** using `=`.
+
+      Python has several basic data types:
+      - `str` — text, written in quotes: `"hello"`
+      - `int` — whole numbers: `42`
+      - `float` — decimal numbers: `3.14`
+
+      **Your task:**
+      1. Create a variable `name` with the value `"Alice"`
+      2. Create a variable `age` with the value `30`
+      3. Print them both, one per line
+    starter_code: |
+      # Create your variables below and print them
+
+
+    tests:
+      - type: output_contains
+        value: "Alice"
+      - type: output_contains
+        value: "30"
+      - type: assert
+        code: "assert name == 'Alice', 'name should be the string Alice'"
+        description: "`name` should equal \"Alice\""
+      - type: assert
+        code: "assert age == 30, 'age should be the integer 30'"
+        description: "`age` should equal 30"
+    hints:
+      - "Assign a string with: name = \"Alice\""
+      - "Print a variable with: print(name)"
+      - "Each print() call outputs on its own line"
+    solution: |
+      name = "Alice"
+      age = 30
+      print(name)
+      print(age)
+
+  - id: lists
+    title: "Working with Lists"
+    instructions: |
+      A **list** holds multiple values in order, written with square brackets:
+
+      ```python
+      temperatures = [22.1, 19.8, 25.4, 21.0]
+      ```
+
+      Useful list operations:
+      - `len(my_list)` — number of items
+      - `my_list[0]` — first item (index starts at 0)
+      - `my_list[-1]` — last item
+      - `my_list.append(value)` — add an item to the end
+
+      **Your task:**
+      1. Create a list called `scores` with the values `85, 92, 78, 96, 88`
+      2. Print the number of items in the list
+      3. Print the highest score (it's the 4th item, index 3)
+    starter_code: |
+      # Create the scores list
+      scores =
+
+      # Print the number of items
+
+
+      # Print the highest score (index 3)
+
+
+    tests:
+      - type: assert
+        code: "assert scores == [85, 92, 78, 96, 88], 'scores list is not correct'"
+        description: "`scores` should be `[85, 92, 78, 96, 88]`"
+      - type: output_contains
+        value: "5"
+      - type: output_contains
+        value: "96"
+    hints:
+      - "A list literal: scores = [85, 92, 78, 96, 88]"
+      - "len(scores) gives you the number of items"
+      - "scores[3] gives you the item at index 3 (the 4th item)"
+    solution: |
+      scores = [85, 92, 78, 96, 88]
+      print(len(scores))
+      print(scores[3])
+
+  - id: loops
+    title: "Loops and Aggregation"
+    instructions: |
+      A `for` loop lets you repeat code for each item in a list:
+
+      ```python
+      for value in my_list:
+          print(value)
+      ```
+
+      **Your task:**
+      Write a loop that calculates the **total** of the numbers in `values`, and then print it.
+
+      The expected total is **150**.
+    starter_code: |
+      values = [10, 20, 30, 40, 50]
+
+      total = 0
+      for value in values:
+          # add each value to total
+
+
+      print(total)
+    tests:
+      - type: output_equals
+        value: "150"
+      - type: assert
+        code: "assert total == 150, 'total should be 150'"
+        description: "`total` should equal 150"
+    hints:
+      - "Inside the loop, use: total = total + value"
+      - "You can also write it as: total += value"
+    solution: |
+      values = [10, 20, 30, 40, 50]
+
+      total = 0
+      for value in values:
+          total += value
+
+      print(total)
+
+  - id: functions
+    title: "Writing Functions"
+    instructions: |
+      A **function** packages reusable logic:
+
+      ```python
+      def greet(name):
+          return "Hello, " + name
+      ```
+
+      **Your task:**
+      Write a function called `calculate_mean` that:
+      - Takes a list of numbers as input
+      - Returns the arithmetic mean (average)
+
+      Then call it with `[4, 8, 15, 16, 23, 42]` and print the result.
+      The expected mean is **18.0**.
+    starter_code: |
+      def calculate_mean(numbers):
+          # your code here
+
+
+      result = calculate_mean([4, 8, 15, 16, 23, 42])
+      print(result)
+    tests:
+      - type: output_equals
+        value: "18.0"
+      - type: assert
+        code: "assert calculate_mean([1, 2, 3]) == 2.0, 'mean of [1,2,3] should be 2.0'"
+        description: "`calculate_mean([1, 2, 3])` should return 2.0"
+      - type: assert
+        code: "assert calculate_mean([10, 20]) == 15.0, 'mean of [10,20] should be 15.0'"
+        description: "`calculate_mean([10, 20])` should return 15.0"
+    hints:
+      - "Sum the numbers and divide by how many there are"
+      - "Use sum(numbers) and len(numbers)"
+      - "return sum(numbers) / len(numbers)"
+    solution: |
+      def calculate_mean(numbers):
+          return sum(numbers) / len(numbers)
+
+      result = calculate_mean([4, 8, 15, 16, 23, 42])
+      print(result)
