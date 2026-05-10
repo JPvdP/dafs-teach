@@ -1,0 +1,280 @@
+title: Print, F-strings and Functions
+description: Learn to display information with print(), combine text and variables with f-strings, and use functions with dot notation.
+
+exercises:
+
+  - id: fstring_basics
+    title: Print and F-strings
+    instructions: |
+      The `print()` function is crucial in programming because it allows you to display information during the development process. It provides immediate feedback — helping you check the values of variables, verify the flow of execution, or ensure that certain conditions are met.
+
+      A very basic use is printing the value of a variable alongside a description:
+
+      ```python
+      plop = 42
+      print(plop)           # prints the number
+      print("Step 3 done")  # prints text — remember to use "" for text
+      ```
+
+      To combine text and a variable in one line, use an **f-string** (formatted string). Put an `f` before the opening quote, and place variable names inside `{}`:
+
+      ```python
+      plop = 42
+      message = f"The value is {plop}"
+      print(message)
+      # Output: The value is 42
+      ```
+
+      **Your task:**
+      1. Create a variable `plop = 42`
+      2. Create `message = f"The value is {plop}"`
+      3. Print `message`
+    starter_code: |
+      plop =
+
+      message =
+
+      print(message)
+    tests:
+      - type: output_equals
+        value: "The value is 42"
+      - type: assert
+        code: "assert plop == 42, 'plop should be 42'"
+        description: "Output should be 'The value is 42'"
+    hints:
+      - "plop = 42"
+      - "Put an f before the opening quote: f\"The value is {plop}\""
+    solution: |
+      plop = 42
+      message = f"The value is {plop}"
+      print(message)
+
+  - id: random_fstring
+    title: Random Numbers and F-strings
+    instructions: |
+      Python has a built-in `random` module for generating random numbers. Two useful functions:
+      - `random.uniform(a, b)` — generates a random **decimal** number between `a` and `b`
+      - `random.randint(a, b)` — generates a random **integer** between `a` and `b`
+
+      You can combine these with f-strings to print informative messages:
+
+      ```python
+      import random
+
+      x = random.uniform(0, 5)
+      message = f"The number generated was {x}"
+      print(message)
+      ```
+
+      **Your task:**
+      1. Import the `random` module
+      2. Generate a random decimal number between `4` and `87` using `random.uniform()`, stored in `x`
+      3. Print the sentence: `"The generated number is {x}"` using an f-string
+      4. Generate a random integer between `1` and `70` using `random.randint()`, stored in `y`
+      5. Print `y`
+    starter_code: |
+      import random
+
+      # Generate a random decimal between 4 and 87
+      x =
+      print(f"The generated number is {x}")
+
+      # Generate a random integer between 1 and 70
+      y =
+      print(y)
+    tests:
+      - type: output_contains
+        value: "The generated number is "
+      - type: assert
+        code: |
+          assert 4 <= x <= 87, f'x should be between 4 and 87, got {x}'
+          assert isinstance(x, float), 'x should be a float (use random.uniform)'
+          assert 1 <= y <= 70, f'y should be between 1 and 70, got {y}'
+          assert isinstance(y, int), 'y should be an int (use random.randint)'
+        description: "x should be a float in [4, 87], y should be an int in [1, 70]"
+    hints:
+      - "x = random.uniform(4, 87)"
+      - "y = random.randint(1, 70)"
+      - "Use f\"The generated number is {x}\" for the f-string"
+    solution: |
+      import random
+
+      x = random.uniform(4, 87)
+      print(f"The generated number is {x}")
+
+      y = random.randint(1, 70)
+      print(y)
+
+  - id: arithmetic_sentences
+    title: Arithmetic Results in Sentences
+    instructions: |
+      A common pattern in data analysis is to calculate something and then print the result in a readable sentence. F-strings make this easy:
+
+      ```python
+      a = 10
+      b = 3
+      print(f"The sum of a and b is {a + b}")
+      # Output: The sum of a and b is 13
+      ```
+
+      You can put any expression inside `{}` — not just variable names.
+
+      **Your task:**
+      Set `a = 15` and `b = 7`, then print three sentences:
+      1. `"The sum of a and b is 22"`
+      2. `"The difference of a and b is 8"`
+      3. `"The product of a and b is 105"`
+
+      Use f-strings and calculate the values inside `{}` directly.
+    starter_code: |
+      a = 15
+      b = 7
+
+      print(f"The sum of a and b is {}")
+      print(f"The difference of a and b is {}")
+      print(f"The product of a and b is {}")
+    tests:
+      - type: output_contains
+        value: "The sum of a and b is 22"
+      - type: output_contains
+        value: "The difference of a and b is 8"
+      - type: output_contains
+        value: "The product of a and b is 105"
+    hints:
+      - "Put a + b inside the braces: {a + b}"
+      - "Difference: a - b, Product: a * b"
+    solution: |
+      a = 15
+      b = 7
+
+      print(f"The sum of a and b is {a + b}")
+      print(f"The difference of a and b is {a - b}")
+      print(f"The product of a and b is {a * b}")
+
+  - id: dot_notation
+    title: Functions and Dot Notation
+    instructions: |
+      When you see something between parentheses in Python, it means you are **calling a function**, and the value inside is an **argument**:
+
+      ```python
+      print("Hello")   # calls print() with the argument "Hello"
+      ```
+
+      In Python, **dot notation** (`.`) is used to access attributes or methods (functions) of objects. For example:
+
+      ```python
+      import numpy as np
+
+      data = np.array([1, 2, 3, 4])   # create a NumPy array
+      print(data.shape)               # .shape is an attribute — no parentheses
+      data_reshaped = data.reshape(2, 2)  # .reshape() is a method — parentheses required
+      ```
+
+      Key rules:
+      - **Parentheses** are used to call functions; the values inside are arguments.
+      - **Dot notation** accesses methods or attributes of an object.
+      - **Attributes** (like `.shape`) have no parentheses.
+      - **Methods** (like `.reshape()`) do have parentheses.
+
+      **Your task:**
+      1. Import numpy as np
+      2. Create `data = np.array([10, 20, 30, 40])`
+      3. Print `data.shape`
+      4. Create `data_reshaped = data.reshape(2, 2)`
+      5. Print `data_reshaped.shape`
+    starter_code: |
+      import numpy as np
+
+      data = np.array([10, 20, 30, 40])
+
+      # Print the shape of data
+
+
+      # Reshape to 2x2 and store in data_reshaped
+      data_reshaped =
+
+      # Print the shape of data_reshaped
+
+
+    tests:
+      - type: output_contains
+        value: "(4,)"
+      - type: output_contains
+        value: "(2, 2)"
+      - type: assert
+        code: |
+          assert data.shape == (4,), 'data should have shape (4,)'
+          assert data_reshaped.shape == (2, 2), 'data_reshaped should have shape (2, 2)'
+        description: "data.shape == (4,) and data_reshaped.shape == (2, 2)"
+    hints:
+      - "print(data.shape) — no parentheses on .shape"
+      - "data_reshaped = data.reshape(2, 2)"
+    solution: |
+      import numpy as np
+
+      data = np.array([10, 20, 30, 40])
+      print(data.shape)
+
+      data_reshaped = data.reshape(2, 2)
+      print(data_reshaped.shape)
+
+  - id: call_function
+    title: Calling a Custom Function
+    instructions: |
+      In Python, functions are defined using the `def` keyword:
+
+      ```python
+      def function_name(parameters):
+          # Code block (indented)
+          return result
+      ```
+
+      For example, a function that returns a greeting:
+
+      ```python
+      def greet(name):
+          return f"Hi, {name}!"
+      ```
+
+      We create a function called `greet` which takes one argument `name`. It returns the text `"Hi, name!"`.
+
+      You do not need to write your own functions yet — but you do need to be able to **call** a function when you see one in a script.
+
+      To call it, you simply write the function name with the argument in parentheses:
+
+      ```python
+      result = greet("Alice")
+      print(result)   # Hi, Alice!
+      ```
+
+      **Your task:**
+      The `greet` function is already defined below. Call it **twice**:
+      1. With your own name, and print the result
+      2. With the name `"World"`, and print the result
+    starter_code: |
+      def greet(name):
+          return f"Hi, {name}!"
+
+      # Call greet with your own name and print
+
+
+      # Call greet with "World" and print
+
+
+    tests:
+      - type: output_contains
+        value: "Hi, "
+      - type: output_contains
+        value: "Hi, World!"
+      - type: assert
+        code: "assert greet('Alice') == 'Hi, Alice!'"
+        description: "greet() should return 'Hi, <name>!'"
+    hints:
+      - "print(greet(\"Alice\"))  — replace Alice with your name"
+      - "print(greet(\"World\"))"
+    solution: |
+      def greet(name):
+          return f"Hi, {name}!"
+
+      print(greet("Alice"))
+      print(greet("World"))

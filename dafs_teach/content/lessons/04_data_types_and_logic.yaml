@@ -1,0 +1,257 @@
+title: Data Types and Logic Operators
+description: Understand the difference between numeric and text values, how to check data types, and how to use logic operators to filter and compare data.
+
+exercises:
+
+  - id: numeric_types
+    title: Checking Numeric Types
+    instructions: |
+      A variable is a labeled container that holds information. An important distinction is the difference between **numerical** and **textual** values. When we assign a number, we can use it for mathematical operations. This needs to be differentiated from assigning the text `"42"`.
+
+      ```python
+      variable_numeric = 42    # a number
+      variable_text = "42"     # text — any value between quotes is understood as text
+      ```
+
+      Python has several core data types:
+
+      | Type | Description | Example |
+      |------|-------------|---------|
+      | `int` | Whole numbers | `42`, `-7` |
+      | `float` | Decimal numbers | `3.14`, `-0.5` |
+      | `str` | Text (sequence of characters) | `"hello"` |
+      | `bool` | True or False | `True`, `False` |
+
+      You can check the type of a variable in two ways:
+      - `isinstance(variable, int)` — returns `True` or `False`
+      - `type(variable)` — returns the type directly
+
+      **Your task:**
+      1. Create a variable `my_value` with the integer `42`
+      2. Print `isinstance(my_value, int)` — should print `True`
+      3. Print `type(my_value)` — should print `<class 'int'>`
+    starter_code: |
+      # Create the variable
+      my_value =
+
+      # Check with isinstance
+
+      # Check with type
+
+    tests:
+      - type: output_contains
+        value: "True"
+      - type: output_contains
+        value: "int"
+      - type: assert
+        code: "assert my_value == 42, 'my_value should be 42'"
+        description: "my_value should be the integer 42"
+    hints:
+      - "my_value = 42"
+      - "print(isinstance(my_value, int))"
+      - "print(type(my_value))"
+    solution: |
+      my_value = 42
+      print(isinstance(my_value, int))
+      print(type(my_value))
+
+  - id: string_vs_number
+    title: Text vs Numbers — An Important Distinction
+    instructions: |
+      Any value between quotes is understood as **text** by Python — even if it looks like a number:
+
+      ```python
+      variable_numeric = 42   # this is the number 42
+      variable_text = "42"    # this is the text "42"
+      ```
+
+      This distinction matters because Python behaves differently depending on the type. For example, multiplying text by a number does not give you a larger number — it **repeats** the text:
+
+      ```python
+      variable_text = "42"
+      variable_text * 2
+      # Result: '4242'   ← not a number, still text!
+      ```
+
+      It's good practice — especially when loading data from an external source — to check that what you expect to be numbers really are numbers.
+
+      **Your task:**
+      1. Create `variable_text = "42"`
+      2. Print `isinstance(variable_text, str)` — should be `True`
+      3. Print `variable_text * 2` — observe what happens
+    starter_code: |
+      # Assign the text value
+      variable_text =
+
+      # Check its type
+
+
+      # Multiply it by 2 and print the result
+
+
+    tests:
+      - type: output_contains
+        value: "True"
+      - type: output_contains
+        value: "4242"
+      - type: assert
+        code: "assert isinstance(variable_text, str), 'variable_text should be a string'"
+        description: "variable_text should be the string \"42\""
+    hints:
+      - "variable_text = \"42\" — note the quotes"
+      - "print(isinstance(variable_text, str))"
+      - "print(variable_text * 2)"
+    solution: |
+      variable_text = "42"
+      print(isinstance(variable_text, str))
+      print(variable_text * 2)
+
+  - id: type_conversion
+    title: Converting Between Types
+    instructions: |
+      It often happens that when you download data and load it into Python, the format is not understood correctly. Numbers are for example often misunderstood as text (strings).
+
+      You can **convert** between types using built-in functions:
+      - `str(42)` converts the number `42` to the string `"42"`
+      - `int("42")` converts the string `"42"` to the integer `42`
+      - `float("3.14")` converts the string `"3.14"` to the float `3.14`
+
+      After converting, you can use `isinstance()` to verify the result:
+
+      ```python
+      my_number = 42
+      my_text = str(my_number)
+      print(isinstance(my_text, str))  # True
+      ```
+
+      **Your task:**
+      1. Create `my_number = 42`
+      2. Convert it to a string and store it in `my_text`
+      3. Print `isinstance(my_text, str)` to verify it worked
+      4. Print `type(my_text)` to confirm the type
+    starter_code: |
+      my_number = 42
+
+      # Convert to string
+      my_text =
+
+      # Verify with isinstance
+
+
+      # Confirm with type()
+
+
+    tests:
+      - type: output_contains
+        value: "True"
+      - type: output_contains
+        value: "str"
+      - type: assert
+        code: |
+          assert isinstance(my_text, str), 'my_text should be a string after conversion'
+          assert my_text == "42", 'my_text should equal the string "42"'
+        description: "my_text should be the string \"42\""
+    hints:
+      - "my_text = str(my_number)"
+      - "print(isinstance(my_text, str))"
+    solution: |
+      my_number = 42
+      my_text = str(my_number)
+      print(isinstance(my_text, str))
+      print(type(my_text))
+
+  - id: logic_operators
+    title: Logic Operators
+    instructions: |
+      Logical operators are commonly used in data analysis, especially when subsetting datasets. For example: we want to extract documents from the year 2000 that contain the term "sustainability" and the term "climate change". We would check `year == 2000` and `"sustainability" in text` and `"climate change" in text`.
+
+      The key logical operators in Python are:
+
+      | Operator | Meaning | Example |
+      |----------|---------|---------|
+      | `==` | equal to | `x == 4` |
+      | `!=` | not equal to | `x != 4` |
+      | `and` | both conditions true | `x == 4 and y == 8` |
+      | `or` | at least one true | `x == 4 or y == 8` |
+      | `not` | negation | `not x` |
+
+      **Important:** In Python, `True` and `False` must start with a capital letter. `and`, `or`, `not` must be written exactly like this.
+
+      **Your task:**
+      Set `x = 4` and `y = 8`, then print the result of each expression below:
+      1. `x == 4` (is x equal to 4?)
+      2. `x == y` (is x equal to y?)
+      3. `x == 4 and y == 8` (are both true?)
+      4. `x == 5 or y == 8` (is at least one true?)
+    starter_code: |
+      x = 4
+      y = 8
+
+      # 1. Is x equal to 4?
+      print(x == 4)
+
+      # 2. Is x equal to y?
+      print(x == y)
+
+      # 3. Are both conditions true?
+      print(x == 4 and y == 8)
+
+      # 4. Is at least one condition true?
+      print(x == 5 or y == 8)
+    tests:
+      - type: output_equals
+        value: "True\nFalse\nTrue\nTrue"
+    hints:
+      - "The starter code is nearly complete — just run it and check the output"
+      - "x == 4 is True, x == y is False (4 != 8), both is True, or is True (y==8)"
+    solution: |
+      x = 4
+      y = 8
+
+      print(x == 4)
+      print(x == y)
+      print(x == 4 and y == 8)
+      print(x == 5 or y == 8)
+
+  - id: multiple_conditions
+    title: Combining Conditions
+    instructions: |
+      In data analysis, we often combine multiple conditions to filter data. For example, we might want observations where `temperature > 20` **and** `humidity < 50`.
+
+      You can combine as many conditions as you like:
+
+      ```python
+      z = "plop"
+      x == 4 and (y == 8 or z == "plop")
+      ```
+
+      Note: When using `pandas` to filter DataFrames, these same operators change slightly: `and` becomes `&`, `or` becomes `|`, `not` becomes `~`. You will see these in the pandas lessons.
+
+      **Your task:**
+      1. Create `temperature = 25` and `humidity = 40`
+      2. Create a variable `result` that is `True` if temperature is greater than 20 **and** humidity is less than 50
+      3. Print `result`
+    starter_code: |
+      temperature = 25
+      humidity = 40
+
+      # Check both conditions with 'and'
+      result =
+
+      print(result)
+    tests:
+      - type: output_equals
+        value: "True"
+      - type: assert
+        code: |
+          assert result == True, 'result should be True — temperature=25>20 and humidity=40<50'
+        description: "result should be True"
+    hints:
+      - "result = temperature > 20 and humidity < 50"
+    solution: |
+      temperature = 25
+      humidity = 40
+
+      result = temperature > 20 and humidity < 50
+
+      print(result)

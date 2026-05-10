@@ -1,0 +1,200 @@
+title: "Reading and Modifying Scripts"
+description: "Practice reading Python scripts and understanding what each line does — a key skill for the exam. You will then modify each script to extend its functionality."
+
+exercises:
+
+  - id: co2_emissions
+    title: "CO₂ Emissions — Read and Extend"
+    instructions: |
+      These are the types of questions you might encounter in the exam.
+
+      Below is a script that calculates the total CO₂ emissions for a trip using three modes of transport. Read through it carefully and make sure you understand what each line does.
+
+      ```python
+      distance_by_car  = 50   # Distance traveled by car in km
+      distance_by_bus  = 30   # Distance traveled by bus in km
+      distance_by_bike = 10   # Distance traveled by bike in km
+
+      emission_car  = 120  # CO₂ per km for a car (grams)
+      emission_bus  = 68   # CO₂ per km for a bus (grams)
+      emission_bike = 0    # CO₂ per km for a bike (grams)
+
+      total_emission_car  = distance_by_car  * emission_car
+      total_emission_bus  = distance_by_bus  * emission_bus
+      total_emission_bike = distance_by_bike * emission_bike
+
+      total_emission = total_emission_car + total_emission_bus + total_emission_bike
+      print(f"The total CO₂ emissions for the trip are {total_emission} grams.")
+      ```
+
+      The original script gives a total of **8040 grams**.
+
+      **Your task:**
+      Extend the script by adding a **train journey** of **20 km** with an emission factor of **60 grams per km**. Include the train's emissions in `total_emission` and print the updated total.
+
+      The expected new total is **9240 grams**.
+    starter_code: |
+      distance_by_car  = 50
+      distance_by_bus  = 30
+      distance_by_bike = 10
+
+      emission_car  = 120
+      emission_bus  = 68
+      emission_bike = 0
+
+      total_emission_car  = distance_by_car  * emission_car
+      total_emission_bus  = distance_by_bus  * emission_bus
+      total_emission_bike = distance_by_bike * emission_bike
+
+      # Add your train variables here
+      distance_by_train =
+      emission_train =
+      total_emission_train =
+
+      total_emission = total_emission_car + total_emission_bus + total_emission_bike  # add train here
+      print(f"The total CO₂ emissions for the trip are {total_emission} grams.")
+    tests:
+      - type: output_contains
+        value: "9240"
+      - type: assert
+        code: |
+          assert distance_by_train == 20, 'distance_by_train should be 20'
+          assert emission_train == 60, 'emission_train should be 60'
+          assert total_emission_train == 1200, 'total_emission_train should be 1200'
+          assert total_emission == 9240, f'total_emission should be 9240, got {total_emission}'
+        description: "total_emission should be 9240 grams"
+    hints:
+      - "distance_by_train = 20  and  emission_train = 60"
+      - "total_emission_train = distance_by_train * emission_train  →  1200"
+      - "Add total_emission_train to the total_emission calculation"
+    solution: |
+      distance_by_car  = 50
+      distance_by_bus  = 30
+      distance_by_bike = 10
+
+      emission_car  = 120
+      emission_bus  = 68
+      emission_bike = 0
+
+      total_emission_car  = distance_by_car  * emission_car
+      total_emission_bus  = distance_by_bus  * emission_bus
+      total_emission_bike = distance_by_bike * emission_bike
+
+      distance_by_train   = 20
+      emission_train      = 60
+      total_emission_train = distance_by_train * emission_train
+
+      total_emission = total_emission_car + total_emission_bus + total_emission_bike + total_emission_train
+      print(f"The total CO₂ emissions for the trip are {total_emission} grams.")
+
+  - id: energy_savings
+    title: "Energy Savings — Read and Call"
+    instructions: |
+      Below is a function that calculates the annual energy savings from switching from incandescent light bulbs to LED bulbs. Read each line carefully and make sure you understand what it computes.
+
+      ```python
+      def calculate_energy_savings(incandescent_wattage, led_wattage, hours_per_day, number_of_bulbs):
+          daily_energy_incandescent = incandescent_wattage * hours_per_day * number_of_bulbs
+          daily_energy_led          = led_wattage          * hours_per_day * number_of_bulbs
+          daily_energy_savings      = daily_energy_incandescent - daily_energy_led
+          annual_energy_savings     = (daily_energy_savings * 365) / 1000
+          return annual_energy_savings
+      ```
+
+      The function:
+      1. Calculates daily energy use for incandescent bulbs (in watt-hours)
+      2. Calculates daily energy use for LED bulbs
+      3. Computes the daily saving
+      4. Converts to kilowatt-hours per year (÷ 1000, × 365)
+      5. Returns the annual saving in kWh
+
+      **Your task:**
+      The function is already defined below. Call it with these values and print the result in a sentence:
+      - `incandescent_wattage = 60`
+      - `led_wattage = 10`
+      - `hours_per_day = 5`
+      - `number_of_bulbs = 10`
+
+      The expected output is:
+      `"The household saves 912.5 kilowatt-hours annually by switching to LED bulbs."`
+    starter_code: |
+      def calculate_energy_savings(incandescent_wattage, led_wattage, hours_per_day, number_of_bulbs):
+          daily_energy_incandescent = incandescent_wattage * hours_per_day * number_of_bulbs
+          daily_energy_led          = led_wattage          * hours_per_day * number_of_bulbs
+          daily_energy_savings      = daily_energy_incandescent - daily_energy_led
+          annual_energy_savings     = (daily_energy_savings * 365) / 1000
+          return annual_energy_savings
+
+      # Call the function with the values above
+      annual_savings =
+
+      print(f"The household saves {annual_savings} kilowatt-hours annually by switching to LED bulbs.")
+    tests:
+      - type: output_contains
+        value: "912.5"
+      - type: assert
+        code: "assert annual_savings == 912.5, f'annual_savings should be 912.5, got {annual_savings}'"
+        description: "annual_savings should be 912.5"
+    hints:
+      - "annual_savings = calculate_energy_savings(60, 10, 5, 10)"
+    solution: |
+      def calculate_energy_savings(incandescent_wattage, led_wattage, hours_per_day, number_of_bulbs):
+          daily_energy_incandescent = incandescent_wattage * hours_per_day * number_of_bulbs
+          daily_energy_led          = led_wattage          * hours_per_day * number_of_bulbs
+          daily_energy_savings      = daily_energy_incandescent - daily_energy_led
+          annual_energy_savings     = (daily_energy_savings * 365) / 1000
+          return annual_energy_savings
+
+      annual_savings = calculate_energy_savings(60, 10, 5, 10)
+      print(f"The household saves {annual_savings} kilowatt-hours annually by switching to LED bulbs.")
+
+  - id: water_usage
+    title: "Water Usage — Read and Experiment"
+    instructions: |
+      Below is a function that checks whether a household's daily water usage meets a sustainability target.
+
+      ```python
+      def evaluate_water_usage(daily_usage, target_usage):
+          meets_target = daily_usage <= target_usage
+          print(f"It is {meets_target} that the household's daily water usage meets the sustainability target of {target_usage} liters.")
+      ```
+
+      The function uses the `<=` operator to check if `daily_usage` is less than or equal to `target_usage`. The result is a **boolean** (`True` or `False`) stored in `meets_target`, which is then printed inside an f-string.
+
+      **Your task — two calls:**
+      1. Call the function with `daily_usage = 100` and `target_usage = 120`.
+         The household is below target — `meets_target` should be `True`.
+      2. Call the function with `daily_usage = 150` and `target_usage = 120`.
+         The household exceeds target — `meets_target` should be `False`.
+    starter_code: |
+      def evaluate_water_usage(daily_usage, target_usage):
+          meets_target = daily_usage <= target_usage
+          print(f"It is {meets_target} that the household's daily water usage meets the sustainability target of {target_usage} liters.")
+
+      # Call 1: usage below target (should print True)
+
+
+      # Call 2: usage above target (should print False)
+
+
+    tests:
+      - type: output_contains
+        value: "It is True"
+      - type: output_contains
+        value: "It is False"
+      - type: assert
+        code: |
+          assert evaluate_water_usage(100, 120) is None
+          assert 100 <= 120
+          assert not (150 <= 120)
+        description: "Both calls must be present with correct arguments"
+    hints:
+      - "evaluate_water_usage(100, 120)  →  True (100 is below 120)"
+      - "evaluate_water_usage(150, 120)  →  False (150 exceeds 120)"
+    solution: |
+      def evaluate_water_usage(daily_usage, target_usage):
+          meets_target = daily_usage <= target_usage
+          print(f"It is {meets_target} that the household's daily water usage meets the sustainability target of {target_usage} liters.")
+
+      evaluate_water_usage(100, 120)
+      evaluate_water_usage(150, 120)

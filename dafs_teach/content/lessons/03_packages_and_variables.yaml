@@ -1,0 +1,207 @@
+title: Packages and Variables
+description: Learn how to import Python packages and create variables — including numerical values and NumPy matrices.
+
+exercises:
+
+  - id: import_packages
+    title: Importing Packages
+    instructions: |
+      R and Python come with basic, built-in functions — like `print()`, `len()`, and `max()`. Think of Python as a basic toolbox with some essential tools available right away.
+
+      However, sometimes you need more specialized tools. In the world of Python, these extra tools are called **packages**. A package is like an extra toolbox full of new tools (functions) that someone else has created for a specific purpose.
+
+      - If you want to work with data in tables (like Excel), you use the `pandas` package.
+      - If you want to work with arrays and matrices, you use `numpy`.
+      - If you want to make graphs, you use `matplotlib`.
+
+      Packages only need to be **installed once** (via `pip install` in the terminal). After that, you **import** them each time you start working:
+
+      ```python
+      import pandas as pd
+      ```
+
+      It is common practice to give packages a short reference name. For `pandas` we use `pd`, for `numpy` we use `np`, and for `matplotlib.pyplot` we use `plt`. This way, instead of writing `pandas.function()`, you can write `pd.function()`.
+
+      **Your task:**
+      Import the three core data analysis packages with their standard short names:
+      - `numpy` as `np`
+      - `pandas` as `pd`
+      - `matplotlib.pyplot` as `plt`
+
+      Then print `"Packages loaded!"`.
+    starter_code: |
+      # Import the three packages here
+
+
+      print("Packages loaded!")
+    tests:
+      - type: output_equals
+        value: "Packages loaded!"
+      - type: assert
+        code: |
+          import sys
+          assert 'numpy' in sys.modules, 'numpy was not imported. Use: import numpy as np'
+          assert 'pandas' in sys.modules, 'pandas was not imported. Use: import pandas as pd'
+          assert 'matplotlib.pyplot' in sys.modules, 'matplotlib.pyplot was not imported. Use: import matplotlib.pyplot as plt'
+        description: "numpy, pandas and matplotlib.pyplot must all be imported"
+    hints:
+      - "import numpy as np"
+      - "import pandas as pd"
+      - "import matplotlib.pyplot as plt"
+    solution: |
+      import numpy as np
+      import pandas as pd
+      import matplotlib.pyplot as plt
+
+      print("Packages loaded!")
+
+  - id: create_variables
+    title: Creating Variables
+    instructions: |
+      A **variable** is like a container or a labeled storage box that holds data or information. In programming, we use variables to store values so that we can easily refer to and manipulate them throughout our code.
+
+      Why do we create variables?
+
+      - **Convenience:** Instead of typing the same value repeatedly, we store it in a variable and use its name.
+      - **Flexibility:** Variables allow us to use information that may change. You can update a variable's content later without rewriting your entire program.
+      - **Reusability:** Once stored, a value can be reused as many times as you want, making the code cleaner.
+
+      ```python
+      # Without variables
+      print(20 + 30)
+
+      # With variables
+      a = 20
+      b = 30
+      result = a + b
+      print(result)
+      ```
+
+      Creating the variables `a`, `b`, and `result` allows us to use them later in the code.
+
+      **Your task:**
+      1. Create a variable `a` with the value `20`
+      2. Create a variable `b` with the value `30`
+      3. Create a variable `result` equal to `a + b`
+      4. Print `result`
+    starter_code: |
+      # Create your variables here
+      a =
+      b =
+      result =
+
+      print(result)
+    tests:
+      - type: output_equals
+        value: "50"
+      - type: assert
+        code: |
+          assert a == 20, 'a should be 20'
+          assert b == 30, 'b should be 30'
+          assert result == 50, 'result should be a + b = 50'
+        description: "a=20, b=30, result=50"
+    hints:
+      - "a = 20 assigns the value 20 to the variable a"
+      - "result = a + b adds a and b together"
+    solution: |
+      a = 20
+      b = 30
+      result = a + b
+      print(result)
+
+  - id: numpy_matrix
+    title: Creating a NumPy Matrix
+    instructions: |
+      Beyond simple numerical values, variables can hold more complex objects — like matrices. In Python we use the `numpy` package for this.
+
+      ```python
+      import numpy as np
+
+      # np.zeros((3, 3)) creates a 3x3 matrix filled with zeros
+      small_matrix = np.zeros((3, 3))
+      print(small_matrix)
+      ```
+
+      The variable `small_matrix` now holds a **NumPy array** (a matrix). We can refer to it by name anywhere in the code. The `(3, 3)` is a tuple telling numpy the number of rows and columns.
+
+      **Your task:**
+      1. Import `numpy` as `np`
+      2. Create a **4×4** matrix filled with zeros, stored in a variable called `small_matrix`
+      3. Print `small_matrix`
+    starter_code: |
+      import numpy as np
+
+      # Create a 4x4 matrix of zeros
+      small_matrix =
+
+      print(small_matrix)
+    tests:
+      - type: output_contains
+        value: "0."
+      - type: assert
+        code: |
+          assert small_matrix.shape == (4, 4), f'matrix should be (4, 4), got {small_matrix.shape}'
+          assert (small_matrix == 0).all(), 'all values in the matrix should be zero'
+        description: "small_matrix should be a 4×4 matrix of zeros"
+    hints:
+      - "np.zeros() creates a matrix of zeros"
+      - "Pass a tuple for the dimensions: np.zeros((4, 4))"
+    solution: |
+      import numpy as np
+
+      small_matrix = np.zeros((4, 4))
+      print(small_matrix)
+
+  - id: matrix_operations
+    title: Matrix Operations and Variable Reassignment
+    instructions: |
+      Once a variable is created, you can perform operations on it. You can either **overwrite** the original variable or **create a new one**.
+
+      ```python
+      # Overwrites small_matrix — the original (all zeros) is lost
+      small_matrix = small_matrix + 3
+
+      # Creates a new variable — both the original and the new one are kept
+      small_matrix_3 = small_matrix + 3
+      ```
+
+      By writing the same name on both sides, the variable is replaced. If you want to keep both versions, always create a new variable with a different name.
+
+      **Your task:**
+      Starting from `small_matrix` (a 4×4 matrix of zeros, already provided):
+      1. Create `small_matrix_5` by adding `5` to every element of `small_matrix`
+      2. Print `small_matrix` (should still be zeros)
+      3. Print `small_matrix_5` (should be all fives)
+    starter_code: |
+      import numpy as np
+
+      small_matrix = np.zeros((4, 4))
+
+      # Create small_matrix_5 without modifying small_matrix
+      small_matrix_5 =
+
+      print(small_matrix)
+      print(small_matrix_5)
+    tests:
+      - type: output_contains
+        value: "0."
+      - type: output_contains
+        value: "5."
+      - type: assert
+        code: |
+          assert (small_matrix == 0).all(), 'small_matrix should still be all zeros'
+          assert (small_matrix_5 == 5).all(), 'small_matrix_5 should be all fives'
+          assert small_matrix_5.sum() == 80, 'sum of small_matrix_5 should be 80 (4x4 matrix of fives)'
+        description: "small_matrix stays all zeros; small_matrix_5 is all fives"
+    hints:
+      - "small_matrix_5 = small_matrix + 5"
+      - "Print both variables on separate lines"
+    solution: |
+      import numpy as np
+
+      small_matrix = np.zeros((4, 4))
+
+      small_matrix_5 = small_matrix + 5
+
+      print(small_matrix)
+      print(small_matrix_5)
