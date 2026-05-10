@@ -1,0 +1,280 @@
+title: Loops with Data
+description: Apply for and while loops to real analytical tasks — finding multiples, filtering DataFrames row by row, and classifying data with conditional logic.
+
+exercises:
+
+  - id: multiples_for
+    title: "Finding Multiples with a For Loop"
+    instructions: |
+      Loops are particularly powerful when combined with conditions. A common pattern is to iterate over a range of numbers and collect those that meet a criterion.
+
+      Imagine you need to find all numbers from 1 to 50 that are divisible by 3 **or** 5. Without a loop, you would check each number manually. With a loop:
+
+      ```python
+      for i in range(1, 51):
+          if i % 3 == 0 or i % 5 == 0:
+              print(i)
+      ```
+
+      The `%` operator returns the **remainder** of division. If `i % 3 == 0`, then `i` is exactly divisible by 3.
+
+      **Your task:**
+      1. Create an empty list `multiples = []`
+      2. Use a `for` loop over `range(1, 51)` to find all numbers divisible by 3 or 5
+      3. Append each matching number to `multiples`
+      4. Print `multiples`
+      5. Print the count: `len(multiples)`
+    starter_code: |
+      multiples = []
+
+      for i in range(1, 51):
+          if i % 3 == 0 or i % 5 == 0:
+              # append i to multiples
+
+
+      print(multiples)
+      print(len(multiples))
+    tests:
+      - type: output_contains
+        value: "15"
+      - type: output_contains
+        value: "50"
+      - type: output_contains
+        value: "23"
+      - type: assert
+        code: |
+          assert len(multiples) == 23, f"Expected 23 multiples, got {len(multiples)}"
+          assert 15 in multiples, "15 should be in multiples (divisible by both 3 and 5)"
+          assert 7 not in multiples, "7 should not be in multiples"
+          assert 50 in multiples, "50 should be in multiples (divisible by 5)"
+        description: "multiples should contain 23 numbers; 15 and 50 in, 7 not in"
+    hints:
+      - "multiples.append(i) inside the if block"
+    solution: |
+      multiples = []
+
+      for i in range(1, 51):
+          if i % 3 == 0 or i % 5 == 0:
+              multiples.append(i)
+
+      print(multiples)
+      print(len(multiples))
+
+  - id: cumulative_while
+    title: "Cumulative Sum with a While Loop"
+    instructions: |
+      Now extend the previous exercise with a `while` loop. Using the `multiples` list you found (already provided below), compute a **running total** and stop as soon as it exceeds 200:
+
+      ```python
+      total = 0
+      i = 0
+      while total <= 200:
+          total += multiples[i]
+          i += 1
+      print(total)
+      ```
+
+      The loop adds values from `multiples` one by one. The moment `total` crosses 200, the `while` condition becomes `False` and the loop stops — then we print the final total.
+
+      **Your task:**
+      Write the while loop described above and print the final `total` once the loop stops.
+
+      The expected answer is **225**.
+    starter_code: |
+      multiples = [n for n in range(1, 51) if n % 3 == 0 or n % 5 == 0]
+
+      total = 0
+      i = 0
+
+      while total <= 200:
+          # add multiples[i] to total
+
+          # increment i
+
+
+      print(total)
+    tests:
+      - type: output_equals
+        value: "225"
+      - type: assert
+        code: "assert total == 225, f'Expected 225, got {total}'"
+        description: "total should be 225 — the first time the cumulative sum exceeds 200"
+    hints:
+      - "total += multiples[i]"
+      - "i += 1  — move to the next item each iteration"
+      - "The loop stops when total > 200; the last value added brings it to 225"
+    solution: |
+      multiples = [n for n in range(1, 51) if n % 3 == 0 or n % 5 == 0]
+
+      total = 0
+      i = 0
+
+      while total <= 200:
+          total += multiples[i]
+          i += 1
+
+      print(total)
+
+  - id: iterrows_filter
+    title: "Filtering DataFrame Rows with a Loop"
+    instructions: |
+      In pandas, `df.iterrows()` lets you loop over a DataFrame row by row — each iteration gives you the row index and the row data as a Series:
+
+      ```python
+      for index, row in df.iterrows():
+          print(row["ColumnName"])
+      ```
+
+      This is useful when you need to apply complex row-level logic that pandas filtering alone cannot handle easily.
+
+      **Your task:**
+      Using the energy DataFrame below:
+
+      **Part 1 — For loop:**
+      Iterate through each row. If `Sustainable` is `True` **and** `EnergyUsage` is greater than 20, print the row's Region and EnergyUsage in the format: `"Region: A, Energy: 30"`
+
+      **Part 2 — While loop:**
+      Use a while loop to add the `EnergyUsage` of sustainable rows to a running `cumulative` total. Stop as soon as `cumulative` exceeds 50 and print the final total.
+    starter_code: |
+      import pandas as pd
+
+      data = {
+          "Region":      ["A", "B", "A", "C", "B", "C", "A"],
+          "EnergyUsage": [10, 20, 30, 40, 50, 60, 70],
+          "Sustainable": [True, False, True, False, True, False, True],
+      }
+      df = pd.DataFrame(data)
+
+      # Part 1: for loop — print sustainable rows with EnergyUsage > 20
+      for index, row in df.iterrows():
+          if row["Sustainable"] and row["EnergyUsage"] > 20:
+              print(f"Region: {row['Region']}, Energy: {row['EnergyUsage']}")
+
+      # Part 2: while loop — cumulative sum of sustainable rows, stop when > 50
+      cumulative = 0
+      i = 0
+      while cumulative <= 50 and i < len(df):
+          if df.iloc[i]["Sustainable"]:
+              cumulative += df.iloc[i]["EnergyUsage"]
+          i += 1
+
+      print(cumulative)
+    tests:
+      - type: output_contains
+        value: "Region: A, Energy: 30"
+      - type: output_contains
+        value: "Region: B, Energy: 50"
+      - type: output_contains
+        value: "Region: A, Energy: 70"
+      - type: output_contains
+        value: "90"
+      - type: assert
+        code: |
+          assert cumulative == 90, f"cumulative should be 90, got {cumulative}"
+        description: "Filtered rows: 30, 50, 70. Cumulative stops at 90 (10+30+50 = 90 > 50)"
+    hints:
+      - "Part 1: if row[\"Sustainable\"] and row[\"EnergyUsage\"] > 20:"
+      - "Part 2: the sustainable EnergyUsage values in order are 10, 30, 50, 70"
+      - "10+30=40 (<=50, continue), +50=90 (>50, stop) → print 90"
+    solution: |
+      import pandas as pd
+
+      data = {
+          "Region":      ["A", "B", "A", "C", "B", "C", "A"],
+          "EnergyUsage": [10, 20, 30, 40, 50, 60, 70],
+          "Sustainable": [True, False, True, False, True, False, True],
+      }
+      df = pd.DataFrame(data)
+
+      for index, row in df.iterrows():
+          if row["Sustainable"] and row["EnergyUsage"] > 20:
+              print(f"Region: {row['Region']}, Energy: {row['EnergyUsage']}")
+
+      cumulative = 0
+      i = 0
+      while cumulative <= 50 and i < len(df):
+          if df.iloc[i]["Sustainable"]:
+              cumulative += df.iloc[i]["EnergyUsage"]
+          i += 1
+
+      print(cumulative)
+
+  - id: renewable_classify
+    title: "Classifying Renewable Energy Data"
+    instructions: |
+      A common real-world task is to compute a derived metric and then classify each observation based on thresholds. This is exactly what analysts do when categorising countries by their energy mix.
+
+      **Your task:**
+      Using the energy DataFrame below:
+      1. Add a column `"renewable_percentage"` = `renewable_energy / total_energy * 100`
+      2. Use `df.iterrows()` to add a column `"renewable_category"` for each row:
+         - `renewable_percentage > 50` → `"High Renewable"`
+         - `renewable_percentage >= 20` → `"Medium Renewable"`
+         - otherwise → `"Low Renewable"`
+      3. Print the final DataFrame
+      4. Print the counts of each category using `df["renewable_category"].value_counts()`
+    starter_code: |
+      import pandas as pd
+
+      df = pd.DataFrame({
+          "country":          ["NL", "DE", "FR", "ES", "PL"],
+          "renewable_energy": [15,   40,   60,   25,    5],
+          "total_energy":     [100,  100,  100,  100,  100],
+      })
+
+      # Step 1: compute renewable_percentage
+      df["renewable_percentage"] =
+
+      # Step 2: classify each row with iterrows
+      for index, row in df.iterrows():
+          if row["renewable_percentage"] > 50:
+              df.at[index, "renewable_category"] = "High Renewable"
+          elif row["renewable_percentage"] >= 20:
+              # Medium range
+
+          else:
+              # Low range
+
+
+      print(df)
+      print(df["renewable_category"].value_counts())
+    tests:
+      - type: output_contains
+        value: "High Renewable"
+      - type: output_contains
+        value: "Medium Renewable"
+      - type: output_contains
+        value: "Low Renewable"
+      - type: assert
+        code: |
+          assert "renewable_percentage" in df.columns
+          assert "renewable_category" in df.columns
+          assert df.loc[df["country"] == "FR", "renewable_category"].values[0] == "High Renewable", "FR (60%) should be High"
+          assert df.loc[df["country"] == "DE", "renewable_category"].values[0] == "Medium Renewable", "DE (40%) should be Medium"
+          assert df.loc[df["country"] == "NL", "renewable_category"].values[0] == "Low Renewable", "NL (15%) should be Low"
+        description: "FR=High, DE & ES=Medium, NL & PL=Low"
+    hints:
+      - "df[\"renewable_percentage\"] = df[\"renewable_energy\"] / df[\"total_energy\"] * 100"
+      - "df.at[index, \"renewable_category\"] = \"Medium Renewable\" in the elif block"
+      - "df.at[index, \"renewable_category\"] = \"Low Renewable\" in the else block"
+    solution: |
+      import pandas as pd
+
+      df = pd.DataFrame({
+          "country":          ["NL", "DE", "FR", "ES", "PL"],
+          "renewable_energy": [15,   40,   60,   25,    5],
+          "total_energy":     [100,  100,  100,  100,  100],
+      })
+
+      df["renewable_percentage"] = df["renewable_energy"] / df["total_energy"] * 100
+
+      for index, row in df.iterrows():
+          if row["renewable_percentage"] > 50:
+              df.at[index, "renewable_category"] = "High Renewable"
+          elif row["renewable_percentage"] >= 20:
+              df.at[index, "renewable_category"] = "Medium Renewable"
+          else:
+              df.at[index, "renewable_category"] = "Low Renewable"
+
+      print(df)
+      print(df["renewable_category"].value_counts())

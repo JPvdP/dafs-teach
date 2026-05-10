@@ -1,0 +1,297 @@
+title: "Exam Preparation"
+description: "Practice the four exam question types: reading code, tracing output, finding errors, and writing short scripts from scratch."
+
+exercises:
+
+  - id: dice_script
+    title: "Reading Code — Dice Roll While Loop"
+    instructions: |
+      In the exam you will be asked to read a script and explain what each line does, and/or deduce the output.
+
+      Read the following script carefully:
+
+      ```python
+      import random
+
+      total_attempts = 0
+      target_reached = False
+
+      while not target_reached:
+          die1 = random.randint(1, 6)
+          die2 = random.randint(1, 6)
+          sum_dice = die1 + die2
+          total_attempts = total_attempts + 1
+          if sum_dice == 7:
+              target_reached = True
+              print(f"Sum of 7 reached after {total_attempts} attempts.")
+          else:
+              print(f"Attempt {total_attempts}: Sum = {sum_dice}")
+      ```
+
+      Make sure you can answer these questions about it (think before running):
+      - What does `while not target_reached` mean at the start?
+      - What happens to `total_attempts` on each iteration?
+      - When does the loop stop?
+      - What is printed when the sum equals 7?
+
+      **Your task:**
+      Run the script above (add `random.seed(42)` as the first line to make the result repeatable). Then extend it: add a variable `even_sums` that **counts how many times** the dice sum was even before finding 7. Print `even_sums` after the loop.
+    starter_code: |
+      import random
+      random.seed(42)
+
+      total_attempts = 0
+      target_reached = False
+      even_sums = 0
+
+      while not target_reached:
+          die1 = random.randint(1, 6)
+          die2 = random.randint(1, 6)
+          sum_dice = die1 + die2
+          total_attempts = total_attempts + 1
+          if sum_dice == 7:
+              target_reached = True
+              print(f"Sum of 7 reached after {total_attempts} attempts.")
+          else:
+              print(f"Attempt {total_attempts}: Sum = {sum_dice}")
+              # if sum_dice is even, increment even_sums
+
+
+      print(f"Even sums before finding 7: {even_sums}")
+    tests:
+      - type: output_contains
+        value: "Sum of 7 reached after"
+      - type: output_contains
+        value: "Even sums before finding 7:"
+      - type: assert
+        code: |
+          assert target_reached == True, "target_reached should be True after the loop"
+          assert total_attempts >= 1, "at least one attempt must have been made"
+          assert even_sums >= 0, "even_sums should be a non-negative integer"
+        description: "Loop must terminate with target_reached=True and even_sums counted"
+    hints:
+      - "if sum_dice % 2 == 0: even_sums += 1 — inside the else block"
+      - "An even sum means the remainder when divided by 2 is 0"
+    solution: |
+      import random
+      random.seed(42)
+
+      total_attempts = 0
+      target_reached = False
+      even_sums = 0
+
+      while not target_reached:
+          die1 = random.randint(1, 6)
+          die2 = random.randint(1, 6)
+          sum_dice = die1 + die2
+          total_attempts = total_attempts + 1
+          if sum_dice == 7:
+              target_reached = True
+              print(f"Sum of 7 reached after {total_attempts} attempts.")
+          else:
+              print(f"Attempt {total_attempts}: Sum = {sum_dice}")
+              if sum_dice % 2 == 0:
+                  even_sums += 1
+
+      print(f"Even sums before finding 7: {even_sums}")
+
+  - id: student_grades
+    title: "Reading and Extending Code — Student Grades"
+    instructions: |
+      Another exam question type asks you to **extend** a script. Read the following code carefully, predict what it does, then run it:
+
+      ```python
+      students = [
+          {"name": "Alice",   "Math": 70, "Science": 80, "English": 60},
+          {"name": "Bob",     "Math": 40, "Science": 50, "English": 30},
+          {"name": "Charlie", "Math": 65, "Science": 75, "English": 55},
+      ]
+
+      for student in students:
+          avg_score = (student["Math"] + student["Science"] + student["English"]) / 3
+          if avg_score >= 60:
+              student["Passed"] = True
+          else:
+              student["Passed"] = False
+
+      for student in students:
+          print(student)
+      ```
+
+      Note: `students` is a **list of dictionaries**. Each loop iteration gives you one student's dictionary, and you can add new keys to it with `student["new_key"] = value`.
+
+      **Your task:**
+      Extend the first loop to also add a `"grade_letter"` key to each student:
+
+      | Average score | Grade letter |
+      |--------------|--------------|
+      | ≥ 80 | `"A"` |
+      | ≥ 70 | `"B"` |
+      | ≥ 60 | `"C"` |
+      | < 60 | `"F"` |
+
+      Expected: Alice → B (avg 70), Bob → F (avg 40), Charlie → C (avg 65).
+    starter_code: |
+      students = [
+          {"name": "Alice",   "Math": 70, "Science": 80, "English": 60},
+          {"name": "Bob",     "Math": 40, "Science": 50, "English": 30},
+          {"name": "Charlie", "Math": 65, "Science": 75, "English": 55},
+      ]
+
+      for student in students:
+          avg_score = (student["Math"] + student["Science"] + student["English"]) / 3
+          if avg_score >= 60:
+              student["Passed"] = True
+          else:
+              student["Passed"] = False
+
+          # Add grade_letter based on avg_score
+          if avg_score >= 80:
+              student["grade_letter"] =
+          elif avg_score >= 70:
+              # grade B
+          elif avg_score >= 60:
+              # grade C
+          else:
+              # grade F
+
+      for student in students:
+          print(student)
+    tests:
+      - type: output_contains
+        value: "'Passed': True"
+      - type: output_contains
+        value: "'Passed': False"
+      - type: output_contains
+        value: "'grade_letter': 'B'"
+      - type: output_contains
+        value: "'grade_letter': 'F'"
+      - type: assert
+        code: |
+          alice = next(s for s in students if s["name"] == "Alice")
+          bob   = next(s for s in students if s["name"] == "Bob")
+          charlie = next(s for s in students if s["name"] == "Charlie")
+          assert alice["grade_letter"] == "B",   f"Alice avg=70, expected B, got {alice.get('grade_letter')}"
+          assert bob["grade_letter"] == "F",     f"Bob avg=40, expected F, got {bob.get('grade_letter')}"
+          assert charlie["grade_letter"] == "C", f"Charlie avg=65, expected C, got {charlie.get('grade_letter')}"
+        description: "Alice=B (avg 70), Bob=F (avg 40), Charlie=C (avg 65)"
+    hints:
+      - "student[\"grade_letter\"] = \"B\" inside the elif avg_score >= 70 block"
+      - "Check the thresholds in order: 80 first, then 70, then 60, then else"
+    solution: |
+      students = [
+          {"name": "Alice",   "Math": 70, "Science": 80, "English": 60},
+          {"name": "Bob",     "Math": 40, "Science": 50, "English": 30},
+          {"name": "Charlie", "Math": 65, "Science": 75, "English": 55},
+      ]
+
+      for student in students:
+          avg_score = (student["Math"] + student["Science"] + student["English"]) / 3
+          if avg_score >= 60:
+              student["Passed"] = True
+          else:
+              student["Passed"] = False
+
+          if avg_score >= 80:
+              student["grade_letter"] = "A"
+          elif avg_score >= 70:
+              student["grade_letter"] = "B"
+          elif avg_score >= 60:
+              student["grade_letter"] = "C"
+          else:
+              student["grade_letter"] = "F"
+
+      for student in students:
+          print(student)
+
+  - id: login_function
+    title: "Writing Code — Login System"
+    instructions: |
+      The final exam question type asks you to **write a short script** from scratch.
+
+      **Task (from the exam):**
+
+      > You are in charge of a log-in system on a website. When the correct password is provided, print `"Success!"`. If the user has failed 3 times, stop the system and print `"Game Over!"`. Write a function that can perform this task.
+
+      Because our app cannot use `input()` (which waits for the user to type), write the function to accept a **list of password attempts** and a **correct password** as arguments. This is actually better practice: it makes the function testable.
+
+      ```python
+      def login_system(attempts, correct_password):
+          # your code here
+
+      # Test cases
+      login_system(["wrong", "test", "secret"], "secret")   # succeeds on 3rd try
+      login_system(["x", "y", "z"], "secret")               # fails all 3
+      ```
+
+      Expected output:
+      ```
+      Wrong password!
+      Wrong password!
+      Success!
+      Wrong password!
+      Wrong password!
+      Game Over!
+      ```
+    starter_code: |
+      def login_system(attempts, correct_password):
+          for i, attempt in enumerate(attempts):
+              if attempt == correct_password:
+                  # print success and stop
+
+              if i >= 2:
+                  # 3rd attempt failed — print game over and stop
+
+              # wrong but not yet 3 failures
+
+
+      # Test your function
+      login_system(["wrong", "test", "secret"], "secret")
+      print("---")
+      login_system(["x", "y", "z"], "secret")
+    tests:
+      - type: output_contains
+        value: "Success!"
+      - type: output_contains
+        value: "Game Over!"
+      - type: assert
+        code: |
+          import io, sys
+
+          def capture(func, *args):
+              buf = io.StringIO()
+              sys.stdout, old = buf, sys.stdout
+              func(*args)
+              sys.stdout = old
+              return buf.getvalue()
+
+          out1 = capture(login_system, ["secret"], "secret")
+          assert "Success!" in out1, "Correct password on 1st try should print Success!"
+          assert "Game Over!" not in out1
+
+          out2 = capture(login_system, ["a", "b", "c"], "secret")
+          assert "Game Over!" in out2, "3 wrong guesses should print Game Over!"
+          assert "Success!" not in out2
+
+          out3 = capture(login_system, ["a", "secret", "c"], "secret")
+          assert "Success!" in out3, "Correct on 2nd try should print Success!"
+          assert "Game Over!" not in out3
+        description: "Must print Success! for correct password, Game Over! after 3 wrong attempts"
+    hints:
+      - "print(\"Success!\") then return — inside the if attempt == correct_password block"
+      - "print(\"Game Over!\") then return — inside the if i >= 2 block"
+      - "print(\"Wrong password!\") at the end of the loop body (no return)"
+    solution: |
+      def login_system(attempts, correct_password):
+          for i, attempt in enumerate(attempts):
+              if attempt == correct_password:
+                  print("Success!")
+                  return
+              if i >= 2:
+                  print("Game Over!")
+                  return
+              print("Wrong password!")
+
+      login_system(["wrong", "test", "secret"], "secret")
+      print("---")
+      login_system(["x", "y", "z"], "secret")

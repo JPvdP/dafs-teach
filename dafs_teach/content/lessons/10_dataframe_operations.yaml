@@ -1,0 +1,437 @@
+title: DataFrame Operations
+description: Learn to select columns, filter rows, add computed columns, merge datasets, and summarise data with groupby — the core skills of data analysis in Python.
+
+exercises:
+
+  - id: select_columns
+    title: Selecting Columns
+    instructions: |
+      Just as in R, Python allows for the extraction of columns both by their name and by their index.
+
+      To select columns **by name**, use double brackets `[[]]` with a list of column names:
+
+      ```python
+      # Single column (returns a DataFrame, not a Series)
+      selected = df[["Name"]]
+
+      # Multiple columns
+      selected = df[["Name", "Age"]]
+      ```
+
+      To select by **index**, use `.iloc`. The first argument is rows, the second is columns. Use `:` to mean "all rows":
+
+      ```python
+      # All rows, columns at index 0 and 1
+      selected = df.iloc[:, [0, 1]]
+
+      # Specific rows (no column specified → selects rows by index)
+      filtered = df.iloc[[0, 4]]
+      ```
+
+      **Your task:**
+      Using the DataFrame below:
+      1. Select only the `Name` and `Age` columns by name, store in `selected`
+      2. Print `selected`
+      3. Select all rows of the first two columns using `.iloc`, store in `by_index`
+      4. Print `by_index`
+    starter_code: |
+      import pandas as pd
+
+      data = {
+          "Name":   ["Alice", "Bob", "Charlie", "David", "Eve"],
+          "Age":    [25, 30, 22, 28, 24],
+          "Gender": ["Female", "Male", "Male", "Male", "Female"],
+      }
+      df = pd.DataFrame(data)
+
+      # Select Name and Age by column name
+      selected =
+
+      print(selected)
+
+      # Select first two columns by index (all rows)
+      by_index =
+
+      print(by_index)
+    tests:
+      - type: output_contains
+        value: "Alice"
+      - type: output_contains
+        value: "25"
+      - type: assert
+        code: |
+          assert list(selected.columns) == ["Name", "Age"], f"Got {list(selected.columns)}"
+          assert list(by_index.columns) == ["Name", "Age"], f"Got {list(by_index.columns)}"
+          assert selected.shape == (5, 2)
+        description: "selected and by_index should both have columns Name and Age"
+    hints:
+      - "selected = df[[\"Name\", \"Age\"]]"
+      - "by_index = df.iloc[:, [0, 1]]  — the : means all rows"
+    solution: |
+      import pandas as pd
+
+      data = {
+          "Name":   ["Alice", "Bob", "Charlie", "David", "Eve"],
+          "Age":    [25, 30, 22, 28, 24],
+          "Gender": ["Female", "Male", "Male", "Male", "Female"],
+      }
+      df = pd.DataFrame(data)
+
+      selected = df[["Name", "Age"]]
+      print(selected)
+
+      by_index = df.iloc[:, [0, 1]]
+      print(by_index)
+
+  - id: filter_rows
+    title: Filtering Rows
+    instructions: |
+      To filter rows in a pandas DataFrame, you use **boolean indexing**: you write a condition inside `[]` that produces `True`/`False` for each row, and only the `True` rows are kept.
+
+      ```python
+      # Keep only rows where Year == 2023
+      subset = df[df["Year"] == 2023]
+      ```
+
+      This is equivalent to asking: "give me all rows where the Year column equals 2023."
+
+      **Your task:**
+      Using the patents DataFrame below:
+      1. Filter to keep only patents from 2023, store in `patents_2023`
+      2. Print `patents_2023`
+      3. Print the number of matching patents using `len()`
+    starter_code: |
+      import pandas as pd
+
+      data = {
+          "Pat_num": ["WO200214562", "WO2023738962", "EP2023778962", "FR2019272698", "FR201922671"],
+          "Year":    [2002, 2023, 2023, 2019, 2019],
+          "Domain":  ["B60C", "B60C", "B29D", "C08K", "C08K"],
+      }
+      df = pd.DataFrame(data)
+
+      # Filter to 2023 only
+      patents_2023 =
+
+      print(patents_2023)
+      print(len(patents_2023))
+    tests:
+      - type: output_contains
+        value: "WO2023738962"
+      - type: output_contains
+        value: "EP2023778962"
+      - type: output_contains
+        value: "2"
+      - type: assert
+        code: |
+          assert len(patents_2023) == 2, f"Expected 2 rows, got {len(patents_2023)}"
+          assert (patents_2023["Year"] == 2023).all()
+        description: "patents_2023 should contain exactly 2 rows"
+    hints:
+      - "patents_2023 = df[df[\"Year\"] == 2023]"
+    solution: |
+      import pandas as pd
+
+      data = {
+          "Pat_num": ["WO200214562", "WO2023738962", "EP2023778962", "FR2019272698", "FR201922671"],
+          "Year":    [2002, 2023, 2023, 2019, 2019],
+          "Domain":  ["B60C", "B60C", "B29D", "C08K", "C08K"],
+      }
+      df = pd.DataFrame(data)
+
+      patents_2023 = df[df["Year"] == 2023]
+      print(patents_2023)
+      print(len(patents_2023))
+
+  - id: filter_multiple
+    title: Filtering with Multiple Conditions
+    instructions: |
+      When filtering DataFrames with multiple conditions, the standard Python operators `and`, `or`, `not` do **not** work. Instead, pandas uses:
+
+      | Operation | Pandas operator |
+      |-----------|----------------|
+      | and | `&` |
+      | or | `\|` |
+      | not | `~` |
+
+      Each condition must be **wrapped in parentheses**:
+
+      ```python
+      # Patents in domain B60C with year >= 2019
+      subset = df[(df["Year"] >= 2019) & (df["Domain"] == "B60C")]
+
+      # Patents NOT in domain B60C
+      subset = df[~(df["Domain"] == "B60C")]
+      ```
+
+      **Your task:**
+      Using the same patents DataFrame:
+      1. Create `b60c_recent` — patents in domain `"B60C"` with `Year >= 2019`
+      2. Create `not_b60c` — all patents **not** in domain `"B60C"`
+      3. Print both, and print their lengths
+    starter_code: |
+      import pandas as pd
+
+      data = {
+          "Pat_num": ["WO200214562", "WO2023738962", "EP2023778962", "FR2019272698", "FR201922671"],
+          "Year":    [2002, 2023, 2023, 2019, 2019],
+          "Domain":  ["B60C", "B60C", "B29D", "C08K", "C08K"],
+      }
+      df = pd.DataFrame(data)
+
+      # B60C patents from 2019 onwards
+      b60c_recent =
+
+      # All patents NOT in B60C
+      not_b60c =
+
+      print(b60c_recent)
+      print(len(b60c_recent))
+      print(not_b60c)
+      print(len(not_b60c))
+    tests:
+      - type: output_contains
+        value: "WO2023738962"
+      - type: assert
+        code: |
+          assert len(b60c_recent) == 1, f"Expected 1 B60C patent >= 2019, got {len(b60c_recent)}"
+          assert len(not_b60c) == 3, f"Expected 3 non-B60C patents, got {len(not_b60c)}"
+          assert "WO200214562" not in b60c_recent["Pat_num"].values
+          assert "WO200214562" not in not_b60c["Pat_num"].values
+        description: "b60c_recent should have 1 row; not_b60c should have 3 rows"
+    hints:
+      - "b60c_recent = df[(df[\"Year\"] >= 2019) & (df[\"Domain\"] == \"B60C\")]"
+      - "not_b60c = df[~(df[\"Domain\"] == \"B60C\")]"
+    solution: |
+      import pandas as pd
+
+      data = {
+          "Pat_num": ["WO200214562", "WO2023738962", "EP2023778962", "FR2019272698", "FR201922671"],
+          "Year":    [2002, 2023, 2023, 2019, 2019],
+          "Domain":  ["B60C", "B60C", "B29D", "C08K", "C08K"],
+      }
+      df = pd.DataFrame(data)
+
+      b60c_recent = df[(df["Year"] >= 2019) & (df["Domain"] == "B60C")]
+      not_b60c = df[~(df["Domain"] == "B60C")]
+
+      print(b60c_recent)
+      print(len(b60c_recent))
+      print(not_b60c)
+      print(len(not_b60c))
+
+  - id: add_column
+    title: Adding a Computed Column
+    instructions: |
+      In a DataFrame, we refer to columns by their name inside brackets `[]`. We can use the same notation to **create a new column** — just assign a value to a column name that does not yet exist:
+
+      ```python
+      Data["new_column"] = Data["Fuel_consumption"] / Data["Population"]
+      ```
+
+      This creates a new column `"new_column"` where each value is `Fuel_consumption` divided by `Population`. By default, pandas applies this **row by row** — so each country gets its own GDP per capita.
+
+      **Your task:**
+      Using the DataFrame below (GDP in billions, population in millions):
+      1. Add a column `"gdp_per_capita"` = `gdp / population`
+      2. Print the full DataFrame
+      3. Print the mean of `gdp_per_capita` rounded to 2 decimal places
+    starter_code: |
+      import pandas as pd
+
+      df = pd.DataFrame({
+          "country":    ["NL", "DE", "FR"],
+          "population": [17, 84, 68],
+          "gdp":        [1000, 4200, 2800],
+      })
+
+      # Add gdp_per_capita column
+      df["gdp_per_capita"] =
+
+      print(df)
+      print(round(df["gdp_per_capita"].mean(), 2))
+    tests:
+      - type: output_contains
+        value: "gdp_per_capita"
+      - type: assert
+        code: |
+          assert "gdp_per_capita" in df.columns
+          assert abs(df.loc[0, "gdp_per_capita"] - 1000/17) < 0.01, "NL gdp_per_capita wrong"
+          assert abs(df.loc[1, "gdp_per_capita"] - 4200/84) < 0.01, "DE gdp_per_capita wrong"
+          assert abs(df.loc[2, "gdp_per_capita"] - 2800/68) < 0.01, "FR gdp_per_capita wrong"
+        description: "gdp_per_capita = gdp / population for each row"
+    hints:
+      - "df[\"gdp_per_capita\"] = df[\"gdp\"] / df[\"population\"]"
+    solution: |
+      import pandas as pd
+
+      df = pd.DataFrame({
+          "country":    ["NL", "DE", "FR"],
+          "population": [17, 84, 68],
+          "gdp":        [1000, 4200, 2800],
+      })
+
+      df["gdp_per_capita"] = df["gdp"] / df["population"]
+
+      print(df)
+      print(round(df["gdp_per_capita"].mean(), 2))
+
+  - id: groupby_agg
+    title: Grouping and Summarising
+    instructions: |
+      With real data we often need to regroup observations — by year, organisation, region, or any other entity. For example: if we have a database with patents and we want to know the earliest and latest patent per domain, we need to group by domain and compute `min` and `max` on the year.
+
+      In Python we do this with `groupby` and `agg`:
+
+      ```python
+      grouped = df.groupby("Domain")["Year"].agg(["min", "max"]).reset_index()
+      ```
+
+      - `groupby("Domain")` — creates a group for each unique domain
+      - `["Year"]` — tells pandas to work on the Year column
+      - `.agg(["min", "max"])` — computes min and max within each group
+      - `.reset_index()` — turns the group labels back into a regular column
+
+      To simply count observations per group, use `.count()`:
+
+      ```python
+      counts = df.groupby("Domain").count().reset_index()
+      ```
+
+      **Your task:**
+      Using the patents DataFrame:
+      1. Create `year_range` — groupby Domain, get min and max Year. Print it.
+      2. Create `counts` — groupby Domain, count all columns. Print it.
+    starter_code: |
+      import pandas as pd
+
+      data = {
+          "Pat_num": ["WO200214562", "WO2023738962", "EP2023778962", "FR2019272698", "FR201922671"],
+          "Year":    [2002, 2023, 2023, 2019, 2019],
+          "Domain":  ["B60C", "B60C", "B29D", "C08K", "C08K"],
+      }
+      df = pd.DataFrame(data)
+
+      # Min and max year per domain
+      year_range =
+      print(year_range)
+
+      # Count per domain
+      counts =
+      print(counts)
+    tests:
+      - type: output_contains
+        value: "B60C"
+      - type: output_contains
+        value: "2002"
+      - type: assert
+        code: |
+          assert year_range.shape == (3, 3), f"year_range should have 3 rows and 3 cols, got {year_range.shape}"
+          b60c_row = year_range[year_range["Domain"] == "B60C"]
+          assert b60c_row["min"].values[0] == 2002
+          assert b60c_row["max"].values[0] == 2023
+        description: "year_range should have 3 domains, B60C min=2002 max=2023"
+    hints:
+      - "year_range = df.groupby(\"Domain\")[\"Year\"].agg([\"min\", \"max\"]).reset_index()"
+      - "counts = df.groupby(\"Domain\").count().reset_index()"
+    solution: |
+      import pandas as pd
+
+      data = {
+          "Pat_num": ["WO200214562", "WO2023738962", "EP2023778962", "FR2019272698", "FR201922671"],
+          "Year":    [2002, 2023, 2023, 2019, 2019],
+          "Domain":  ["B60C", "B60C", "B29D", "C08K", "C08K"],
+      }
+      df = pd.DataFrame(data)
+
+      year_range = df.groupby("Domain")["Year"].agg(["min", "max"]).reset_index()
+      print(year_range)
+
+      counts = df.groupby("Domain").count().reset_index()
+      print(counts)
+
+  - id: merge_dataframes
+    title: Merging DataFrames
+    instructions: |
+      When working with data we often need to merge information from different data sources. For example, we want to analyse the link between population density and air pollution. We find pollution data from the WHO, but population data comes from a different source — we end up with two datasets.
+
+      | Country | Pollution |    | Country | Population |
+      |---------|-----------|    |---------|------------|
+      | NL      | 21        |    | NL      | 17M        |
+      | DE      | 23        |    | DE      | 84M        |
+      | FR      | 17        |    | FR      | 68M        |
+
+      We combine them with `pd.merge()`, matching rows by a **key** column:
+
+      ```python
+      merged = pd.merge(df_1, df_2, on="Country")
+      ```
+
+      There are multiple ways to merge — the `how` argument controls which rows to keep:
+
+      ```python
+      pd.merge(df_1, df_2, on="Country", how="inner")   # only matching rows (default)
+      pd.merge(df_1, df_2, on="Country", how="left")    # all rows from df_1
+      pd.merge(df_1, df_2, on="Country", how="outer")   # all rows from both
+      ```
+
+      **Your task:**
+      1. Merge `df_pollution` and `df_population` on `"Country"` (inner join) into `merged`
+      2. Print `merged`
+      3. Add a computed column `"pollution_per_capita"` = `pollution / population`
+      4. Print the country with the **highest** pollution per capita
+    starter_code: |
+      import pandas as pd
+
+      df_pollution = pd.DataFrame({
+          "Country":   ["NL", "DE", "FR"],
+          "pollution": [21, 23, 17],
+      })
+      df_population = pd.DataFrame({
+          "Country":    ["NL", "DE", "FR"],
+          "population": [17, 84, 68],
+      })
+
+      # Merge on Country
+      merged =
+
+      print(merged)
+
+      # Add pollution_per_capita
+      merged["pollution_per_capita"] =
+
+      # Print the country with the highest value
+      best = merged.loc[merged["pollution_per_capita"].idxmax(), "Country"]
+      print(best)
+    tests:
+      - type: output_contains
+        value: "NL"
+      - type: assert
+        code: |
+          assert "pollution_per_capita" in merged.columns, "pollution_per_capita column missing"
+          assert len(merged) == 3, f"merged should have 3 rows, got {len(merged)}"
+          assert "Country" in merged.columns and "pollution" in merged.columns and "population" in merged.columns
+          assert abs(merged.loc[merged["Country"] == "NL", "pollution_per_capita"].values[0] - 21/17) < 0.001
+        description: "merged should have 3 rows; NL has highest pollution per capita (21/17)"
+    hints:
+      - "merged = pd.merge(df_pollution, df_population, on=\"Country\")"
+      - "merged[\"pollution_per_capita\"] = merged[\"pollution\"] / merged[\"population\"]"
+      - "NL: 21/17 ≈ 1.24 is the highest"
+    solution: |
+      import pandas as pd
+
+      df_pollution = pd.DataFrame({
+          "Country":   ["NL", "DE", "FR"],
+          "pollution": [21, 23, 17],
+      })
+      df_population = pd.DataFrame({
+          "Country":    ["NL", "DE", "FR"],
+          "population": [17, 84, 68],
+      })
+
+      merged = pd.merge(df_pollution, df_population, on="Country")
+      print(merged)
+
+      merged["pollution_per_capita"] = merged["pollution"] / merged["population"]
+      best = merged.loc[merged["pollution_per_capita"].idxmax(), "Country"]
+      print(best)

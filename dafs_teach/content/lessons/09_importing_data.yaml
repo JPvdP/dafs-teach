@@ -1,0 +1,243 @@
+title: Importing and Exporting Data
+description: Learn how to load data from CSV, TSV and Excel files using pandas, and how to export your results when you are done.
+
+exercises:
+
+  - id: read_csv_comma
+    title: Reading a CSV File
+    instructions: |
+      Data comes in many different formats. The most basic are `.txt` and `.csv`. **CSV** stands for "Comma Separated Values" — each column is separated by a comma `,`.
+
+      ```python
+      import pandas as pd
+
+      df = pd.read_csv("sample_data.csv")
+      print(df)
+      ```
+
+      In a real project you pass the file path as a string. In this exercise, we simulate a CSV file using Python's `io.StringIO`, which lets you pass text directly to `pd.read_csv()` as if it were a file. The syntax for `pd.read_csv()` is **identical** — only the source changes.
+
+      **Your task:**
+      The variable `csv_data` below contains comma-separated data. Use `pd.read_csv(StringIO(csv_data))` to load it into a DataFrame called `df`, then:
+      1. Print the shape of `df`
+      2. Print the column names
+    starter_code: |
+      import pandas as pd
+      from io import StringIO
+
+      csv_data = """country,pollution,year
+      NL,21,2020
+      DE,23,2020
+      FR,17,2020"""
+
+      # Load into a DataFrame
+      df =
+
+      # Print shape and columns
+      print(df.shape)
+      print(list(df.columns))
+    tests:
+      - type: output_contains
+        value: "(3, 3)"
+      - type: output_contains
+        value: "country"
+      - type: assert
+        code: |
+          assert df.shape == (3, 3), f"Expected (3, 3), got {df.shape}"
+          assert list(df.columns) == ["country", "pollution", "year"]
+        description: "df should have shape (3, 3) with columns country, pollution, year"
+    hints:
+      - "df = pd.read_csv(StringIO(csv_data))"
+    solution: |
+      import pandas as pd
+      from io import StringIO
+
+      csv_data = """country,pollution,year
+      NL,21,2020
+      DE,23,2020
+      FR,17,2020"""
+
+      df = pd.read_csv(StringIO(csv_data))
+      print(df.shape)
+      print(list(df.columns))
+
+  - id: read_csv_separator
+    title: Reading Files with a Different Separator
+    instructions: |
+      CSV files do not always use a comma as the separator. Nowadays data is often separated by a **semicolon** `;`. Because we don't always know what the separator is, we add a `sep` argument to tell pandas how to read the file:
+
+      ```python
+      df = pd.read_csv("sample_data.csv", sep=";")
+      ```
+
+      If you try to load a semicolon-separated file without specifying `sep=";"`, pandas will treat the entire row as a single column — a very common mistake.
+
+      **Your task:**
+      The `csv_data` below is separated by semicolons. Load it into `df` with the correct `sep` argument, then:
+      1. Print the shape
+      2. Print the value in the `pollution` column for `DE` (the second row, index 1)
+    starter_code: |
+      import pandas as pd
+      from io import StringIO
+
+      csv_data = """country;pollution;year
+      NL;21;2020
+      DE;23;2020
+      FR;17;2020"""
+
+      # Load with the correct separator
+      df =
+
+      print(df.shape)
+      print(df["pollution"].iloc[1])
+    tests:
+      - type: output_equals
+        value: "(3, 3)\n23"
+      - type: assert
+        code: |
+          assert df.shape == (3, 3), f"Expected (3, 3), got {df.shape} — did you set sep=\";\"?"
+          assert df["pollution"].iloc[1] == 23
+        description: "df should have 3 rows and 3 columns"
+    hints:
+      - "pd.read_csv(StringIO(csv_data), sep=\";\")"
+    solution: |
+      import pandas as pd
+      from io import StringIO
+
+      csv_data = """country;pollution;year
+      NL;21;2020
+      DE;23;2020
+      FR;17;2020"""
+
+      df = pd.read_csv(StringIO(csv_data), sep=";")
+      print(df.shape)
+      print(df["pollution"].iloc[1])
+
+  - id: read_tsv
+    title: Reading a TSV File (Tab-Separated)
+    instructions: |
+      **TSV** is a plain text file where the separator is a **tab** character. In Python, a tab is written as `\t`.
+
+      To read a TSV file, you use the same `pd.read_csv()` function but with `sep="\t"`:
+
+      ```python
+      df = pd.read_csv("sample_data.tsv", sep="\t")
+      ```
+
+      **Your task:**
+      The `tsv_data` below is tab-separated. Load it into `df`, then:
+      1. Print the shape
+      2. Print the `country` column
+    starter_code: |
+      import pandas as pd
+      from io import StringIO
+
+      tsv_data = "country\tpopulation\tgdp\nNL\t17\t1000\nDE\t84\t4200\nFR\t68\t2800\nBE\t11\t560"
+
+      # Load with the correct separator
+      df =
+
+      print(df.shape)
+      print(df["country"])
+    tests:
+      - type: output_contains
+        value: "(4, 3)"
+      - type: output_contains
+        value: "NL"
+      - type: output_contains
+        value: "BE"
+      - type: assert
+        code: |
+          assert df.shape == (4, 3), f"Expected (4, 3), got {df.shape}"
+          assert list(df.columns) == ["country", "population", "gdp"]
+        description: "df should have 4 rows and 3 columns"
+    hints:
+      - "pd.read_csv(StringIO(tsv_data), sep=\"\\t\")"
+    solution: |
+      import pandas as pd
+      from io import StringIO
+
+      tsv_data = "country\tpopulation\tgdp\nNL\t17\t1000\nDE\t84\t4200\nFR\t68\t2800\nBE\t11\t560"
+
+      df = pd.read_csv(StringIO(tsv_data), sep="\t")
+      print(df.shape)
+      print(df["country"])
+
+  - id: export_csv
+    title: Exporting Data to CSV
+    instructions: |
+      Once you are done with your data operations, you often want to **export** the results to share them, save them, or use them in other software.
+
+      The pandas `.to_csv()` method writes a DataFrame to a CSV file:
+
+      ```python
+      df.to_csv('output.csv')
+      ```
+
+      By default this also writes the row index (0, 1, 2 …) as the first column. Pass `index=False` to suppress it:
+
+      ```python
+      df.to_csv('output.csv', index=False)
+      ```
+
+      The file is saved in whatever folder you are working from. You can also export to other formats:
+
+      ```python
+      df.to_csv('output.txt', sep='\t')   # TSV
+      df.to_excel('output.xlsx')           # Excel (requires openpyxl)
+      df.to_json('output.json')            # JSON
+      ```
+
+      **Your task:**
+      1. Create a DataFrame with 4 columns: `country`, `population`, `gdp`, `gdp_per_capita`
+         - Use these values: NL (17M, 1000B), DE (84M, 4200B), FR (68M, 2800B)
+         - Compute `gdp_per_capita = gdp / population`
+      2. Export it to `output.csv` with `index=False`
+      3. Reload it with `pd.read_csv("output.csv")` and print its shape
+    starter_code: |
+      import pandas as pd
+
+      df = pd.DataFrame({
+          "country": ["NL", "DE", "FR"],
+          "population": [17, 84, 68],
+          "gdp": [1000, 4200, 2800],
+      })
+
+      # Add gdp_per_capita column
+      df["gdp_per_capita"] =
+
+      # Export to output.csv without the index
+      df.to_csv(         )
+
+      # Reload and print shape
+      df_check = pd.read_csv("output.csv")
+      print(df_check.shape)
+    tests:
+      - type: output_equals
+        value: "(3, 4)"
+      - type: assert
+        code: |
+          import pandas as pd
+          df_check = pd.read_csv("output.csv")
+          assert df_check.shape == (3, 4), f"Expected (3, 4), got {df_check.shape}"
+          assert "gdp_per_capita" in df_check.columns
+          assert abs(df_check.loc[0, "gdp_per_capita"] - 1000/17) < 0.01
+        description: "output.csv should have 3 rows and 4 columns including gdp_per_capita"
+    hints:
+      - "df[\"gdp_per_capita\"] = df[\"gdp\"] / df[\"population\"]"
+      - "df.to_csv(\"output.csv\", index=False)"
+    solution: |
+      import pandas as pd
+
+      df = pd.DataFrame({
+          "country": ["NL", "DE", "FR"],
+          "population": [17, 84, 68],
+          "gdp": [1000, 4200, 2800],
+      })
+
+      df["gdp_per_capita"] = df["gdp"] / df["population"]
+
+      df.to_csv("output.csv", index=False)
+
+      df_check = pd.read_csv("output.csv")
+      print(df_check.shape)

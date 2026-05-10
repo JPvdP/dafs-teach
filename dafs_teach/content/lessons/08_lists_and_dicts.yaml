@@ -1,0 +1,276 @@
+title: Lists and Dictionaries
+description: Learn two essential Python data structures — lists for ordered collections and dictionaries for labelled key-value data.
+
+exercises:
+
+  - id: create_list
+    title: Creating and Accessing Lists
+    instructions: |
+      A **list** in Python is a data structure used to store multiple items in a single variable. Think of it as a container that keeps things organised — like a box with numbered compartments.
+
+      We use lists because instead of creating lots of separate variables:
+
+      ```python
+      Techno_1 = "Wind Energy"
+      Techno_2 = "Solar Energy"
+      Techno_3 = "Water Energy"
+      ```
+
+      We can store the same information in one object:
+
+      ```python
+      Technologies = ["Wind Energy", "Solar Energy", "Water Energy"]
+      ```
+
+      Accessing elements uses the **index** (position), which starts at **0**:
+
+      ```python
+      Technologies[0]   # "Wind Energy"   ← first element
+      Technologies[1]   # "Solar Energy"  ← second element
+      Technologies[-1]  # "Water Energy"  ← last element
+      ```
+
+      **Your task:**
+      1. Create a list called `Technologies` with three items: `"Wind Energy"`, `"Solar Energy"`, `"Water Energy"`
+      2. Print the **second** element (index 1)
+      3. Print the **last** element using index `-1`
+      4. Print the **total number** of items using `len()`
+    starter_code: |
+      Technologies = [        ]
+
+      # Print the second element
+
+
+      # Print the last element
+
+
+      # Print the number of items
+
+
+    tests:
+      - type: output_contains
+        value: "Solar Energy"
+      - type: output_contains
+        value: "Water Energy"
+      - type: output_contains
+        value: "3"
+      - type: assert
+        code: |
+          assert Technologies == ["Wind Energy", "Solar Energy", "Water Energy"]
+          assert len(Technologies) == 3
+        description: "Technologies should have exactly these 3 items"
+    hints:
+      - "Technologies = [\"Wind Energy\", \"Solar Energy\", \"Water Energy\"]"
+      - "print(Technologies[1])  # second element"
+      - "print(Technologies[-1])  # last element"
+      - "print(len(Technologies))  # count"
+    solution: |
+      Technologies = ["Wind Energy", "Solar Energy", "Water Energy"]
+
+      print(Technologies[1])
+      print(Technologies[-1])
+      print(len(Technologies))
+
+  - id: list_operations
+    title: Building Lists Dynamically
+    instructions: |
+      You can start with an empty list and **append** items to it one by one:
+
+      ```python
+      # Creating an empty list
+      my_list = []
+
+      # Adding items with .append()
+      my_list.append("Wind Energy")
+      my_list.append("Solar Energy")
+      ```
+
+      This is useful when you are collecting results inside a loop, or building a list from multiple sources:
+
+      ```python
+      data_files = []
+      data_files.append("pollution.csv")
+      data_files.append("population.csv")
+      data_files.append("gdp.json")
+      ```
+
+      **Your task:**
+      1. Create an empty list called `energy_sources`
+      2. Append these three items to it: `"Solar"`, `"Wind"`, `"Hydro"`
+      3. Print the length of the list
+      4. Print the last item using index `-1`
+    starter_code: |
+      # Start with an empty list
+      energy_sources = []
+
+      # Append three items
+
+
+      # Print the length
+
+
+      # Print the last item
+
+
+    tests:
+      - type: output_contains
+        value: "3"
+      - type: output_contains
+        value: "Hydro"
+      - type: assert
+        code: |
+          assert energy_sources == ["Solar", "Wind", "Hydro"], f"Got {energy_sources}"
+          assert len(energy_sources) == 3
+        description: "energy_sources should contain Solar, Wind, Hydro in that order"
+    hints:
+      - "energy_sources.append(\"Solar\")"
+      - "print(len(energy_sources))"
+      - "print(energy_sources[-1])"
+    solution: |
+      energy_sources = []
+
+      energy_sources.append("Solar")
+      energy_sources.append("Wind")
+      energy_sources.append("Hydro")
+
+      print(len(energy_sources))
+      print(energy_sources[-1])
+
+  - id: create_dict
+    title: Creating Dictionaries
+    instructions: |
+      While lists let you access elements by their **position** (index), dictionaries let you access elements by a **meaningful label** (key). This is like a labelled box system: you give each box a special name and store a value in it.
+
+      ```python
+      technology_efficiency = {"Solar": 24, "Wind": 19, "Water": 22}
+      print(technology_efficiency["Solar"])  # prints 24
+      ```
+
+      A dictionary is a collection of **key-value pairs**, written with curly braces `{}`. You access a value using its key — not a number.
+
+      Use a dictionary when you want to look up items quickly by a **meaningful label**, not by a number. Dictionaries support very fast lookup by key, while with a list, searching by value can take much longer for large datasets.
+
+      To create a dictionary with initial data:
+
+      ```python
+      info = {
+          "name": "Alice",
+          "age": 30,
+          "job": "Data Scientist"
+      }
+      ```
+
+      **Your task:**
+      1. Create a dictionary `technology_efficiency` with these key-value pairs:
+         - `"Solar"` → `24`
+         - `"Wind"` → `19`
+         - `"Water"` → `22`
+      2. Print the efficiency of `"Solar"`
+      3. Print the efficiency of `"Wind"`
+    starter_code: |
+      technology_efficiency = {
+          # add your key-value pairs here
+      }
+
+      # Print the efficiency of Solar
+
+
+      # Print the efficiency of Wind
+
+
+    tests:
+      - type: output_equals
+        value: "24\n19"
+      - type: assert
+        code: |
+          assert technology_efficiency["Solar"] == 24
+          assert technology_efficiency["Wind"] == 19
+          assert technology_efficiency["Water"] == 22
+        description: "Dictionary should have Solar=24, Wind=19, Water=22"
+    hints:
+      - "\"Solar\": 24, — note the colon between key and value"
+      - "print(technology_efficiency[\"Solar\"])"
+    solution: |
+      technology_efficiency = {
+          "Solar": 24,
+          "Wind": 19,
+          "Water": 22,
+      }
+
+      print(technology_efficiency["Solar"])
+      print(technology_efficiency["Wind"])
+
+  - id: dict_operations
+    title: Working with Dictionaries
+    instructions: |
+      Dictionaries are mutable — you can add, update, or remove entries after creation:
+
+      ```python
+      info = {"name": "Alice", "age": 30}
+
+      # Add a new key
+      info["city"] = "Utrecht"
+
+      # Update an existing key
+      info["age"] = 31
+
+      # Check if a key exists
+      print("name" in info)   # True
+      ```
+
+      You can also loop over a dictionary:
+
+      ```python
+      for key, value in info.items():
+          print(f"{key}: {value}")
+      ```
+
+      **Your task:**
+      1. Create a dictionary `researcher` with:
+         - `"name"` → `"Alice"`
+         - `"age"` → `30`
+         - `"institution"` → `"Utrecht University"`
+      2. Add a new key `"field"` with the value `"Sustainability"`
+      3. Print the value of `"field"`
+      4. Print the total number of keys using `len()`
+    starter_code: |
+      researcher = {
+          "name": "Alice",
+          "age": 30,
+          "institution": "Utrecht University",
+      }
+
+      # Add the "field" key
+
+
+      # Print the value of "field"
+
+
+      # Print the number of keys
+
+
+    tests:
+      - type: output_contains
+        value: "Sustainability"
+      - type: output_contains
+        value: "4"
+      - type: assert
+        code: |
+          assert researcher["field"] == "Sustainability"
+          assert len(researcher) == 4
+        description: "researcher should have 4 keys including 'field'"
+    hints:
+      - "researcher[\"field\"] = \"Sustainability\""
+      - "print(researcher[\"field\"])"
+      - "print(len(researcher))"
+    solution: |
+      researcher = {
+          "name": "Alice",
+          "age": 30,
+          "institution": "Utrecht University",
+      }
+
+      researcher["field"] = "Sustainability"
+
+      print(researcher["field"])
+      print(len(researcher))

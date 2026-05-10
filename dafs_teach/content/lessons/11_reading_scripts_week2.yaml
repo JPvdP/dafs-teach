@@ -1,0 +1,291 @@
+title: "Reading Scripts — Week 2"
+description: "Practice reading and extending Python scripts that combine DataFrames, filtering, groupby and merging — the types of questions you may encounter in the exam."
+
+exercises:
+
+  - id: waste_management
+    title: "Waste Management Analysis"
+    instructions: |
+      Read the following script carefully. For each line, make sure you understand what it does before moving on.
+
+      ```python
+      import pandas as pd
+
+      waste_data = pd.DataFrame({
+          "Country":        ["CountryA", "CountryB", "CountryC", "CountryD", "CountryE"],
+          "Total_Waste":    [2.5, 1.8, 4.0, 3.1, 1.2],   # tons per capita
+          "Recycling_Rate": [65, 30, 50, 85, 20],          # percentage
+      })
+
+      # Assign a default Waste_Level, then overwrite for Low and High
+      waste_data["Waste_Level"] = "Moderate"
+      waste_data.loc[waste_data["Total_Waste"] < 2,  "Waste_Level"] = "Low"
+      waste_data.loc[waste_data["Total_Waste"] > 3,  "Waste_Level"] = "High"
+
+      # Mark countries with recycling rate above 50% as sustainable
+      waste_data["Sustainable_Practices"] = "No"
+      waste_data.loc[waste_data["Recycling_Rate"] > 50, "Sustainable_Practices"] = "Yes"
+
+      # Find countries with high waste AND no sustainable practices
+      high_waste_no_recycling = waste_data[
+          (waste_data["Waste_Level"] == "High") & (waste_data["Sustainable_Practices"] == "No")
+      ]
+      print("Countries with high waste and no sustainable practices:")
+      print(high_waste_no_recycling)
+      ```
+
+      **Your task:**
+      Run the script above, then extend it by:
+      1. Adding a column `"Total_Score"` = `Total_Waste * Recycling_Rate`
+      2. Printing the **mean** of `Total_Score` rounded to 1 decimal place
+
+      The expected mean is **140.8**.
+    starter_code: |
+      import pandas as pd
+
+      waste_data = pd.DataFrame({
+          "Country":        ["CountryA", "CountryB", "CountryC", "CountryD", "CountryE"],
+          "Total_Waste":    [2.5, 1.8, 4.0, 3.1, 1.2],
+          "Recycling_Rate": [65, 30, 50, 85, 20],
+      })
+
+      waste_data["Waste_Level"] = "Moderate"
+      waste_data.loc[waste_data["Total_Waste"] < 2,  "Waste_Level"] = "Low"
+      waste_data.loc[waste_data["Total_Waste"] > 3,  "Waste_Level"] = "High"
+
+      waste_data["Sustainable_Practices"] = "No"
+      waste_data.loc[waste_data["Recycling_Rate"] > 50, "Sustainable_Practices"] = "Yes"
+
+      high_waste_no_recycling = waste_data[
+          (waste_data["Waste_Level"] == "High") & (waste_data["Sustainable_Practices"] == "No")
+      ]
+      print("Countries with high waste and no sustainable practices:")
+      print(high_waste_no_recycling)
+
+      # Add Total_Score column and print its mean
+      waste_data["Total_Score"] =
+
+      print(round(waste_data["Total_Score"].mean(), 1))
+    tests:
+      - type: output_contains
+        value: "Countries with high waste and no sustainable practices:"
+      - type: output_contains
+        value: "140.8"
+      - type: assert
+        code: |
+          assert "Total_Score" in waste_data.columns
+          assert abs(waste_data["Total_Score"].mean() - 140.8) < 0.1, f"Expected 140.8, got {waste_data['Total_Score'].mean()}"
+        description: "Total_Score = Total_Waste * Recycling_Rate, mean = 140.8"
+    hints:
+      - "waste_data[\"Total_Score\"] = waste_data[\"Total_Waste\"] * waste_data[\"Recycling_Rate\"]"
+      - "Verify: CountryA = 2.5 * 65 = 162.5, CountryB = 1.8 * 30 = 54.0, ..."
+    solution: |
+      import pandas as pd
+
+      waste_data = pd.DataFrame({
+          "Country":        ["CountryA", "CountryB", "CountryC", "CountryD", "CountryE"],
+          "Total_Waste":    [2.5, 1.8, 4.0, 3.1, 1.2],
+          "Recycling_Rate": [65, 30, 50, 85, 20],
+      })
+
+      waste_data["Waste_Level"] = "Moderate"
+      waste_data.loc[waste_data["Total_Waste"] < 2,  "Waste_Level"] = "Low"
+      waste_data.loc[waste_data["Total_Waste"] > 3,  "Waste_Level"] = "High"
+
+      waste_data["Sustainable_Practices"] = "No"
+      waste_data.loc[waste_data["Recycling_Rate"] > 50, "Sustainable_Practices"] = "Yes"
+
+      high_waste_no_recycling = waste_data[
+          (waste_data["Waste_Level"] == "High") & (waste_data["Sustainable_Practices"] == "No")
+      ]
+      print("Countries with high waste and no sustainable practices:")
+      print(high_waste_no_recycling)
+
+      waste_data["Total_Score"] = waste_data["Total_Waste"] * waste_data["Recycling_Rate"]
+      print(round(waste_data["Total_Score"].mean(), 1))
+
+  - id: solar_production
+    title: "Average Solar Energy Production"
+    instructions: |
+      In a real pipeline, this script would load data from a CSV file using `pd.read_csv("solar_production.csv")`. Below is that same script adapted to use a DataFrame directly, so you can run it without needing an external file. The logic is identical.
+
+      Read each line carefully:
+
+      ```python
+      import pandas as pd
+
+      # In a real project this would be: solar_data = pd.read_csv("data/solar_production.csv")
+      solar_data = pd.DataFrame({
+          "country":        ["Netherlands"]*3 + ["Germany"]*3 + ["France"]*3,
+          "date":           ["2017-01-01","2018-01-01","2019-01-01"] * 3,
+          "production_mwh": [1200, 1500, 1800, 3000, 3500, 4000, 2000, 2200, 2500],
+      })
+
+      solar_data = solar_data[["country", "date", "production_mwh"]]
+      solar_data["year"] = pd.to_datetime(solar_data["date"]).dt.year
+
+      country_year = solar_data.groupby(["country", "year"], as_index=False)["production_mwh"].mean()
+      country_year = country_year.rename(columns={"production_mwh": "avg_production"})
+
+      recent_data = country_year[country_year["year"] >= 2018]
+      print(recent_data)
+      ```
+
+      **Your task:**
+      Run the script above, then find and print the **country with the highest overall average production** across all years. Store the result in `best_country` and print it.
+
+      Expected answer: `Germany`
+    starter_code: |
+      import pandas as pd
+
+      solar_data = pd.DataFrame({
+          "country":        ["Netherlands"]*3 + ["Germany"]*3 + ["France"]*3,
+          "date":           ["2017-01-01","2018-01-01","2019-01-01"] * 3,
+          "production_mwh": [1200, 1500, 1800, 3000, 3500, 4000, 2000, 2200, 2500],
+      })
+
+      solar_data = solar_data[["country", "date", "production_mwh"]]
+      solar_data["year"] = pd.to_datetime(solar_data["date"]).dt.year
+
+      country_year = solar_data.groupby(["country", "year"], as_index=False)["production_mwh"].mean()
+      country_year = country_year.rename(columns={"production_mwh": "avg_production"})
+
+      recent_data = country_year[country_year["year"] >= 2018]
+      print(recent_data)
+
+      # Find the country with highest average production across ALL years
+      best_country =
+
+      print(best_country)
+    tests:
+      - type: output_contains
+        value: "Germany"
+      - type: assert
+        code: |
+          assert best_country == "Germany", f"Expected Germany, got {best_country}"
+        description: "best_country should be Germany (avg 3500 MWh across all years)"
+    hints:
+      - "Use solar_data (all years), not recent_data"
+      - "solar_data.groupby(\"country\")[\"production_mwh\"].mean() gives average per country"
+      - "Add .idxmax() to get the name of the country with the highest average"
+    solution: |
+      import pandas as pd
+
+      solar_data = pd.DataFrame({
+          "country":        ["Netherlands"]*3 + ["Germany"]*3 + ["France"]*3,
+          "date":           ["2017-01-01","2018-01-01","2019-01-01"] * 3,
+          "production_mwh": [1200, 1500, 1800, 3000, 3500, 4000, 2000, 2200, 2500],
+      })
+
+      solar_data = solar_data[["country", "date", "production_mwh"]]
+      solar_data["year"] = pd.to_datetime(solar_data["date"]).dt.year
+
+      country_year = solar_data.groupby(["country", "year"], as_index=False)["production_mwh"].mean()
+      country_year = country_year.rename(columns={"production_mwh": "avg_production"})
+
+      recent_data = country_year[country_year["year"] >= 2018]
+      print(recent_data)
+
+      best_country = solar_data.groupby("country")["production_mwh"].mean().idxmax()
+      print(best_country)
+
+  - id: wind_utilization
+    title: "Wind Energy Utilisation Rate"
+    instructions: |
+      The script below merges two datasets — wind generation and installed capacity — to compute a **utilisation rate** for each region:
+
+      ```
+      utilisation_rate = total_generation / (capacity_mw × 8760 hours/year)
+      ```
+
+      A rate of `1.0` means the turbines ran at full power every hour of the year. In practice, rates of 0.25–0.40 are typical for wind.
+
+      In a real pipeline this would use `pd.read_csv()` for both datasets. Here we provide the data inline. Read each line carefully:
+
+      ```python
+      import pandas as pd
+
+      wind = pd.DataFrame({
+          "region":         ["North","North","South","South","East","East"],
+          "year":           [2020, 2021, 2020, 2021, 2020, 2021],
+          "generation_mwh": [13000, 14500, 6000, 6500, 9500, 10000],
+      })
+      capacity = pd.DataFrame({
+          "region":      ["North", "South", "East"],
+          "capacity_mw": [5, 3, 4],
+      })
+
+      wind_year = wind.groupby(["region", "year"], as_index=False)["generation_mwh"].sum()
+      wind_year = wind_year.rename(columns={"generation_mwh": "total_generation"})
+
+      merged = pd.merge(wind_year, capacity, on="region", how="left")
+      merged["utilization_rate"] = merged["total_generation"] / (merged["capacity_mw"] * 8760)
+      merged = merged.sort_values(by="utilization_rate", ascending=False)
+
+      print(merged.head(5))
+      ```
+
+      **Your task:**
+      Run the script above, then find and print the **region with the highest utilisation rate**. Store it in `best_region` and print it.
+
+      Expected answer: `North`
+    starter_code: |
+      import pandas as pd
+
+      wind = pd.DataFrame({
+          "region":         ["North","North","South","South","East","East"],
+          "year":           [2020, 2021, 2020, 2021, 2020, 2021],
+          "generation_mwh": [13000, 14500, 6000, 6500, 9500, 10000],
+      })
+      capacity = pd.DataFrame({
+          "region":      ["North", "South", "East"],
+          "capacity_mw": [5, 3, 4],
+      })
+
+      wind_year = wind.groupby(["region", "year"], as_index=False)["generation_mwh"].sum()
+      wind_year = wind_year.rename(columns={"generation_mwh": "total_generation"})
+
+      merged = pd.merge(wind_year, capacity, on="region", how="left")
+      merged["utilization_rate"] = merged["total_generation"] / (merged["capacity_mw"] * 8760)
+      merged = merged.sort_values(by="utilization_rate", ascending=False)
+
+      print(merged.head(5))
+
+      # Find the region with the highest utilisation rate
+      best_region =
+
+      print(best_region)
+    tests:
+      - type: output_contains
+        value: "North"
+      - type: assert
+        code: |
+          assert best_region == "North", f"Expected North, got {best_region}"
+        description: "best_region should be North — highest utilisation rate in 2021"
+    hints:
+      - "The DataFrame is already sorted descending by utilization_rate"
+      - "merged[\"region\"].iloc[0] gives the region in the first (highest) row"
+    solution: |
+      import pandas as pd
+
+      wind = pd.DataFrame({
+          "region":         ["North","North","South","South","East","East"],
+          "year":           [2020, 2021, 2020, 2021, 2020, 2021],
+          "generation_mwh": [13000, 14500, 6000, 6500, 9500, 10000],
+      })
+      capacity = pd.DataFrame({
+          "region":      ["North", "South", "East"],
+          "capacity_mw": [5, 3, 4],
+      })
+
+      wind_year = wind.groupby(["region", "year"], as_index=False)["generation_mwh"].sum()
+      wind_year = wind_year.rename(columns={"generation_mwh": "total_generation"})
+
+      merged = pd.merge(wind_year, capacity, on="region", how="left")
+      merged["utilization_rate"] = merged["total_generation"] / (merged["capacity_mw"] * 8760)
+      merged = merged.sort_values(by="utilization_rate", ascending=False)
+
+      print(merged.head(5))
+
+      best_region = merged["region"].iloc[0]
+      print(best_region)

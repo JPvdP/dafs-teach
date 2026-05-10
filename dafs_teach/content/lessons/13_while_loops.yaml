@@ -1,0 +1,156 @@
+title: While Loops
+description: Learn how while loops repeat code as long as a condition holds — and how to control them with continue and nested loops.
+
+exercises:
+
+  - id: basic_while
+    title: "The While Loop"
+    instructions: |
+      A `while` loop continues to run as long as a specific condition is `True`. It differs from the `for` loop, which has a defined stopping point. The danger with `while` loops is that they can theoretically run forever if the condition is always `True` — so always make sure the condition will eventually become `False`.
+
+      The basic structure is:
+
+      ```python
+      count = 1
+      while count <= 5:
+          print("Iteration", count)
+          count += 1
+      ```
+
+      - Start with `count = 1`
+      - Check the condition: `count <= 5`
+      - If `True`: run the body, then increase `count` by 1
+      - Repeat until `count` is 6 — then the condition is `False` and the loop stops
+
+      **Your task:**
+      Write a while loop that:
+      1. Starts with `count = 1`
+      2. Prints `"Iteration 1"` through `"Iteration 5"`
+      3. Increments `count` by 1 each time
+    starter_code: |
+      count = 1
+
+      while count <= 5:
+          # print the current iteration
+
+          # increment count
+
+    tests:
+      - type: output_equals
+        value: "Iteration 1\nIteration 2\nIteration 3\nIteration 4\nIteration 5"
+    hints:
+      - "print(\"Iteration\", count)"
+      - "count += 1  — without this the loop runs forever!"
+    solution: |
+      count = 1
+
+      while count <= 5:
+          print("Iteration", count)
+          count += 1
+
+  - id: while_continue
+    title: "Skipping Steps with continue"
+    instructions: |
+      The `continue` statement skips the rest of the current loop iteration and jumps back to the condition check — without exiting the loop entirely. This is useful when you want to skip certain values.
+
+      ```python
+      i = 0
+      while i < 10:
+          i += 1
+          if i % 2 == 0:
+              continue   # skip even numbers
+          print(i)
+      ```
+
+      This prints only the **odd** numbers from 1 to 9. When `i` is even, `continue` skips the `print` and goes straight to the next iteration.
+
+      Note: `i` is incremented **before** the `if` check, so the loop does not get stuck.
+
+      **Your task:**
+      Write a while loop that iterates `i` from 1 to 20 and prints only numbers **divisible by 3** (use `continue` to skip the others).
+    starter_code: |
+      i = 0
+
+      while i < 20:
+          i += 1
+          if i % 3 != 0:
+              continue   # skip non-multiples of 3
+          # print i if we reach here
+
+    tests:
+      - type: output_equals
+        value: "3\n6\n9\n12\n15\n18"
+    hints:
+      - "If i % 3 != 0: continue  — this skips numbers that are NOT multiples of 3"
+      - "print(i) after the continue check will only run for multiples of 3"
+    solution: |
+      i = 0
+
+      while i < 20:
+          i += 1
+          if i % 3 != 0:
+              continue
+          print(i)
+
+  - id: nested_while
+    title: "Nested While Loops"
+    instructions: |
+      Just like `for` loops, `while` loops can be **nested** — one loop inside another. The inner loop runs completely for every single iteration of the outer loop.
+
+      ```python
+      row = 1
+      while row <= 3:
+          col = 1
+          while col <= 3:
+              print("Row", row, "Column", col)
+              col += 1
+          row += 1
+      ```
+
+      This prints a 3×3 grid of combinations — 9 lines total. Key detail: `col` must be **reset to 1** at the start of each outer iteration, otherwise it stays at 4 after the first pass.
+
+      **Your task:**
+      Write nested while loops that print a multiplication table for numbers 1 to 3:
+      - `"1 x 1 = 1"`
+      - `"1 x 2 = 2"`
+      - ...
+      - `"3 x 3 = 9"`
+    starter_code: |
+      i = 1
+      while i <= 3:
+          j = 1
+          while j <= 3:
+              # print "i x j = result"
+
+              j += 1
+          i += 1
+    tests:
+      - type: output_contains
+        value: "1 x 1 = 1"
+      - type: output_contains
+        value: "2 x 3 = 6"
+      - type: output_contains
+        value: "3 x 3 = 9"
+      - type: assert
+        code: |
+          lines = []
+          i = 1
+          while i <= 3:
+              j = 1
+              while j <= 3:
+                  lines.append(f"{i} x {j} = {i*j}")
+                  j += 1
+              i += 1
+          assert len(lines) == 9, "Should print 9 lines (3x3)"
+        description: "Should print all 9 combinations of 1-3 × 1-3"
+    hints:
+      - "print(i, \"x\", j, \"=\", i * j)"
+      - "Make sure j += 1 is inside the inner while, and i += 1 is inside the outer while"
+    solution: |
+      i = 1
+      while i <= 3:
+          j = 1
+          while j <= 3:
+              print(i, "x", j, "=", i * j)
+              j += 1
+          i += 1

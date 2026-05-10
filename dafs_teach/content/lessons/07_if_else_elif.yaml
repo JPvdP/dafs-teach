@@ -1,0 +1,223 @@
+title: "If, Else and Elif"
+description: "Learn to make decisions in code — run different actions depending on whether a condition is true or false."
+
+exercises:
+
+  - id: basic_if
+    title: "The If Statement"
+    instructions: |
+      We are often faced with a situation in which we need to check if a certain condition is met before we proceed with the next action. For example:
+
+      - A coffee machine should only run the water if the temperature reaches a certain level.
+      - A ticket should only be issued if the car exceeds a certain speed.
+      - A map should show red if pollution levels exceed a specific threshold.
+
+      The key word in all these examples is **if**. An `if` statement checks a condition and only runs the code inside it if the condition is `True`.
+
+      ```python
+      x = 42
+      if x > 20:
+          print("x is higher than 20")
+      ```
+
+      ⚠️ Make sure the code you want to run after the condition is **indented** (one tab or 4 spaces). Python uses indentation to know what belongs inside the `if` block.
+
+      You can also nest `if` statements:
+
+      ```python
+      x = 42
+      y = 21
+      if x > 20:
+          if y > 10:
+              print("x is higher than 20, y is higher than 10")
+      ```
+
+      **Your task:**
+      1. Set `x = 42` and `y = 21`
+      2. Write a nested `if` statement: if `x > 20` **and** `y > 10`, print `"Both conditions are met"`
+    starter_code: |
+      x = 42
+      y = 21
+
+      if x > 20:
+          # add the inner if statement here
+
+    tests:
+      - type: output_equals
+        value: "Both conditions are met"
+    hints:
+      - "Add an indented if y > 10: block inside the if x > 20: block"
+      - "    if y > 10:\n        print(\"Both conditions are met\")"
+    solution: |
+      x = 42
+      y = 21
+
+      if x > 20:
+          if y > 10:
+              print("Both conditions are met")
+
+  - id: if_else
+    title: "If / Else — Two Outcomes"
+    instructions: |
+      The `if` statement only runs code when the condition is `True` — but what about when it is `False`? That is where `else` comes in.
+
+      For example, if we grade students, we want a result to be `"Admitted"` if the grade is ≥ 5.5 and `"Fail"` when the grade is lower:
+
+      ```python
+      grade = 6.8
+      if grade >= 5.5:
+          print("Admitted")
+      else:
+          print("Fail")
+      ```
+
+      The `else` block has the **same indentation as the `if`** — they are at the same level.
+
+      **Your task:**
+      Write an if/else statement that:
+      - Sets `grade = 4.2`
+      - Prints `"Admitted"` if the grade is ≥ 5.5
+      - Prints `"Fail"` otherwise
+    starter_code: |
+      grade = 4.2
+
+      if grade >= 5.5:
+          # what to print if passing
+
+      else:
+          # what to print if failing
+
+    tests:
+      - type: output_equals
+        value: "Fail"
+      - type: assert
+        code: |
+          grade = 7.0
+          if grade >= 5.5:
+              result = "Admitted"
+          else:
+              result = "Fail"
+          assert result == "Admitted", "grade=7.0 should give Admitted"
+        description: "The logic should work for any grade, not just 4.2"
+    hints:
+      - "    print(\"Admitted\") goes inside the if block"
+      - "    print(\"Fail\") goes inside the else block"
+    solution: |
+      grade = 4.2
+
+      if grade >= 5.5:
+          print("Admitted")
+      else:
+          print("Fail")
+
+  - id: carbon_categories
+    title: "If / Elif / Else — Carbon Emissions"
+    instructions: |
+      When you need more than two outcomes, use `elif` (short for "else if"). Python checks each condition in order and runs the first one that is `True`:
+
+      ```python
+      z = 7
+      if z > 10:
+          print("z is greater than 10")
+      elif z > 5:
+          print("z is greater than 5 but not greater than 10")
+      else:
+          print("z is not greater than 5")
+      ```
+
+      **Your task:**
+      Write a function `categorize_emissions(emissions)` that takes annual CO₂ emissions in tons and returns a category string:
+
+      | Emissions (tons/year) | Category |
+      |----------------------|----------|
+      | Less than 2 | `"Low Emissions"` |
+      | 2 to less than 6 | `"Moderate Emissions"` |
+      | 6 to less than 15 | `"High Emissions"` |
+      | 15 or more | `"Very High Emissions"` |
+
+      Then call it with `8.5` and print the result.
+    starter_code: |
+      def categorize_emissions(emissions):
+          if emissions < 2:
+              return "Low Emissions"
+          elif emissions < 6:
+              # Moderate range
+          elif emissions < 15:
+              # High range
+          else:
+              # Very High
+
+      print(categorize_emissions(8.5))
+    tests:
+      - type: output_equals
+        value: "High Emissions"
+      - type: assert
+        code: |
+          assert categorize_emissions(1) == "Low Emissions", "1 ton should be Low"
+          assert categorize_emissions(4) == "Moderate Emissions", "4 tons should be Moderate"
+          assert categorize_emissions(8.5) == "High Emissions", "8.5 tons should be High"
+          assert categorize_emissions(20) == "Very High Emissions", "20 tons should be Very High"
+        description: "Function should correctly categorize all four ranges"
+    hints:
+      - "elif emissions < 6: return \"Moderate Emissions\""
+      - "elif emissions < 15: return \"High Emissions\""
+      - "else: return \"Very High Emissions\""
+    solution: |
+      def categorize_emissions(emissions):
+          if emissions < 2:
+              return "Low Emissions"
+          elif emissions < 6:
+              return "Moderate Emissions"
+          elif emissions < 15:
+              return "High Emissions"
+          else:
+              return "Very High Emissions"
+
+      print(categorize_emissions(8.5))
+
+  - id: water_conservation
+    title: "If / Elif / Else — Water Conservation"
+    instructions: |
+      **Your task:**
+      Write a function `rate_water_usage(daily_usage)` that takes the number of liters used per day and returns a conservation rating:
+
+      | Daily usage (liters) | Rating |
+      |----------------------|--------|
+      | Less than 50 | `"Excellent Conservation"` |
+      | 50 to less than 100 | `"Good Conservation"` |
+      | 100 to less than 150 | `"Average Conservation"` |
+      | 150 or more | `"Poor Conservation"` |
+
+      Then call it with `75` and print the result.
+    starter_code: |
+      def rate_water_usage(daily_usage):
+          # write your if/elif/else here
+
+
+      print(rate_water_usage(75))
+    tests:
+      - type: output_equals
+        value: "Good Conservation"
+      - type: assert
+        code: |
+          assert rate_water_usage(30) == "Excellent Conservation", "30L should be Excellent"
+          assert rate_water_usage(75) == "Good Conservation", "75L should be Good"
+          assert rate_water_usage(120) == "Average Conservation", "120L should be Average"
+          assert rate_water_usage(200) == "Poor Conservation", "200L should be Poor"
+        description: "Function should correctly rate all four usage ranges"
+    hints:
+      - "Start with: if daily_usage < 50: return \"Excellent Conservation\""
+      - "Then elif daily_usage < 100: return \"Good Conservation\""
+      - "Continue with elif < 150 for Average, and else for Poor"
+    solution: |
+      def rate_water_usage(daily_usage):
+          if daily_usage < 50:
+              return "Excellent Conservation"
+          elif daily_usage < 100:
+              return "Good Conservation"
+          elif daily_usage < 150:
+              return "Average Conservation"
+          else:
+              return "Poor Conservation"
+
+      print(rate_water_usage(75))
