@@ -9,7 +9,7 @@ An interactive Python learning app for the **Data Analysis for Sustainability** 
 You need Python 3.10 or higher. Install the app with:
 
 ```bash
-pip install git+https://github.com/your-username/dafs-teach.git
+pip install git+https://github.com/JPvdP/dafs-teach.git
 ```
 
 ### Running the app
@@ -25,7 +25,7 @@ This opens the app in your browser automatically. Your progress is saved on your
 When new lessons are released, update with:
 
 ```bash
-pip install --upgrade git+https://github.com/your-username/dafs-teach.git
+pip install --upgrade git+https://github.com/JPvdP/dafs-teach.git
 ```
 
 ---
@@ -84,7 +84,7 @@ exercises:
 Clone the repo and install in editable mode so your changes take effect immediately:
 
 ```bash
-git clone https://github.com/your-username/dafs-teach.git
+git clone https://github.com/JPvdP/dafs-teach.git
 cd dafs-teach
 pip install -e .
 dafs-teach

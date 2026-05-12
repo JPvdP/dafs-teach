@@ -435,3 +435,141 @@ exercises:
       merged["pollution_per_capita"] = merged["pollution"] / merged["population"]
       best = merged.loc[merged["pollution_per_capita"].idxmax(), "Country"]
       print(best)
+
+  - id: sort_and_rank
+    title: "Sorting and Top-N Selection"
+    instructions: |
+      Sorting a DataFrame is done with `.sort_values(by="column_name")`. By default it sorts ascending; add `ascending=False` for descending order:
+
+      ```python
+      df.sort_values(by="score", ascending=False)
+      ```
+
+      Chain `.head(N)` to keep only the top N rows after sorting:
+
+      ```python
+      top3 = df.sort_values(by="score", ascending=False).head(3)
+      ```
+
+      **Your task:**
+      Using the country energy DataFrame below:
+      1. Sort by `"renewable_pct"` descending — store as `df_sorted` and print it
+      2. Select the top 3 countries — store as `top3` and print it
+      3. Print the name of the country with the highest percentage using `top3.iloc[0]["country"]`
+    starter_code: |
+      import pandas as pd
+
+      df = pd.DataFrame({
+          "country":       ["NL", "DE", "FR", "ES", "PL", "SE", "NO"],
+          "renewable_pct": [15,   40,   20,   35,    8,   65,   98],
+          "total_gw":      [20,  100,   80,   60,   50,   30,   15],
+      })
+
+      # Sort by renewable_pct descending
+      df_sorted =
+      print(df_sorted)
+
+      # Top 3 countries
+      top3 =
+      print(top3)
+
+      # Country with the highest renewable percentage
+      best_country = top3.iloc[0]["country"]
+      print("Best:", best_country)
+    tests:
+      - type: output_contains
+        value: "Best: NO"
+      - type: assert
+        code: |
+          assert df_sorted.iloc[0]["country"] == "NO", "First sorted row should be NO (98%)"
+          assert list(top3["country"]) == ["NO", "SE", "DE"], f"Top 3 should be NO, SE, DE — got {list(top3['country'])}"
+          assert best_country == "NO"
+        description: "Norway (98%) is #1, Sweden (65%) #2, Germany (40%) #3"
+    hints:
+      - "df.sort_values(by=\"renewable_pct\", ascending=False)"
+      - "df_sorted.head(3) gives the top 3 rows"
+    solution: |
+      import pandas as pd
+
+      df = pd.DataFrame({
+          "country":       ["NL", "DE", "FR", "ES", "PL", "SE", "NO"],
+          "renewable_pct": [15,   40,   20,   35,    8,   65,   98],
+          "total_gw":      [20,  100,   80,   60,   50,   30,   15],
+      })
+
+      df_sorted = df.sort_values(by="renewable_pct", ascending=False)
+      print(df_sorted)
+
+      top3 = df_sorted.head(3)
+      print(top3)
+
+      best_country = top3.iloc[0]["country"]
+      print("Best:", best_country)
+
+  - id: string_operations
+    title: "String Operations on Columns"
+    instructions: |
+      Pandas string columns have a `.str` accessor that applies string methods to every value at once:
+
+      ```python
+      df["city"].str.upper()        # uppercase every name
+      df["city"].str.len()          # length of each string
+      df["city"].str.contains("a")  # True/False for each row
+      ```
+
+      These return a Series you can assign as a new column or use to filter rows.
+
+      **Your task:**
+      Using the cities DataFrame below:
+      1. Add `"city_upper"` — all city names in uppercase (already done — study it)
+      2. Add `"name_length"` — the number of characters in each city name
+      3. Create `long_names` — only rows where the name is **longer than 5 characters**
+      4. Print the full DataFrame, then print `long_names`
+    starter_code: |
+      import pandas as pd
+
+      df = pd.DataFrame({
+          "city":       ["Oslo", "Amsterdam", "Berlin", "Madrid", "Rome", "Copenhagen"],
+          "population": [700000, 900000, 3700000, 3300000, 2800000, 800000],
+      })
+
+      # Uppercase city names (example — already done)
+      df["city_upper"] = df["city"].str.upper()
+
+      # Number of characters in each city name
+      df["name_length"] =
+
+      # Cities whose name is longer than 5 characters
+      long_names =
+
+      print(df)
+      print(long_names)
+    tests:
+      - type: output_contains
+        value: "AMSTERDAM"
+      - type: output_contains
+        value: "COPENHAGEN"
+      - type: assert
+        code: |
+          assert "name_length" in df.columns, "name_length column missing"
+          assert df.loc[df["city"] == "Amsterdam", "name_length"].values[0] == 9
+          assert len(long_names) == 4, f"Expected 4 cities with name > 5 chars, got {len(long_names)}"
+          assert set(long_names["city"].values) == {"Amsterdam", "Berlin", "Madrid", "Copenhagen"}
+        description: "name_length correct; long_names has Amsterdam, Berlin, Madrid, Copenhagen"
+    hints:
+      - "df[\"name_length\"] = df[\"city\"].str.len()"
+      - "long_names = df[df[\"name_length\"] > 5]"
+    solution: |
+      import pandas as pd
+
+      df = pd.DataFrame({
+          "city":       ["Oslo", "Amsterdam", "Berlin", "Madrid", "Rome", "Copenhagen"],
+          "population": [700000, 900000, 3700000, 3300000, 2800000, 800000],
+      })
+
+      df["city_upper"] = df["city"].str.upper()
+      df["name_length"] = df["city"].str.len()
+      long_names = df[df["name_length"] > 5]
+
+      print(df)
+      print(long_names)

@@ -207,3 +207,136 @@ exercises:
           print("Processing", num)
 
       print("Done")
+
+  - id: accumulator_loop
+    title: "Accumulating Results — Total and Maximum"
+    instructions: |
+      A very common loop pattern is the **accumulator**: you initialise a value before the loop and update it on each iteration. The same pattern works for sums, maximums, and more:
+
+      ```python
+      numbers = [4, 9, 2, 7, 5]
+      total = 0
+      max_val = numbers[0]
+
+      for num in numbers:
+          total += num
+          if num > max_val:
+              max_val = num
+
+      print(total, max_val)   # 27  9
+      ```
+
+      **Your task:**
+      Given 12 monthly rainfall values (mm), use a `for` loop with `enumerate` to:
+      1. Compute `total_rain` — the sum of all monthly values
+      2. Track `max_rain` — the highest monthly value
+      3. Track `max_month` — the **1-based** month number with the highest rainfall
+
+      Expected output:
+      ```
+      Total rainfall: 720 mm
+      Wettest month: 4 with 95 mm
+      ```
+    starter_code: |
+      rainfall = [45, 60, 80, 95, 75, 40, 30, 35, 55, 85, 70, 50]
+
+      total_rain = 0
+      max_rain = rainfall[0]
+      max_month = 1
+
+      for i, rain in enumerate(rainfall):
+          # add rain to total_rain
+
+          if rain > max_rain:
+              # update max_rain and max_month (use i + 1 for 1-based month number)
+
+
+      print(f"Total rainfall: {total_rain} mm")
+      print(f"Wettest month: {max_month} with {max_rain} mm")
+    tests:
+      - type: output_contains
+        value: "Total rainfall: 720 mm"
+      - type: output_contains
+        value: "Wettest month: 4 with 95 mm"
+      - type: assert
+        code: |
+          assert total_rain == 720, f"Expected 720, got {total_rain}"
+          assert max_rain == 95, f"Expected max 95, got {max_rain}"
+          assert max_month == 4, f"Expected month 4, got {max_month}"
+        description: "total=720, max=95 in month 4 (April)"
+    hints:
+      - "total_rain += rain — add each value to the running total"
+      - "max_rain = rain and max_month = i + 1 inside the if block"
+    solution: |
+      rainfall = [45, 60, 80, 95, 75, 40, 30, 35, 55, 85, 70, 50]
+
+      total_rain = 0
+      max_rain = rainfall[0]
+      max_month = 1
+
+      for i, rain in enumerate(rainfall):
+          total_rain += rain
+          if rain > max_rain:
+              max_rain = rain
+              max_month = i + 1
+
+      print(f"Total rainfall: {total_rain} mm")
+      print(f"Wettest month: {max_month} with {max_rain} mm")
+
+  - id: nested_combinations
+    title: "Nested For Loops — All Combinations"
+    instructions: |
+      Nested `for` loops pair every element of one list with every element of another — generating all combinations. The inner loop runs completely for every single step of the outer loop:
+
+      ```python
+      colors = ["red", "blue"]
+      sizes  = ["S", "M", "L"]
+
+      for color in colors:
+          for size in sizes:
+              print(color, size)
+      ```
+
+      This produces 6 lines (2 × 3): `red S`, `red M`, `red L`, `blue S`, etc.
+
+      **Your task:**
+      1. Use nested `for` loops to print all combinations of `regions` and `products` in the format `"North - Solar"`
+      2. Count every combination in a variable `count`
+      3. Print `"Total combinations: 12"` at the end
+    starter_code: |
+      regions  = ["North", "South", "East", "West"]
+      products = ["Solar", "Wind", "Hydro"]
+
+      count = 0
+      for region in regions:
+          for product in products:
+              # print the combination in format "North - Solar"
+
+              # increment count
+
+      print(f"Total combinations: {count}")
+    tests:
+      - type: output_contains
+        value: "North - Solar"
+      - type: output_contains
+        value: "West - Hydro"
+      - type: output_contains
+        value: "Total combinations: 12"
+      - type: assert
+        code: |
+          assert count == 12, f"Expected 12 combinations (4x3), got {count}"
+        description: "4 regions x 3 products = 12 combinations"
+    hints:
+      - "print(f\"{region} - {product}\") inside the inner loop"
+      - "count += 1 inside the inner loop — one per combination"
+    solution: |
+      regions  = ["North", "South", "East", "West"]
+      products = ["Solar", "Wind", "Hydro"]
+
+      count = 0
+      for region in regions:
+          for product in products:
+              print(f"{region} - {product}")
+              count += 1
+
+      print(f"Total combinations: {count}")

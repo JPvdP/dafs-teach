@@ -221,3 +221,72 @@ exercises:
               return "Poor Conservation"
 
       print(rate_water_usage(75))
+
+  - id: temperature_advice
+    title: "If/Elif — Temperature Advisory"
+    instructions: |
+      Practice if/elif/else chains with a real-world scenario.
+
+      Write a function `temperature_advice(temp)` that returns a clothing recommendation based on temperature in Celsius:
+
+      | Temperature | Advice |
+      |-------------|--------|
+      | ≥ 30 | `"Wear light clothing and stay hydrated."` |
+      | ≥ 20 | `"A t-shirt is fine."` |
+      | ≥ 10 | `"Bring a jacket."` |
+      | ≥ 0 | `"Wear a warm coat."` |
+      | < 0 | `"It's freezing — layer up!"` |
+
+      Then call the function for each temperature in `[35, 22, 15, 5, -3]` and print each result.
+    starter_code: |
+      def temperature_advice(temp):
+          if temp >= 30:
+              return "Wear light clothing and stay hydrated."
+          elif temp >= 20:
+              # return t-shirt advice
+          elif temp >= 10:
+              # return jacket advice
+          elif temp >= 0:
+              # return warm coat advice
+          else:
+              # return freezing advice
+
+      for temp in [35, 22, 15, 5, -3]:
+          print(temperature_advice(temp))
+    tests:
+      - type: output_contains
+        value: "Wear light clothing and stay hydrated."
+      - type: output_contains
+        value: "A t-shirt is fine."
+      - type: output_contains
+        value: "Bring a jacket."
+      - type: output_contains
+        value: "Wear a warm coat."
+      - type: output_contains
+        value: "It's freezing — layer up!"
+      - type: assert
+        code: |
+          assert temperature_advice(35) == "Wear light clothing and stay hydrated."
+          assert temperature_advice(25) == "A t-shirt is fine."
+          assert temperature_advice(10) == "Bring a jacket."
+          assert temperature_advice(0) == "Wear a warm coat."
+          assert temperature_advice(-5) == "It's freezing — layer up!"
+        description: "All five temperature categories must return the correct string"
+    hints:
+      - "return \"A t-shirt is fine.\" inside the elif temp >= 20 block"
+      - "return \"It's freezing — layer up!\" inside the else block"
+    solution: |
+      def temperature_advice(temp):
+          if temp >= 30:
+              return "Wear light clothing and stay hydrated."
+          elif temp >= 20:
+              return "A t-shirt is fine."
+          elif temp >= 10:
+              return "Bring a jacket."
+          elif temp >= 0:
+              return "Wear a warm coat."
+          else:
+              return "It's freezing — layer up!"
+
+      for temp in [35, 22, 15, 5, -3]:
+          print(temperature_advice(temp))

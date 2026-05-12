@@ -274,3 +274,136 @@ exercises:
 
       print(researcher["field"])
       print(len(researcher))
+
+  - id: dict_iteration
+    title: "Iterating Over a Dictionary"
+    instructions: |
+      You can loop over all key-value pairs in a dictionary using `.items()`, which gives you both the key and the value on each iteration:
+
+      ```python
+      capitals = {"NL": "Amsterdam", "DE": "Berlin", "FR": "Paris"}
+
+      for country, capital in capitals.items():
+          print(country, "→", capital)
+      ```
+
+      This pattern is very common when you need to process or display every entry.
+
+      **Your task:**
+      Given the dictionary of annual CO₂ emissions (in millions of tons) below:
+      1. Loop over `.items()` and print each line as: `"DE emitted 680 Mt of CO2"`
+      2. In the same loop, accumulate `total` (the sum of all emissions)
+      3. After the loop, print: `"Total: 1760 Mt"`
+    starter_code: |
+      emissions = {
+          "NL": 150,
+          "DE": 680,
+          "FR": 310,
+          "ES": 230,
+          "PL": 390,
+      }
+
+      total = 0
+      for country, amount in emissions.items():
+          print(f"{country} emitted {amount} Mt of CO2")
+          # add amount to total
+
+      print(f"Total: {total} Mt")
+    tests:
+      - type: output_contains
+        value: "NL emitted 150 Mt of CO2"
+      - type: output_contains
+        value: "DE emitted 680 Mt of CO2"
+      - type: output_contains
+        value: "Total: 1760 Mt"
+      - type: assert
+        code: |
+          assert total == 1760, f"Expected total 1760, got {total}"
+        description: "total must equal 1760 (sum of all emissions)"
+    hints:
+      - "total += amount  — inside the for loop, after the print"
+      - "150 + 680 + 310 + 230 + 390 = 1760"
+    solution: |
+      emissions = {
+          "NL": 150,
+          "DE": 680,
+          "FR": 310,
+          "ES": 230,
+          "PL": 390,
+      }
+
+      total = 0
+      for country, amount in emissions.items():
+          print(f"{country} emitted {amount} Mt of CO2")
+          total += amount
+
+      print(f"Total: {total} Mt")
+
+  - id: list_slicing
+    title: "List Slicing and Sorting"
+    instructions: |
+      Python lists support **slicing** to extract a sub-sequence: `my_list[start:stop]` — `start` is included, `stop` is excluded. Leaving either side blank means "from the beginning" or "to the end":
+
+      ```python
+      temps = [22, 15, 30, 8, 25]
+      print(temps[:3])    # [22, 15, 30] — first 3
+      print(temps[2:])    # [30, 8, 25]  — from index 2 onwards
+      print(temps[-2:])   # [8, 25]      — last 2 (negative = count from end)
+      ```
+
+      `sorted(my_list)` returns a new sorted list without changing the original.
+
+      **Your task:**
+      Given 12 monthly average temperatures (Jan–Dec):
+      1. Create `first_quarter` — slice the first 3 months
+      2. Create `last_quarter` — slice the last 3 months using a negative start index
+      3. Create `sorted_temps = sorted(monthly_temps)` and print it
+      4. Compute `temp_range = max(...) - min(...)` and print it
+    starter_code: |
+      monthly_temps = [3, 5, 10, 15, 20, 25, 28, 27, 22, 14, 7, 4]
+
+      # First 3 months (Jan-Mar)
+      first_quarter =
+      print("First quarter:", first_quarter)
+
+      # Last 3 months (Oct-Dec) — use a negative start index
+      last_quarter =
+      print("Last quarter:", last_quarter)
+
+      # All months sorted coldest to warmest
+      sorted_temps = sorted(monthly_temps)
+      print("Sorted:", sorted_temps)
+
+      # Range: warmest minus coldest
+      temp_range = max(monthly_temps) - min(monthly_temps)
+      print("Range:", temp_range)
+    tests:
+      - type: output_contains
+        value: "[3, 5, 10]"
+      - type: output_contains
+        value: "[14, 7, 4]"
+      - type: output_contains
+        value: "Range: 25"
+      - type: assert
+        code: |
+          assert first_quarter == [3, 5, 10], f"Expected [3, 5, 10], got {first_quarter}"
+          assert last_quarter == [14, 7, 4], f"Expected [14, 7, 4], got {last_quarter}"
+          assert temp_range == 25, f"Expected range 25, got {temp_range}"
+        description: "first_quarter=[3,5,10], last_quarter=[14,7,4], range=25"
+    hints:
+      - "monthly_temps[:3] — stop at index 3 (not included)"
+      - "monthly_temps[-3:] — start 3 positions from the end"
+    solution: |
+      monthly_temps = [3, 5, 10, 15, 20, 25, 28, 27, 22, 14, 7, 4]
+
+      first_quarter = monthly_temps[:3]
+      print("First quarter:", first_quarter)
+
+      last_quarter = monthly_temps[-3:]
+      print("Last quarter:", last_quarter)
+
+      sorted_temps = sorted(monthly_temps)
+      print("Sorted:", sorted_temps)
+
+      temp_range = max(monthly_temps) - min(monthly_temps)
+      print("Range:", temp_range)

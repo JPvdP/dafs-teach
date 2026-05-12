@@ -295,3 +295,81 @@ exercises:
       login_system(["wrong", "test", "secret"], "secret")
       print("---")
       login_system(["x", "y", "z"], "secret")
+
+  - id: debug_the_script
+    title: "Finding Errors — Debug the Script"
+    instructions: |
+      A key exam skill is **identifying and fixing bugs in existing code**. Read the script below carefully and find the two errors:
+
+      ```python
+      scores = [72, 88, 55, 91, 63, 77]
+
+      total = 0
+      for score in scores:
+          total = score          # BUG 1
+
+      average = total / len(scores)
+
+      highest = scores[0]
+      for score in scores:
+          if score < highest:    # BUG 2
+              highest = score
+
+      print(f"Average: {average:.1f}")
+      print(f"Highest: {highest}")
+      ```
+
+      **Bug 1:** `total = score` replaces the running total on every iteration instead of adding to it.
+      **Bug 2:** `if score < highest` finds the *minimum*, not the maximum.
+
+      **Your task:**
+      Fix both bugs. Expected output:
+      ```
+      Average: 74.3
+      Highest: 91
+      ```
+    starter_code: |
+      scores = [72, 88, 55, 91, 63, 77]
+
+      total = 0
+      for score in scores:
+          total = score          # fix this line
+
+      average = total / len(scores)
+
+      highest = scores[0]
+      for score in scores:
+          if score < highest:    # fix this condition
+              highest = score
+
+      print(f"Average: {average:.1f}")
+      print(f"Highest: {highest}")
+    tests:
+      - type: output_contains
+        value: "Average: 74.3"
+      - type: output_contains
+        value: "Highest: 91"
+      - type: assert
+        code: |
+          assert abs(average - 446/6) < 0.001, f"average should be ~74.3, got {average}"
+          assert highest == 91, f"highest should be 91, got {highest}"
+        description: "Average = 446/6 ≈ 74.3, Highest = 91"
+    hints:
+      - "total += score — use += to accumulate, not = which overwrites"
+      - "if score > highest — change < to > to find the maximum"
+    solution: |
+      scores = [72, 88, 55, 91, 63, 77]
+
+      total = 0
+      for score in scores:
+          total += score
+
+      average = total / len(scores)
+
+      highest = scores[0]
+      for score in scores:
+          if score > highest:
+              highest = score
+
+      print(f"Average: {average:.1f}")
+      print(f"Highest: {highest}")
