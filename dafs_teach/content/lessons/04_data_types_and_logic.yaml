@@ -255,3 +255,190 @@ exercises:
       result = temperature > 20 and humidity < 50
 
       print(result)
+
+  - id: practice_numeric_types
+    title: "Practice: Checking Numeric Types"
+    instructions: |
+      More practice checking types — this time with a decimal number.
+
+      **Your task:**
+      1. Create a variable `temperature` with the value `21.5`
+      2. Print `isinstance(temperature, float)` — should print `True`
+      3. Print `type(temperature)` — should print `<class 'float'>`
+    starter_code: |
+      # Create the variable
+
+
+      # Check with isinstance
+
+
+      # Check with type
+
+    tests:
+      - type: output_contains
+        value: "True"
+      - type: output_contains
+        value: "float"
+      - type: assert
+        code: "assert temperature == 21.5, 'temperature should be 21.5'"
+        description: "temperature should be the float 21.5"
+    hints:
+      - "temperature = 21.5"
+      - "print(isinstance(temperature, float))"
+      - "print(type(temperature))"
+    solution: |
+      temperature = 21.5
+      print(isinstance(temperature, float))
+      print(type(temperature))
+
+  - id: practice_string_vs_number
+    title: "Practice: Text vs Numbers"
+    instructions: |
+      More practice with the text-vs-number distinction — this time with a code that *looks* numeric but is stored as text.
+
+      **Your task:**
+      1. Create `product_code = "007"`
+      2. Print `isinstance(product_code, str)` — should be `True`
+      3. Print `product_code * 3` — observe what happens
+    starter_code: |
+      # Assign the text value
+
+
+      # Check its type
+
+
+      # Multiply it by 3 and print the result
+
+    tests:
+      - type: output_contains
+        value: "True"
+      - type: output_contains
+        value: "007007007"
+      - type: assert
+        code: "assert isinstance(product_code, str), 'product_code should be a string'"
+        description: "product_code should be the string \"007\""
+    hints:
+      - "product_code = \"007\" — note the quotes"
+      - "print(isinstance(product_code, str))"
+      - "print(product_code * 3)"
+    solution: |
+      product_code = "007"
+      print(isinstance(product_code, str))
+      print(product_code * 3)
+
+  - id: practice_type_conversion
+    title: "Practice: Converting Between Types"
+    instructions: |
+      More practice converting types — this time going the other way: from text to a number, using `int()`.
+
+      **Your task:**
+      1. Create `count_text = "150"` (already done for you)
+      2. Convert it to an integer and store it in `count_number`
+      3. Print `isinstance(count_number, int)` to verify it worked
+      4. Print `type(count_number)` to confirm the type
+    starter_code: |
+      count_text = "150"
+
+      # Convert to an integer
+      count_number =
+
+      # Verify with isinstance
+
+
+      # Confirm with type()
+
+    tests:
+      - type: output_contains
+        value: "True"
+      - type: output_contains
+        value: "int"
+      - type: assert
+        code: |
+          assert isinstance(count_number, int), 'count_number should be an integer after conversion'
+          assert count_number == 150, 'count_number should equal 150'
+        description: "count_number should be the integer 150"
+    hints:
+      - "count_number = int(count_text)"
+      - "print(isinstance(count_number, int))"
+    solution: |
+      count_text = "150"
+      count_number = int(count_text)
+      print(isinstance(count_number, int))
+      print(type(count_number))
+
+  - id: practice_logic_operators
+    title: "Practice: Logic Operators"
+    instructions: |
+      More practice with logic operators, using new values.
+
+      **Your task:**
+      Set `a = 10` and `b = 3`, then print the result of each expression below:
+      1. `a == 10` (is a equal to 10?)
+      2. `a == b` (is a equal to b?)
+      3. `a == 10 and b == 3` (are both true?)
+      4. `a == 2 or b == 3` (is at least one true?)
+    starter_code: |
+      a = 10
+      b = 3
+
+      # 1. Is a equal to 10?
+
+
+      # 2. Is a equal to b?
+
+
+      # 3. Are both conditions true?
+
+
+      # 4. Is at least one condition true?
+
+    tests:
+      - type: output_equals
+        value: "True\nFalse\nTrue\nTrue"
+    hints:
+      - "print(a == 10)"
+      - "print(a == b)"
+      - "print(a == 10 and b == 3)"
+      - "print(a == 2 or b == 3)"
+    solution: |
+      a = 10
+      b = 3
+
+      print(a == 10)
+      print(a == b)
+      print(a == 10 and b == 3)
+      print(a == 2 or b == 3)
+
+  - id: practice_multiple_conditions
+    title: "Practice: Combining Conditions"
+    instructions: |
+      More practice combining conditions — this time deciding whether it's a good day for an outdoor measurement.
+
+      **Your task:**
+      1. Create `rainfall_mm = 5` and `wind_kmh = 15`
+      2. Create a variable `good_conditions` that is `True` if rainfall is less than 10 **and** wind speed is less than 20
+      3. Print `good_conditions`
+    starter_code: |
+      rainfall_mm = 5
+      wind_kmh = 15
+
+      # Check both conditions with 'and'
+      good_conditions =
+
+      print(good_conditions)
+    tests:
+      - type: output_equals
+        value: "True"
+      - type: assert
+        code: |
+          assert good_conditions == True, 'good_conditions should be True — rainfall=5<10 and wind=15<20'
+        description: "good_conditions should be True"
+    hints:
+      - "good_conditions = rainfall_mm < 10 and wind_kmh < 20"
+    solution: |
+      rainfall_mm = 5
+      wind_kmh = 15
+
+      good_conditions = rainfall_mm < 10 and wind_kmh < 20
+
+      print(good_conditions)

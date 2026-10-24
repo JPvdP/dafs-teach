@@ -5,19 +5,28 @@ import streamlit as st
 from dafs_teach.core.lesson_loader import load_lessons, Lesson, Exercise
 from dafs_teach.core.executor import run_code
 from dafs_teach.core.progress import ProgressTracker
+from dafs_teach.core.verification import generate_code
+from dafs_teach.core.deadlines import load_deadlines
+from dafs_teach.core.sync import check_and_send_due_deadlines
 
 # ── Configuration ────────────────────────────────────────────────────────────
 
+BASE_DIR = Path(__file__).parent
+ASSETS_DIR = BASE_DIR / "assets"
+DATA_DIR = Path.home() / ".dafs_teach"
+DATA_DIR.mkdir(exist_ok=True)
+
 st.set_page_config(
     page_title="DAFS Teaching App",
-    page_icon="🐍",
+    page_icon=str(ASSETS_DIR / "logo_uu_seal.png"),
     layout="wide",
     initial_sidebar_state="expanded",
 )
 
-BASE_DIR = Path(__file__).parent
-DATA_DIR = Path.home() / ".dafs_teach"
-DATA_DIR.mkdir(exist_ok=True)
+st.logo(
+    str(ASSETS_DIR / "logo_uu_en.png"),
+    icon_image=str(ASSETS_DIR / "logo_uu_seal.png"),
+)
 
 # ── Load content & tracker (cached across reruns) ─────────────────────────────
 
@@ -29,9 +38,21 @@ def get_lessons():
 def get_tracker():
     return ProgressTracker(DATA_DIR / "progress.db")
 
+@st.cache_resource
+def get_deadlines():
+    return load_deadlines(BASE_DIR / "content" / "deadlines.yaml")
+
 lessons = get_lessons()
 lessons_by_id = {l.id: l for l in lessons}
 tracker = get_tracker()
+
+# ── Anonymous deadline reporting (once per app launch) ─────────────────────────
+
+if "deadline_check_done" not in st.session_state:
+    st.session_state.deadline_check_done = True
+    lesson_titles = {l.id: l.title for l in lessons}
+    for level, message in check_and_send_due_deadlines(tracker, get_deadlines(), lesson_titles):
+        st.toast(message, icon="📡" if level == "success" else "⚠️")
 
 # ── Custom CSS ───────────────────────────────────────────────────────────────
 
@@ -145,6 +166,23 @@ def render_lesson_browser():
                     go_to_lesson(lesson.id, first_incomplete)
                     st.rerun()
 
+            if n_total and n_done == n_total:
+                n_viewed_solution = sum(
+                    1 for ex in lesson.exercises if completed.get(ex.id, {}).get("solution_views", 0) > 0
+                )
+                if n_viewed_solution:
+                    st.caption(
+                        f"💡 You viewed the solution on {n_viewed_solution}/{n_total} exercises in this "
+                        "lesson — worth revisiting those on your own to make sure it sticks."
+                    )
+
+                code = generate_code(st.session_state.student_name, lesson.id)
+                with st.expander("🎓 Get completion code"):
+                    st.markdown(
+                        "Upload this code to Brightspace as proof you finished this module:"
+                    )
+                    st.code(code, language="text")
+
 
 # ── Sidebar ───────────────────────────────────────────────────────────────────
 
@@ -228,6 +266,8 @@ def render_exercise():
             run_clicked = st.button("▶ Run", type="primary", use_container_width=True)
         with sol_col:
             if st.button("👁 Solution", use_container_width=True):
+                if not st.session_state.show_solution:
+                    tracker.record_solution_view(st.session_state.student_name, lesson.id, exercise.id)
                 st.session_state.show_solution = not st.session_state.show_solution
                 st.rerun()
 

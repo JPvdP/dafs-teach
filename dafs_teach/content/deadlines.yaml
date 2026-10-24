@@ -1,0 +1,47 @@
+# ─────────────────────────────────────────────────────────────
+# Deadlines for anonymous progress reporting.
+#
+# Each entry groups a set of lessons under one deadline. Once the
+# deadline passes, the next time a student opens the app it silently
+# (but visibly, via an on-screen notice) sends an ANONYMOUS summary of
+# their progress on those lessons to the instructor's configured
+# endpoint (DAFS_TEACH_SYNC_URL) — no student name is ever included.
+# Only aggregate, cross-student patterns are meant to come out of this;
+# individual students are not identifiable from the report.
+#
+# Edit the `deadline` values below to match your actual course
+# schedule (ISO format, local time: YYYY-MM-DDTHH:MM:SS). `id` should
+# be short and stable — it's used to track "already sent" locally so
+# a student's report isn't sent more than once per deadline.
+# `lessons` lists the lesson ids (matching the .yaml filenames in
+# content/lessons/, without the .yaml extension) that belong to that
+# deadline/week.
+# ─────────────────────────────────────────────────────────────
+
+- id: week1
+  deadline: "2026-08-18T23:59:00"
+  lessons:
+    - 01_python_basics
+    - 02_pandas_intro
+    - 03_packages_and_variables
+    - 04_data_types_and_logic
+    - 05_installing_packages
+
+- id: week2
+  deadline: "2026-08-25T23:59:00"
+  lessons:
+    - 06_print_and_functions
+    - 07_reading_scripts
+    - 08_if_else_elif
+    - 09_lists_and_dicts
+    - 10_importing_data
+    - 11_dataframe_operations
+
+- id: week3
+  deadline: "2026-09-01T23:59:00"
+  lessons:
+    - 12_reading_scripts_week2
+    - 13_for_loops
+    - 14_while_loops
+    - 15_loops_with_data
+    - 16_exam_prep

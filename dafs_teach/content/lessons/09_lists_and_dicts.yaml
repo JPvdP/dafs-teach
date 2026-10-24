@@ -407,3 +407,307 @@ exercises:
 
       temp_range = max(monthly_temps) - min(monthly_temps)
       print("Range:", temp_range)
+
+  - id: practice_create_list
+    title: "Practice: Creating and Accessing Lists"
+    instructions: |
+      More practice creating and indexing a list.
+
+      **Your task:**
+      1. Create a list called `recycling_methods` with three items: `"Composting"`, `"Glass Recycling"`, `"Paper Recycling"`
+      2. Print the **second** element (index 1)
+      3. Print the **last** element using index `-1`
+      4. Print the **total number** of items using `len()`
+    starter_code: |
+      recycling_methods = [        ]
+
+      # Print the second element
+
+
+      # Print the last element
+
+
+      # Print the number of items
+
+    tests:
+      - type: output_contains
+        value: "Glass Recycling"
+      - type: output_contains
+        value: "Paper Recycling"
+      - type: output_contains
+        value: "3"
+      - type: assert
+        code: |
+          assert recycling_methods == ["Composting", "Glass Recycling", "Paper Recycling"]
+          assert len(recycling_methods) == 3
+        description: "recycling_methods should have exactly these 3 items"
+    hints:
+      - "recycling_methods = [\"Composting\", \"Glass Recycling\", \"Paper Recycling\"]"
+      - "print(recycling_methods[1])  # second element"
+      - "print(recycling_methods[-1])  # last element"
+      - "print(len(recycling_methods))  # count"
+    solution: |
+      recycling_methods = ["Composting", "Glass Recycling", "Paper Recycling"]
+
+      print(recycling_methods[1])
+      print(recycling_methods[-1])
+      print(len(recycling_methods))
+
+  - id: practice_list_operations
+    title: "Practice: Building Lists Dynamically"
+    instructions: |
+      More practice building a list with `.append()`.
+
+      **Your task:**
+      1. Create an empty list called `materials`
+      2. Append these three items to it: `"Steel"`, `"Aluminum"`, `"Copper"`
+      3. Print the length of the list
+      4. Print the last item using index `-1`
+    starter_code: |
+      # Start with an empty list
+      materials = []
+
+      # Append three items
+
+
+      # Print the length
+
+
+      # Print the last item
+
+    tests:
+      - type: output_contains
+        value: "3"
+      - type: output_contains
+        value: "Copper"
+      - type: assert
+        code: |
+          assert materials == ["Steel", "Aluminum", "Copper"], f"Got {materials}"
+          assert len(materials) == 3
+        description: "materials should contain Steel, Aluminum, Copper in that order"
+    hints:
+      - "materials.append(\"Steel\")"
+      - "print(len(materials))"
+      - "print(materials[-1])"
+    solution: |
+      materials = []
+
+      materials.append("Steel")
+      materials.append("Aluminum")
+      materials.append("Copper")
+
+      print(len(materials))
+      print(materials[-1])
+
+  - id: practice_create_dict
+    title: "Practice: Creating Dictionaries"
+    instructions: |
+      More practice creating and looking up values in a dictionary.
+
+      **Your task:**
+      1. Create a dictionary `material_recyclability` with these key-value pairs:
+         - `"Steel"` → `90`
+         - `"Aluminum"` → `95`
+         - `"Copper"` → `85`
+      2. Print the recyclability of `"Steel"`
+      3. Print the recyclability of `"Aluminum"`
+    starter_code: |
+      material_recyclability = {
+          # add your key-value pairs here
+      }
+
+      # Print the recyclability of Steel
+
+
+      # Print the recyclability of Aluminum
+
+    tests:
+      - type: output_equals
+        value: "90\n95"
+      - type: assert
+        code: |
+          assert material_recyclability["Steel"] == 90
+          assert material_recyclability["Aluminum"] == 95
+          assert material_recyclability["Copper"] == 85
+        description: "Dictionary should have Steel=90, Aluminum=95, Copper=85"
+    hints:
+      - "\"Steel\": 90, — note the colon between key and value"
+      - "print(material_recyclability[\"Steel\"])"
+    solution: |
+      material_recyclability = {
+          "Steel": 90,
+          "Aluminum": 95,
+          "Copper": 85,
+      }
+
+      print(material_recyclability["Steel"])
+      print(material_recyclability["Aluminum"])
+
+  - id: practice_dict_operations
+    title: "Practice: Working with Dictionaries"
+    instructions: |
+      More practice adding a key to a dictionary and inspecting it.
+
+      **Your task:**
+      1. Create a dictionary `project` with:
+         - `"title"` → `"Solar Rollout"`
+         - `"budget"` → `50000`
+         - `"lead"` → `"Sam"`
+      2. Add a new key `"status"` with the value `"In Progress"`
+      3. Print the value of `"status"`
+      4. Print the total number of keys using `len()`
+    starter_code: |
+      project = {
+          "title": "Solar Rollout",
+          "budget": 50000,
+          "lead": "Sam",
+      }
+
+      # Add the "status" key
+
+
+      # Print the value of "status"
+
+
+      # Print the number of keys
+
+    tests:
+      - type: output_contains
+        value: "In Progress"
+      - type: output_contains
+        value: "4"
+      - type: assert
+        code: |
+          assert project["status"] == "In Progress"
+          assert len(project) == 4
+        description: "project should have 4 keys including 'status'"
+    hints:
+      - "project[\"status\"] = \"In Progress\""
+      - "print(project[\"status\"])"
+      - "print(len(project))"
+    solution: |
+      project = {
+          "title": "Solar Rollout",
+          "budget": 50000,
+          "lead": "Sam",
+      }
+
+      project["status"] = "In Progress"
+
+      print(project["status"])
+      print(len(project))
+
+  - id: practice_dict_iteration
+    title: "Practice: Iterating Over a Dictionary"
+    instructions: |
+      More practice looping over a dictionary with `.items()`.
+
+      **Your task:**
+      Given the dictionary of annual rainfall (in mm) below:
+      1. Loop over `.items()` and print each line as: `"DE received 700 mm of rain"`
+      2. In the same loop, accumulate `total` (the sum of all rainfall)
+      3. After the loop, print: `"Total: 3200 mm"`
+    starter_code: |
+      rainfall = {
+          "NL": 800,
+          "DE": 700,
+          "FR": 650,
+          "ES": 450,
+          "PL": 600,
+      }
+
+      total = 0
+      for country, amount in rainfall.items():
+          print(f"{country} received {amount} mm of rain")
+          # add amount to total
+
+      print(f"Total: {total} mm")
+    tests:
+      - type: output_contains
+        value: "NL received 800 mm of rain"
+      - type: output_contains
+        value: "DE received 700 mm of rain"
+      - type: output_contains
+        value: "Total: 3200 mm"
+      - type: assert
+        code: |
+          assert total == 3200, f"Expected total 3200, got {total}"
+        description: "total must equal 3200 (sum of all rainfall)"
+    hints:
+      - "total += amount  — inside the for loop, after the print"
+      - "800 + 700 + 650 + 450 + 600 = 3200"
+    solution: |
+      rainfall = {
+          "NL": 800,
+          "DE": 700,
+          "FR": 650,
+          "ES": 450,
+          "PL": 600,
+      }
+
+      total = 0
+      for country, amount in rainfall.items():
+          print(f"{country} received {amount} mm of rain")
+          total += amount
+
+      print(f"Total: {total} mm")
+
+  - id: practice_list_slicing
+    title: "Practice: List Slicing and Sorting"
+    instructions: |
+      More practice with slicing, `sorted()`, `max()` and `min()` — this time with monthly rainfall.
+
+      **Your task:**
+      Given 12 monthly rainfall totals (Jan–Dec, in mm):
+      1. Create `first_quarter` — slice the first 3 months
+      2. Create `last_quarter` — slice the last 3 months using a negative start index
+      3. Create `sorted_rainfall = sorted(monthly_rainfall)` and print it
+      4. Compute `rainfall_range = max(...) - min(...)` and print it
+    starter_code: |
+      monthly_rainfall = [80, 65, 70, 55, 40, 30, 20, 25, 45, 60, 75, 90]
+
+      # First 3 months (Jan-Mar)
+      first_quarter =
+      print("First quarter:", first_quarter)
+
+      # Last 3 months (Oct-Dec) — use a negative start index
+      last_quarter =
+      print("Last quarter:", last_quarter)
+
+      # All months sorted driest to wettest
+      sorted_rainfall = sorted(monthly_rainfall)
+      print("Sorted:", sorted_rainfall)
+
+      # Range: wettest minus driest
+      rainfall_range = max(monthly_rainfall) - min(monthly_rainfall)
+      print("Range:", rainfall_range)
+    tests:
+      - type: output_contains
+        value: "[80, 65, 70]"
+      - type: output_contains
+        value: "[60, 75, 90]"
+      - type: output_contains
+        value: "Range: 70"
+      - type: assert
+        code: |
+          assert first_quarter == [80, 65, 70], f"Expected [80, 65, 70], got {first_quarter}"
+          assert last_quarter == [60, 75, 90], f"Expected [60, 75, 90], got {last_quarter}"
+          assert rainfall_range == 70, f"Expected range 70, got {rainfall_range}"
+        description: "first_quarter=[80,65,70], last_quarter=[60,75,90], range=70"
+    hints:
+      - "monthly_rainfall[:3] — stop at index 3 (not included)"
+      - "monthly_rainfall[-3:] — start 3 positions from the end"
+    solution: |
+      monthly_rainfall = [80, 65, 70, 55, 40, 30, 20, 25, 45, 60, 75, 90]
+
+      first_quarter = monthly_rainfall[:3]
+      print("First quarter:", first_quarter)
+
+      last_quarter = monthly_rainfall[-3:]
+      print("Last quarter:", last_quarter)
+
+      sorted_rainfall = sorted(monthly_rainfall)
+      print("Sorted:", sorted_rainfall)
+
+      rainfall_range = max(monthly_rainfall) - min(monthly_rainfall)
+      print("Range:", rainfall_range)

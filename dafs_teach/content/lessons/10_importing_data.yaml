@@ -241,3 +241,201 @@ exercises:
 
       df_check = pd.read_csv("output.csv")
       print(df_check.shape)
+
+  - id: practice_read_csv_comma
+    title: "Practice: Reading a CSV File"
+    instructions: |
+      More practice loading comma-separated data.
+
+      **Your task:**
+      The variable `csv_data` below contains comma-separated data. Use `pd.read_csv(StringIO(csv_data))` to load it into a DataFrame called `df`, then:
+      1. Print the shape of `df`
+      2. Print the column names
+    starter_code: |
+      import pandas as pd
+      from io import StringIO
+
+      csv_data = """country,energy_kwh,year
+      NL,120,2021
+      DE,150,2021
+      FR,95,2021"""
+
+      # Load into a DataFrame
+      df =
+
+      # Print shape and columns
+      print(df.shape)
+      print(list(df.columns))
+    tests:
+      - type: output_contains
+        value: "(3, 3)"
+      - type: output_contains
+        value: "country"
+      - type: assert
+        code: |
+          assert df.shape == (3, 3), f"Expected (3, 3), got {df.shape}"
+          assert list(df.columns) == ["country", "energy_kwh", "year"]
+        description: "df should have shape (3, 3) with columns country, energy_kwh, year"
+    hints:
+      - "df = pd.read_csv(StringIO(csv_data))"
+    solution: |
+      import pandas as pd
+      from io import StringIO
+
+      csv_data = """country,energy_kwh,year
+      NL,120,2021
+      DE,150,2021
+      FR,95,2021"""
+
+      df = pd.read_csv(StringIO(csv_data))
+      print(df.shape)
+      print(list(df.columns))
+
+  - id: practice_read_csv_separator
+    title: "Practice: Reading Files with a Different Separator"
+    instructions: |
+      More practice with a non-comma separator — this time semicolon-separated waste data.
+
+      **Your task:**
+      The `csv_data` below is separated by semicolons. Load it into `df` with the correct `sep` argument, then:
+      1. Print the shape
+      2. Print the value in the `waste_kg` column for `DE` (the second row, index 1)
+    starter_code: |
+      import pandas as pd
+      from io import StringIO
+
+      csv_data = """country;waste_kg;year
+      NL;450;2022
+      DE;510;2022
+      FR;390;2022"""
+
+      # Load with the correct separator
+      df =
+
+      print(df.shape)
+      print(df["waste_kg"].iloc[1])
+    tests:
+      - type: output_equals
+        value: "(3, 3)\n510"
+      - type: assert
+        code: |
+          assert df.shape == (3, 3), f"Expected (3, 3), got {df.shape} — did you set sep=\";\"?"
+          assert df["waste_kg"].iloc[1] == 510
+        description: "df should have 3 rows and 3 columns"
+    hints:
+      - "pd.read_csv(StringIO(csv_data), sep=\";\")"
+    solution: |
+      import pandas as pd
+      from io import StringIO
+
+      csv_data = """country;waste_kg;year
+      NL;450;2022
+      DE;510;2022
+      FR;390;2022"""
+
+      df = pd.read_csv(StringIO(csv_data), sep=";")
+      print(df.shape)
+      print(df["waste_kg"].iloc[1])
+
+  - id: practice_read_tsv
+    title: "Practice: Reading a TSV File (Tab-Separated)"
+    instructions: |
+      More practice with tab-separated data — this time recycling rates.
+
+      **Your task:**
+      The `tsv_data` below is tab-separated. Load it into `df`, then:
+      1. Print the shape
+      2. Print the `country` column
+    starter_code: |
+      import pandas as pd
+      from io import StringIO
+
+      tsv_data = "country\trecycling_rate\tpopulation\nNL\t54\t17\nDE\t48\t84\nFR\t42\t68\nBE\t53\t11"
+
+      # Load with the correct separator
+      df =
+
+      print(df.shape)
+      print(df["country"])
+    tests:
+      - type: output_contains
+        value: "(4, 3)"
+      - type: output_contains
+        value: "NL"
+      - type: output_contains
+        value: "BE"
+      - type: assert
+        code: |
+          assert df.shape == (4, 3), f"Expected (4, 3), got {df.shape}"
+          assert list(df.columns) == ["country", "recycling_rate", "population"]
+        description: "df should have 4 rows and 3 columns"
+    hints:
+      - "pd.read_csv(StringIO(tsv_data), sep=\"\\t\")"
+    solution: |
+      import pandas as pd
+      from io import StringIO
+
+      tsv_data = "country\trecycling_rate\tpopulation\nNL\t54\t17\nDE\t48\t84\nFR\t42\t68\nBE\t53\t11"
+
+      df = pd.read_csv(StringIO(tsv_data), sep="\t")
+      print(df.shape)
+      print(df["country"])
+
+  - id: practice_export_csv
+    title: "Practice: Exporting Data to CSV"
+    instructions: |
+      More practice adding a computed column and exporting the result — this time water usage.
+
+      **Your task:**
+      1. Create a DataFrame with 4 columns: `country`, `population`, `water_liters`, `water_per_capita`
+         - Use these values: NL (17M, 500B liters), DE (84M, 2000B liters), FR (68M, 1400B liters)
+         - Compute `water_per_capita = water_liters / population`
+      2. Export it to `output_water.csv` with `index=False`
+      3. Reload it with `pd.read_csv("output_water.csv")` and print its shape
+    starter_code: |
+      import pandas as pd
+
+      df = pd.DataFrame({
+          "country": ["NL", "DE", "FR"],
+          "population": [17, 84, 68],
+          "water_liters": [500, 2000, 1400],
+      })
+
+      # Add water_per_capita column
+      df["water_per_capita"] =
+
+      # Export to output_water.csv without the index
+      df.to_csv(         )
+
+      # Reload and print shape
+      df_check = pd.read_csv("output_water.csv")
+      print(df_check.shape)
+    tests:
+      - type: output_equals
+        value: "(3, 4)"
+      - type: assert
+        code: |
+          import pandas as pd
+          df_check = pd.read_csv("output_water.csv")
+          assert df_check.shape == (3, 4), f"Expected (3, 4), got {df_check.shape}"
+          assert "water_per_capita" in df_check.columns
+          assert abs(df_check.loc[0, "water_per_capita"] - 500/17) < 0.01
+        description: "output_water.csv should have 3 rows and 4 columns including water_per_capita"
+    hints:
+      - "df[\"water_per_capita\"] = df[\"water_liters\"] / df[\"population\"]"
+      - "df.to_csv(\"output_water.csv\", index=False)"
+    solution: |
+      import pandas as pd
+
+      df = pd.DataFrame({
+          "country": ["NL", "DE", "FR"],
+          "population": [17, 84, 68],
+          "water_liters": [500, 2000, 1400],
+      })
+
+      df["water_per_capita"] = df["water_liters"] / df["population"]
+
+      df.to_csv("output_water.csv", index=False)
+
+      df_check = pd.read_csv("output_water.csv")
+      print(df_check.shape)

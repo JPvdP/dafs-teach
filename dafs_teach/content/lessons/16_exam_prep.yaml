@@ -1,5 +1,5 @@
 title: "Exam Preparation"
-description: "Practice the four exam question types: reading code, tracing output, finding errors, and writing short scripts from scratch."
+description: "Practice the exam question types: reading code, tracing output, finding errors, writing short scripts from scratch, and slotting an unfamiliar function into existing code."
 
 exercises:
 
@@ -373,3 +373,168 @@ exercises:
 
       print(f"Average: {average:.1f}")
       print(f"Highest: {highest}")
+
+  - id: unfamiliar_function
+    title: "Using an Unfamiliar Function — Handling Missing Data"
+    instructions: |
+      In the exam — and in real datasets — you will sometimes need to use a function you haven't seen before. The skill being tested isn't memorisation, it's reading a short explanation of what a function does and correctly slotting it into existing code: the right import, the right call, the right arguments, in the right place.
+
+      Real-world data almost always has **missing values** — a sensor that failed, a field nobody filled in. In pandas, missing values show up as `NaN`, and here is the function you'll need to deal with them, explained the way you'd find it in documentation:
+
+      **`DataFrame.dropna(subset=None)`**
+      - **Package:** `pandas` (already imported as `pd` below)
+      - **What it does:** returns a **new** DataFrame with any row that has a missing value **removed**. It does not change the original DataFrame.
+      - **Argument `subset`** *(optional)*: a list of column names. If given, only rows with a missing value in **those** columns are dropped — missing values in other columns are ignored. If omitted, a row is dropped if **any** column is missing a value.
+
+      ```python
+      clean_df = df.dropna(subset=["pollution"])
+      ```
+
+      This keeps every row whose `pollution` value is present, regardless of what's missing elsewhere.
+
+      **Your task:**
+      The script below measures air pollution in several cities; some `pollution` readings are missing, and separately, some `notes` are missing too (that's expected and not a problem). There's a gap in the `clean_and_average` function, marked with a comment. Fill it in so that `clean_df` contains only the rows where `pollution` is **not missing** — rows missing only a `note` should be kept.
+
+      Expected output:
+      ```
+      Rows before cleaning: 6
+      Rows after cleaning: 4
+      Mean pollution: 21.12
+      ```
+    starter_code: |
+      import pandas as pd
+
+      def clean_and_average(df):
+          print(f"Rows before cleaning: {len(df)}")
+
+          # Use pandas' dropna() to remove rows where 'pollution' is missing,
+          # store the result in clean_df
+
+
+          print(f"Rows after cleaning: {len(clean_df)}")
+          return round(clean_df["pollution"].mean(), 2)
+
+      df = pd.DataFrame({
+          "city":      ["Utrecht", "Amsterdam", "Rotterdam", "Groningen", "Eindhoven", "Nijmegen"],
+          "pollution": [21.5, None, 18.2, None, 25.0, 19.8],
+          "notes":     ["ok", "sensor drifting", None, "calibration due", None, "ok"],
+      })
+
+      mean_pollution = clean_and_average(df)
+      print(f"Mean pollution: {mean_pollution}")
+    tests:
+      - type: output_equals
+        value: |
+          Rows before cleaning: 6
+          Rows after cleaning: 4
+          Mean pollution: 21.12
+      - type: assert
+        code: |
+          result = clean_and_average(df)
+          assert result == 21.12, f"Expected mean pollution 21.12, got {result}"
+        description: "clean_and_average(df) should return 21.12 — only rows missing 'pollution' should be dropped"
+    hints:
+      - "The function you need is pandas' .dropna(), called on df"
+      - "Pass subset=[\"pollution\"] so it only checks that column — otherwise rows missing a 'notes' value get dropped too"
+      - "The line goes inside the function body — indent it to match the print() lines around it (4 spaces)"
+      - "clean_df = df.dropna(subset=[\"pollution\"])"
+    solution: |
+      import pandas as pd
+
+      def clean_and_average(df):
+          print(f"Rows before cleaning: {len(df)}")
+
+          clean_df = df.dropna(subset=["pollution"])
+
+          print(f"Rows after cleaning: {len(clean_df)}")
+          return round(clean_df["pollution"].mean(), 2)
+
+      df = pd.DataFrame({
+          "city":      ["Utrecht", "Amsterdam", "Rotterdam", "Groningen", "Eindhoven", "Nijmegen"],
+          "pollution": [21.5, None, 18.2, None, 25.0, 19.8],
+          "notes":     ["ok", "sensor drifting", None, "calibration due", None, "ok"],
+      })
+
+      mean_pollution = clean_and_average(df)
+      print(f"Mean pollution: {mean_pollution}")
+
+  - id: unfamiliar_function_2
+    title: "Using an Unfamiliar Function — Removing Duplicate Readings"
+    instructions: |
+      Another common data-cleaning problem: **duplicate rows**. A sensor might log the same reading twice, or a spreadsheet might get merged with itself by accident. Here's the function for it, again explained the way you'd find it in documentation:
+
+      **`DataFrame.drop_duplicates(subset=None)`**
+      - **Package:** `pandas` (already imported as `pd` below)
+      - **What it does:** returns a **new** DataFrame with duplicate rows removed. By default, a row only counts as a duplicate if **every column** matches another row exactly — the first occurrence is kept, later ones are dropped.
+      - **Argument `subset`** *(optional)*: a list of column names. If given, rows are considered duplicates based on **just those columns**, ignoring the rest.
+      - **Returns:** a new DataFrame (it does not change the original).
+
+      ```python
+      unique_df = df.drop_duplicates(subset=["city"])
+      ```
+
+      This keeps only the **first** row for each city, even if other columns differ between the repeats.
+
+      **Your task:**
+      The script below logs energy readings per city. Some cities were measured more than once: a couple of entries are exact repeats (a logging glitch), but others share a city with a *different* reading (an updated measurement) — those should still count as duplicates for this task, and only the first one kept. There's a gap in `dedupe_and_average`, marked with a comment. Fill it in so `unique_df` keeps only the **first reading per city**.
+
+      Expected output:
+      ```
+      Rows before deduping: 7
+      Rows after deduping: 4
+      Mean energy: 165.0
+      ```
+    starter_code: |
+      import pandas as pd
+
+      def dedupe_and_average(df):
+          print(f"Rows before deduping: {len(df)}")
+
+          # Use pandas' drop_duplicates() to keep only the first reading per city,
+          # store the result in unique_df
+
+
+          print(f"Rows after deduping: {len(unique_df)}")
+          return round(unique_df["energy_kwh"].mean(), 2)
+
+      df = pd.DataFrame({
+          "city":       ["Utrecht", "Amsterdam", "Utrecht", "Rotterdam", "Amsterdam", "Groningen", "Utrecht"],
+          "energy_kwh": [120, 300, 120, 150, 310, 90, 125],
+      })
+
+      mean_energy = dedupe_and_average(df)
+      print(f"Mean energy: {mean_energy}")
+    tests:
+      - type: output_equals
+        value: |
+          Rows before deduping: 7
+          Rows after deduping: 4
+          Mean energy: 165.0
+      - type: assert
+        code: |
+          result = dedupe_and_average(df)
+          assert result == 165.0, f"Expected mean energy 165.0, got {result}"
+        description: "dedupe_and_average(df) should return 165.0 — only the first reading per city should be kept"
+    hints:
+      - "The function you need is pandas' .drop_duplicates(), called on df"
+      - "Pass subset=[\"city\"] so duplicates are identified by city alone — otherwise only rows that match on every column get removed"
+      - "The line goes inside the function body — indent it 4 spaces, matching the print() lines around it"
+      - "unique_df = df.drop_duplicates(subset=[\"city\"])"
+    solution: |
+      import pandas as pd
+
+      def dedupe_and_average(df):
+          print(f"Rows before deduping: {len(df)}")
+
+          unique_df = df.drop_duplicates(subset=["city"])
+
+          print(f"Rows after deduping: {len(unique_df)}")
+          return round(unique_df["energy_kwh"].mean(), 2)
+
+      df = pd.DataFrame({
+          "city":       ["Utrecht", "Amsterdam", "Utrecht", "Rotterdam", "Amsterdam", "Groningen", "Utrecht"],
+          "energy_kwh": [120, 300, 120, 150, 310, 90, 125],
+      })
+
+      mean_energy = dedupe_and_average(df)
+      print(f"Mean energy: {mean_energy}")

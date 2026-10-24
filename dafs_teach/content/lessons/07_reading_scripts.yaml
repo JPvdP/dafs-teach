@@ -198,3 +198,186 @@ exercises:
 
       evaluate_water_usage(100, 120)
       evaluate_water_usage(150, 120)
+
+  - id: practice_energy_cost
+    title: "Electricity Cost — Read and Extend"
+    instructions: |
+      More practice reading and extending a script — same skill, a new scenario.
+
+      Below is a script that calculates the total daily electricity cost of running three appliances. Read through it carefully and make sure you understand what each line does.
+
+      ```python
+      usage_fridge = 1.5   # kWh per day
+      usage_tv     = 0.3   # kWh per day
+      usage_washer = 0.8   # kWh per day
+
+      cost_per_kwh = 0.25  # euros
+
+      cost_fridge = usage_fridge * cost_per_kwh
+      cost_tv     = usage_tv     * cost_per_kwh
+      cost_washer = usage_washer * cost_per_kwh
+
+      total_cost = cost_fridge + cost_tv + cost_washer
+      print(f"The total daily electricity cost is {total_cost} euros.")
+      ```
+
+      The original script gives a total of **0.65 euros**.
+
+      **Your task:**
+      Extend the script by adding a **dryer** that uses **1.2 kWh per day**, at the same `cost_per_kwh`. Include the dryer's cost in `total_cost` and print the updated total.
+
+      The expected new total is **0.95 euros**.
+    starter_code: |
+      usage_fridge = 1.5
+      usage_tv     = 0.3
+      usage_washer = 0.8
+
+      cost_per_kwh = 0.25
+
+      cost_fridge = usage_fridge * cost_per_kwh
+      cost_tv     = usage_tv     * cost_per_kwh
+      cost_washer = usage_washer * cost_per_kwh
+
+      # Add your dryer variables here
+      usage_dryer =
+      cost_dryer =
+
+      total_cost = cost_fridge + cost_tv + cost_washer  # add dryer here
+      print(f"The total daily electricity cost is {total_cost} euros.")
+    tests:
+      - type: output_contains
+        value: "0.95"
+      - type: assert
+        code: |
+          assert usage_dryer == 1.2, 'usage_dryer should be 1.2'
+          assert abs(cost_dryer - 0.3) < 0.001, f'cost_dryer should be 0.3, got {cost_dryer}'
+          assert abs(total_cost - 0.95) < 0.001, f'total_cost should be 0.95, got {total_cost}'
+        description: "total_cost should be 0.95 euros"
+    hints:
+      - "usage_dryer = 1.2"
+      - "cost_dryer = usage_dryer * cost_per_kwh  →  0.3"
+      - "Add cost_dryer to the total_cost calculation"
+    solution: |
+      usage_fridge = 1.5
+      usage_tv     = 0.3
+      usage_washer = 0.8
+
+      cost_per_kwh = 0.25
+
+      cost_fridge = usage_fridge * cost_per_kwh
+      cost_tv     = usage_tv     * cost_per_kwh
+      cost_washer = usage_washer * cost_per_kwh
+
+      usage_dryer = 1.2
+      cost_dryer  = usage_dryer * cost_per_kwh
+
+      total_cost = cost_fridge + cost_tv + cost_washer + cost_dryer
+      print(f"The total daily electricity cost is {total_cost} euros.")
+
+  - id: practice_co2_savings
+    title: "CO₂ Savings — Read and Call"
+    instructions: |
+      Below is a function that calculates the CO₂ saved by taking the bus instead of the car for a given distance. Read each line carefully and make sure you understand what it computes.
+
+      ```python
+      def calculate_co2_savings(car_emission, bus_emission, distance_km):
+          car_total = car_emission * distance_km
+          bus_total = bus_emission * distance_km
+          savings   = car_total - bus_total
+          return savings
+      ```
+
+      The function:
+      1. Calculates total car emissions for the trip
+      2. Calculates total bus emissions for the trip
+      3. Returns the difference — the CO₂ saved by choosing the bus
+
+      **Your task:**
+      The function is already defined below. Call it with these values and print the result in a sentence:
+      - `car_emission = 120`
+      - `bus_emission = 68`
+      - `distance_km = 50`
+
+      The expected output is:
+      `"Taking the bus instead of the car saves 2600 grams of CO2 over 50 km."`
+    starter_code: |
+      def calculate_co2_savings(car_emission, bus_emission, distance_km):
+          car_total = car_emission * distance_km
+          bus_total = bus_emission * distance_km
+          savings   = car_total - bus_total
+          return savings
+
+      # Call the function with the values above
+      distance_km = 50
+      savings =
+
+      print(f"Taking the bus instead of the car saves {savings} grams of CO2 over {distance_km} km.")
+    tests:
+      - type: output_contains
+        value: "2600"
+      - type: assert
+        code: "assert savings == 2600, f'savings should be 2600, got {savings}'"
+        description: "savings should be 2600"
+    hints:
+      - "savings = calculate_co2_savings(120, 68, distance_km)"
+    solution: |
+      def calculate_co2_savings(car_emission, bus_emission, distance_km):
+          car_total = car_emission * distance_km
+          bus_total = bus_emission * distance_km
+          savings   = car_total - bus_total
+          return savings
+
+      distance_km = 50
+      savings = calculate_co2_savings(120, 68, distance_km)
+
+      print(f"Taking the bus instead of the car saves {savings} grams of CO2 over {distance_km} km.")
+
+  - id: practice_energy_usage
+    title: "Energy Usage — Read and Experiment"
+    instructions: |
+      Below is a function that checks whether a household's daily energy usage meets a sustainability target.
+
+      ```python
+      def evaluate_energy_usage(daily_kwh, target_kwh):
+          meets_target = daily_kwh <= target_kwh
+          print(f"It is {meets_target} that the household's daily energy usage meets the sustainability target of {target_kwh} kWh.")
+      ```
+
+      The function uses the `<=` operator to check if `daily_kwh` is less than or equal to `target_kwh`. The result is a **boolean** (`True` or `False`) stored in `meets_target`, which is then printed inside an f-string.
+
+      **Your task — two calls:**
+      1. Call the function with `daily_kwh = 8` and `target_kwh = 10`.
+         The household is below target — `meets_target` should be `True`.
+      2. Call the function with `daily_kwh = 15` and `target_kwh = 10`.
+         The household exceeds target — `meets_target` should be `False`.
+    starter_code: |
+      def evaluate_energy_usage(daily_kwh, target_kwh):
+          meets_target = daily_kwh <= target_kwh
+          print(f"It is {meets_target} that the household's daily energy usage meets the sustainability target of {target_kwh} kWh.")
+
+      # Call 1: usage below target (should print True)
+
+
+      # Call 2: usage above target (should print False)
+
+    tests:
+      - type: output_contains
+        value: "It is True"
+      - type: output_contains
+        value: "It is False"
+      - type: assert
+        code: |
+          assert evaluate_energy_usage(8, 10) is None
+          assert 8 <= 10
+          assert not (15 <= 10)
+        description: "Both calls must be present with correct arguments"
+    hints:
+      - "evaluate_energy_usage(8, 10)  →  True (8 is below 10)"
+      - "evaluate_energy_usage(15, 10)  →  False (15 exceeds 10)"
+    solution: |
+      def evaluate_energy_usage(daily_kwh, target_kwh):
+          meets_target = daily_kwh <= target_kwh
+          print(f"It is {meets_target} that the household's daily energy usage meets the sustainability target of {target_kwh} kWh.")
+
+      evaluate_energy_usage(8, 10)
+      evaluate_energy_usage(15, 10)

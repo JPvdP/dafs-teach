@@ -278,3 +278,189 @@ exercises:
 
       print(greet("Alice"))
       print(greet("World"))
+
+  - id: practice_fstring_basics
+    title: "Practice: Print and F-strings"
+    instructions: |
+      More practice with f-strings, using a new variable.
+
+      **Your task:**
+      1. Create a variable `score = 88`
+      2. Create `message = f"Your score is {score}"`
+      3. Print `message`
+    starter_code: |
+      score =
+
+      message =
+
+      print(message)
+    tests:
+      - type: output_equals
+        value: "Your score is 88"
+      - type: assert
+        code: "assert score == 88, 'score should be 88'"
+        description: "Output should be 'Your score is 88'"
+    hints:
+      - "score = 88"
+      - "message = f\"Your score is {score}\""
+    solution: |
+      score = 88
+      message = f"Your score is {score}"
+      print(message)
+
+  - id: practice_random_fstring
+    title: "Practice: Random Numbers and F-strings"
+    instructions: |
+      More practice generating random numbers and combining them with f-strings.
+
+      **Your task:**
+      1. Import the `random` module
+      2. Generate a random decimal number between `10` and `50` using `random.uniform()`, stored in `temp_reading`
+      3. Print the sentence: `"Reading: {temp_reading}"` using an f-string
+      4. Generate a random integer between `100` and `999` using `random.randint()`, stored in `id_number`
+      5. Print `id_number`
+    starter_code: |
+      import random
+
+      # Generate a random decimal between 10 and 50
+      temp_reading =
+      print(f"Reading: {temp_reading}")
+
+      # Generate a random integer between 100 and 999
+      id_number =
+      print(id_number)
+    tests:
+      - type: output_contains
+        value: "Reading: "
+      - type: assert
+        code: |
+          assert 10 <= temp_reading <= 50, f'temp_reading should be between 10 and 50, got {temp_reading}'
+          assert isinstance(temp_reading, float), 'temp_reading should be a float (use random.uniform)'
+          assert 100 <= id_number <= 999, f'id_number should be between 100 and 999, got {id_number}'
+          assert isinstance(id_number, int), 'id_number should be an int (use random.randint)'
+        description: "temp_reading should be a float in [10, 50], id_number should be an int in [100, 999]"
+    hints:
+      - "temp_reading = random.uniform(10, 50)"
+      - "id_number = random.randint(100, 999)"
+    solution: |
+      import random
+
+      temp_reading = random.uniform(10, 50)
+      print(f"Reading: {temp_reading}")
+
+      id_number = random.randint(100, 999)
+      print(id_number)
+
+  - id: practice_arithmetic_sentences
+    title: "Practice: Arithmetic Results in Sentences"
+    instructions: |
+      More practice putting calculations directly inside f-strings — this time computing the area and perimeter of a rectangle.
+
+      **Your task:**
+      Set `length = 9` and `width = 4`, then print two sentences:
+      1. `"The area of the rectangle is 36"`
+      2. `"The perimeter of the rectangle is 26"`
+
+      Use f-strings and calculate the values inside `{}` directly.
+    starter_code: |
+      length = 9
+      width = 4
+
+      print(f"The area of the rectangle is {}")
+      print(f"The perimeter of the rectangle is {}")
+    tests:
+      - type: output_contains
+        value: "The area of the rectangle is 36"
+      - type: output_contains
+        value: "The perimeter of the rectangle is 26"
+    hints:
+      - "Area: {length * width}"
+      - "Perimeter: {2 * (length + width)}"
+    solution: |
+      length = 9
+      width = 4
+
+      print(f"The area of the rectangle is {length * width}")
+      print(f"The perimeter of the rectangle is {2 * (length + width)}")
+
+  - id: practice_dot_notation
+    title: "Practice: Functions and Dot Notation"
+    instructions: |
+      More practice with dot notation on a NumPy array.
+
+      **Your task:**
+      1. Import numpy as np
+      2. Create `data = np.array([5, 10, 15, 20, 25, 30])`
+      3. Print `data.shape`
+      4. Create `data_reshaped = data.reshape(2, 3)`
+      5. Print `data_reshaped.shape`
+    starter_code: |
+      import numpy as np
+
+      data = np.array([5, 10, 15, 20, 25, 30])
+
+      # Print the shape of data
+
+
+      # Reshape to 2x3 and store in data_reshaped
+      data_reshaped =
+
+      # Print the shape of data_reshaped
+
+    tests:
+      - type: output_contains
+        value: "(6,)"
+      - type: output_contains
+        value: "(2, 3)"
+      - type: assert
+        code: |
+          assert data.shape == (6,), 'data should have shape (6,)'
+          assert data_reshaped.shape == (2, 3), 'data_reshaped should have shape (2, 3)'
+        description: "data.shape == (6,) and data_reshaped.shape == (2, 3)"
+    hints:
+      - "print(data.shape) — no parentheses on .shape"
+      - "data_reshaped = data.reshape(2, 3)"
+    solution: |
+      import numpy as np
+
+      data = np.array([5, 10, 15, 20, 25, 30])
+      print(data.shape)
+
+      data_reshaped = data.reshape(2, 3)
+      print(data_reshaped.shape)
+
+  - id: practice_call_function
+    title: "Practice: Calling a Custom Function"
+    instructions: |
+      More practice calling an already-defined function — this time with a function that squares a number.
+
+      **Your task:**
+      The `square` function is already defined below. Call it **twice**:
+      1. With the argument `6`, and print the result
+      2. With the argument `9`, and print the result
+    starter_code: |
+      def square(n):
+          return n * n
+
+      # Call square with 6 and print
+
+
+      # Call square with 9 and print
+
+    tests:
+      - type: output_contains
+        value: "36"
+      - type: output_contains
+        value: "81"
+      - type: assert
+        code: "assert square(5) == 25, 'square(5) should be 25'"
+        description: "square() should return n * n"
+    hints:
+      - "print(square(6))"
+      - "print(square(9))"
+    solution: |
+      def square(n):
+          return n * n
+
+      print(square(6))
+      print(square(9))

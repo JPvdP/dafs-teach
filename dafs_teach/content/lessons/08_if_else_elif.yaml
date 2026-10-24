@@ -290,3 +290,253 @@ exercises:
 
       for temp in [35, 22, 15, 5, -3]:
           print(temperature_advice(temp))
+
+  - id: practice_basic_if
+    title: "Practice: The If Statement"
+    instructions: |
+      More practice with nested `if` statements — this time checking growing conditions.
+
+      **Your task:**
+      1. Set `rainfall = 15` and `temperature = 22`
+      2. Write a nested `if` statement: if `rainfall > 10` **and** `temperature > 20`, print `"Good growing conditions"`
+    starter_code: |
+      rainfall = 15
+      temperature = 22
+
+      if rainfall > 10:
+          # add the inner if statement here
+
+    tests:
+      - type: output_equals
+        value: "Good growing conditions"
+    hints:
+      - "Add an indented if temperature > 20: block inside the if rainfall > 10: block"
+      - "    if temperature > 20:\n        print(\"Good growing conditions\")"
+    solution: |
+      rainfall = 15
+      temperature = 22
+
+      if rainfall > 10:
+          if temperature > 20:
+              print("Good growing conditions")
+
+  - id: practice_if_else
+    title: "Practice: If / Else — Two Outcomes"
+    instructions: |
+      More practice with if/else — this time grading an energy efficiency audit.
+
+      An audit `score` (out of 100) results in `"Pass"` if it's ≥ 60, and `"Fail"` otherwise:
+
+      ```python
+      score = 75
+      if score >= 60:
+          print("Pass")
+      else:
+          print("Fail")
+      ```
+
+      **Your task:**
+      Write an if/else statement that:
+      - Sets `score = 45`
+      - Prints `"Pass"` if the score is ≥ 60
+      - Prints `"Fail"` otherwise
+    starter_code: |
+      score = 45
+
+      if score >= 60:
+          # what to print if passing
+
+      else:
+          # what to print if failing
+
+    tests:
+      - type: output_equals
+        value: "Fail"
+      - type: assert
+        code: |
+          score = 75
+          if score >= 60:
+              result = "Pass"
+          else:
+              result = "Fail"
+          assert result == "Pass", "score=75 should give Pass"
+        description: "The logic should work for any score, not just 45"
+    hints:
+      - "    print(\"Pass\") goes inside the if block"
+      - "    print(\"Fail\") goes inside the else block"
+    solution: |
+      score = 45
+
+      if score >= 60:
+          print("Pass")
+      else:
+          print("Fail")
+
+  - id: practice_carbon_categories
+    title: "Practice: If / Elif / Else — Recycling Rates"
+    instructions: |
+      More practice with `elif` chains — this time categorising a recycling rate.
+
+      **Your task:**
+      Write a function `categorize_recycling(rate)` that takes a recycling rate in percent and returns a category string:
+
+      | Recycling rate | Category |
+      |-----------------|----------|
+      | Less than 20 | `"Poor Recycling"` |
+      | 20 to less than 50 | `"Fair Recycling"` |
+      | 50 to less than 80 | `"Good Recycling"` |
+      | 80 or more | `"Excellent Recycling"` |
+
+      Then call it with `65` and print the result.
+    starter_code: |
+      def categorize_recycling(rate):
+          if rate < 20:
+              return "Poor Recycling"
+          elif rate < 50:
+              # Fair range
+          elif rate < 80:
+              # Good range
+          else:
+              # Excellent
+
+      print(categorize_recycling(65))
+    tests:
+      - type: output_equals
+        value: "Good Recycling"
+      - type: assert
+        code: |
+          assert categorize_recycling(10) == "Poor Recycling", "10% should be Poor"
+          assert categorize_recycling(35) == "Fair Recycling", "35% should be Fair"
+          assert categorize_recycling(65) == "Good Recycling", "65% should be Good"
+          assert categorize_recycling(90) == "Excellent Recycling", "90% should be Excellent"
+        description: "Function should correctly categorize all four ranges"
+    hints:
+      - "elif rate < 50: return \"Fair Recycling\""
+      - "elif rate < 80: return \"Good Recycling\""
+      - "else: return \"Excellent Recycling\""
+    solution: |
+      def categorize_recycling(rate):
+          if rate < 20:
+              return "Poor Recycling"
+          elif rate < 50:
+              return "Fair Recycling"
+          elif rate < 80:
+              return "Good Recycling"
+          else:
+              return "Excellent Recycling"
+
+      print(categorize_recycling(65))
+
+  - id: practice_water_conservation
+    title: "Practice: If / Elif / Else — Energy Efficiency"
+    instructions: |
+      **Your task:**
+      Write a function `rate_energy_usage(daily_kwh)` that takes daily household energy use in kWh and returns an efficiency rating:
+
+      | Daily usage (kWh) | Rating |
+      |--------------------|--------|
+      | Less than 5 | `"Excellent Efficiency"` |
+      | 5 to less than 10 | `"Good Efficiency"` |
+      | 10 to less than 15 | `"Average Efficiency"` |
+      | 15 or more | `"Poor Efficiency"` |
+
+      Then call it with `7` and print the result.
+    starter_code: |
+      def rate_energy_usage(daily_kwh):
+          # write your if/elif/else here
+
+
+      print(rate_energy_usage(7))
+    tests:
+      - type: output_equals
+        value: "Good Efficiency"
+      - type: assert
+        code: |
+          assert rate_energy_usage(3) == "Excellent Efficiency", "3 kWh should be Excellent"
+          assert rate_energy_usage(7) == "Good Efficiency", "7 kWh should be Good"
+          assert rate_energy_usage(12) == "Average Efficiency", "12 kWh should be Average"
+          assert rate_energy_usage(20) == "Poor Efficiency", "20 kWh should be Poor"
+        description: "Function should correctly rate all four usage ranges"
+    hints:
+      - "Start with: if daily_kwh < 5: return \"Excellent Efficiency\""
+      - "Then elif daily_kwh < 10: return \"Good Efficiency\""
+      - "Continue with elif < 15 for Average, and else for Poor"
+    solution: |
+      def rate_energy_usage(daily_kwh):
+          if daily_kwh < 5:
+              return "Excellent Efficiency"
+          elif daily_kwh < 10:
+              return "Good Efficiency"
+          elif daily_kwh < 15:
+              return "Average Efficiency"
+          else:
+              return "Poor Efficiency"
+
+      print(rate_energy_usage(7))
+
+  - id: practice_temperature_advice
+    title: "Practice: If/Elif — Air Quality Advisory"
+    instructions: |
+      More practice with if/elif/else chains — this time a real-world air quality scenario.
+
+      Write a function `air_quality_advice(aqi)` that returns advice based on the Air Quality Index:
+
+      | AQI | Advice |
+      |-----|--------|
+      | ≥ 300 | `"Hazardous — stay indoors."` |
+      | ≥ 200 | `"Very unhealthy — limit outdoor activity."` |
+      | ≥ 100 | `"Unhealthy for sensitive groups."` |
+      | ≥ 50 | `"Moderate — acceptable air quality."` |
+      | < 50 | `"Good air quality — enjoy the outdoors."` |
+
+      Then call the function for each value in `[350, 150, 80, 30]` and print each result.
+    starter_code: |
+      def air_quality_advice(aqi):
+          if aqi >= 300:
+              return "Hazardous — stay indoors."
+          elif aqi >= 200:
+              # very unhealthy
+          elif aqi >= 100:
+              # unhealthy for sensitive groups
+          elif aqi >= 50:
+              # moderate
+          else:
+              # good
+
+      for aqi in [350, 150, 80, 30]:
+          print(air_quality_advice(aqi))
+    tests:
+      - type: output_contains
+        value: "Hazardous — stay indoors."
+      - type: output_contains
+        value: "Unhealthy for sensitive groups."
+      - type: output_contains
+        value: "Moderate — acceptable air quality."
+      - type: output_contains
+        value: "Good air quality — enjoy the outdoors."
+      - type: assert
+        code: |
+          assert air_quality_advice(350) == "Hazardous — stay indoors."
+          assert air_quality_advice(200) == "Very unhealthy — limit outdoor activity."
+          assert air_quality_advice(150) == "Unhealthy for sensitive groups."
+          assert air_quality_advice(80) == "Moderate — acceptable air quality."
+          assert air_quality_advice(30) == "Good air quality — enjoy the outdoors."
+        description: "All five AQI categories must return the correct string"
+    hints:
+      - "return \"Very unhealthy — limit outdoor activity.\" inside the elif aqi >= 200 block"
+      - "return \"Good air quality — enjoy the outdoors.\" inside the else block"
+    solution: |
+      def air_quality_advice(aqi):
+          if aqi >= 300:
+              return "Hazardous — stay indoors."
+          elif aqi >= 200:
+              return "Very unhealthy — limit outdoor activity."
+          elif aqi >= 100:
+              return "Unhealthy for sensitive groups."
+          elif aqi >= 50:
+              return "Moderate — acceptable air quality."
+          else:
+              return "Good air quality — enjoy the outdoors."
+
+      for aqi in [350, 150, 80, 30]:
+          print(air_quality_advice(aqi))

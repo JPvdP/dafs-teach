@@ -573,3 +573,470 @@ exercises:
 
       print(df)
       print(long_names)
+
+  - id: practice_select_columns
+    title: "Practice: Selecting Columns"
+    instructions: |
+      More practice selecting columns by name and by index — this time with air quality data.
+
+      **Your task:**
+      Using the DataFrame below:
+      1. Select only the `City` and `AQI` columns by name, store in `selected`
+      2. Print `selected`
+      3. Select all rows of the first two columns using `.iloc`, store in `by_index`
+      4. Print `by_index`
+    starter_code: |
+      import pandas as pd
+
+      data = {
+          "City":   ["Utrecht", "Amsterdam", "Rotterdam", "Groningen", "Eindhoven"],
+          "AQI":    [42, 55, 38, 29, 47],
+          "Region": ["Central", "North-Holland", "South-Holland", "North", "South"],
+      }
+      df = pd.DataFrame(data)
+
+      # Select City and AQI by column name
+      selected =
+
+      print(selected)
+
+      # Select first two columns by index (all rows)
+      by_index =
+
+      print(by_index)
+    tests:
+      - type: output_contains
+        value: "Utrecht"
+      - type: output_contains
+        value: "42"
+      - type: assert
+        code: |
+          assert list(selected.columns) == ["City", "AQI"], f"Got {list(selected.columns)}"
+          assert list(by_index.columns) == ["City", "AQI"], f"Got {list(by_index.columns)}"
+          assert selected.shape == (5, 2)
+        description: "selected and by_index should both have columns City and AQI"
+    hints:
+      - "selected = df[[\"City\", \"AQI\"]]"
+      - "by_index = df.iloc[:, [0, 1]]  — the : means all rows"
+    solution: |
+      import pandas as pd
+
+      data = {
+          "City":   ["Utrecht", "Amsterdam", "Rotterdam", "Groningen", "Eindhoven"],
+          "AQI":    [42, 55, 38, 29, 47],
+          "Region": ["Central", "North-Holland", "South-Holland", "North", "South"],
+      }
+      df = pd.DataFrame(data)
+
+      selected = df[["City", "AQI"]]
+      print(selected)
+
+      by_index = df.iloc[:, [0, 1]]
+      print(by_index)
+
+  - id: practice_filter_rows
+    title: "Practice: Filtering Rows"
+    instructions: |
+      More practice with boolean indexing — this time filtering air quality readings by year.
+
+      **Your task:**
+      Using the readings DataFrame below:
+      1. Filter to keep only readings from 2023, store in `readings_2023`
+      2. Print `readings_2023`
+      3. Print the number of matching readings using `len()`
+    starter_code: |
+      import pandas as pd
+
+      data = {
+          "Station_id": ["ST001", "ST002", "ST003", "ST004", "ST005"],
+          "Year":       [2010, 2023, 2023, 2015, 2015],
+          "Pollutant":  ["PM2.5", "PM2.5", "NO2", "PM2.5", "NO2"],
+      }
+      df = pd.DataFrame(data)
+
+      # Filter to 2023 only
+      readings_2023 =
+
+      print(readings_2023)
+      print(len(readings_2023))
+    tests:
+      - type: output_contains
+        value: "ST002"
+      - type: output_contains
+        value: "ST003"
+      - type: output_contains
+        value: "2"
+      - type: assert
+        code: |
+          assert len(readings_2023) == 2, f"Expected 2 rows, got {len(readings_2023)}"
+          assert (readings_2023["Year"] == 2023).all()
+        description: "readings_2023 should contain exactly 2 rows"
+    hints:
+      - "readings_2023 = df[df[\"Year\"] == 2023]"
+    solution: |
+      import pandas as pd
+
+      data = {
+          "Station_id": ["ST001", "ST002", "ST003", "ST004", "ST005"],
+          "Year":       [2010, 2023, 2023, 2015, 2015],
+          "Pollutant":  ["PM2.5", "PM2.5", "NO2", "PM2.5", "NO2"],
+      }
+      df = pd.DataFrame(data)
+
+      readings_2023 = df[df["Year"] == 2023]
+      print(readings_2023)
+      print(len(readings_2023))
+
+  - id: practice_filter_multiple
+    title: "Practice: Filtering with Multiple Conditions"
+    instructions: |
+      More practice combining conditions with `&` and `~`.
+
+      **Your task:**
+      Using the same readings DataFrame:
+      1. Create `pm25_recent` — readings of `"PM2.5"` with `Year >= 2015`
+      2. Create `not_pm25` — all readings **not** of `"PM2.5"`
+      3. Print both, and print their lengths
+    starter_code: |
+      import pandas as pd
+
+      data = {
+          "Station_id": ["ST001", "ST002", "ST003", "ST004", "ST005"],
+          "Year":       [2010, 2023, 2023, 2015, 2015],
+          "Pollutant":  ["PM2.5", "PM2.5", "NO2", "PM2.5", "NO2"],
+      }
+      df = pd.DataFrame(data)
+
+      # PM2.5 readings from 2015 onwards
+      pm25_recent =
+
+      # All readings NOT PM2.5
+      not_pm25 =
+
+      print(pm25_recent)
+      print(len(pm25_recent))
+      print(not_pm25)
+      print(len(not_pm25))
+    tests:
+      - type: output_contains
+        value: "ST002"
+      - type: assert
+        code: |
+          assert len(pm25_recent) == 2, f"Expected 2 PM2.5 readings >= 2015, got {len(pm25_recent)}"
+          assert len(not_pm25) == 2, f"Expected 2 non-PM2.5 readings, got {len(not_pm25)}"
+          assert "ST001" not in pm25_recent["Station_id"].values
+          assert "ST001" not in not_pm25["Station_id"].values
+        description: "pm25_recent should have 2 rows; not_pm25 should have 2 rows"
+    hints:
+      - "pm25_recent = df[(df[\"Year\"] >= 2015) & (df[\"Pollutant\"] == \"PM2.5\")]"
+      - "not_pm25 = df[~(df[\"Pollutant\"] == \"PM2.5\")]"
+    solution: |
+      import pandas as pd
+
+      data = {
+          "Station_id": ["ST001", "ST002", "ST003", "ST004", "ST005"],
+          "Year":       [2010, 2023, 2023, 2015, 2015],
+          "Pollutant":  ["PM2.5", "PM2.5", "NO2", "PM2.5", "NO2"],
+      }
+      df = pd.DataFrame(data)
+
+      pm25_recent = df[(df["Year"] >= 2015) & (df["Pollutant"] == "PM2.5")]
+      not_pm25 = df[~(df["Pollutant"] == "PM2.5")]
+
+      print(pm25_recent)
+      print(len(pm25_recent))
+      print(not_pm25)
+      print(len(not_pm25))
+
+  - id: practice_add_column
+    title: "Practice: Adding a Computed Column"
+    instructions: |
+      More practice adding a computed column — this time emissions per capita.
+
+      **Your task:**
+      Using the DataFrame below (emissions in Mt CO2, population in millions):
+      1. Add a column `"emissions_per_capita"` = `emissions / population`
+      2. Print the full DataFrame
+      3. Print the mean of `emissions_per_capita` rounded to 2 decimal places
+    starter_code: |
+      import pandas as pd
+
+      df = pd.DataFrame({
+          "country":    ["NL", "DE", "FR"],
+          "population": [17, 84, 68],
+          "emissions":  [150, 680, 310],
+      })
+
+      # Add emissions_per_capita column
+      df["emissions_per_capita"] =
+
+      print(df)
+      print(round(df["emissions_per_capita"].mean(), 2))
+    tests:
+      - type: output_contains
+        value: "emissions_per_capita"
+      - type: assert
+        code: |
+          assert "emissions_per_capita" in df.columns
+          assert abs(df.loc[0, "emissions_per_capita"] - 150/17) < 0.01, "NL emissions_per_capita wrong"
+          assert abs(df.loc[1, "emissions_per_capita"] - 680/84) < 0.01, "DE emissions_per_capita wrong"
+          assert abs(df.loc[2, "emissions_per_capita"] - 310/68) < 0.01, "FR emissions_per_capita wrong"
+        description: "emissions_per_capita = emissions / population for each row"
+    hints:
+      - "df[\"emissions_per_capita\"] = df[\"emissions\"] / df[\"population\"]"
+    solution: |
+      import pandas as pd
+
+      df = pd.DataFrame({
+          "country":    ["NL", "DE", "FR"],
+          "population": [17, 84, 68],
+          "emissions":  [150, 680, 310],
+      })
+
+      df["emissions_per_capita"] = df["emissions"] / df["population"]
+
+      print(df)
+      print(round(df["emissions_per_capita"].mean(), 2))
+
+  - id: practice_groupby_agg
+    title: "Practice: Grouping and Summarising"
+    instructions: |
+      More practice with `groupby` and `agg` — this time grouping pollution readings by pollutant.
+
+      **Your task:**
+      Using the readings DataFrame:
+      1. Create `year_range` — groupby Pollutant, get min and max Year. Print it.
+      2. Create `counts` — groupby Pollutant, count all columns. Print it.
+    starter_code: |
+      import pandas as pd
+
+      data = {
+          "Reading_id": ["R1", "R2", "R3", "R4", "R5"],
+          "Year":       [2010, 2023, 2023, 2015, 2015],
+          "Pollutant":  ["PM2.5", "PM2.5", "NO2", "PM2.5", "NO2"],
+      }
+      df = pd.DataFrame(data)
+
+      # Min and max year per pollutant
+      year_range =
+      print(year_range)
+
+      # Count per pollutant
+      counts =
+      print(counts)
+    tests:
+      - type: output_contains
+        value: "PM2.5"
+      - type: output_contains
+        value: "2010"
+      - type: assert
+        code: |
+          assert year_range.shape == (2, 3), f"year_range should have 2 rows and 3 cols, got {year_range.shape}"
+          pm25_row = year_range[year_range["Pollutant"] == "PM2.5"]
+          assert pm25_row["min"].values[0] == 2010
+          assert pm25_row["max"].values[0] == 2023
+        description: "year_range should have 2 pollutants, PM2.5 min=2010 max=2023"
+    hints:
+      - "year_range = df.groupby(\"Pollutant\")[\"Year\"].agg([\"min\", \"max\"]).reset_index()"
+      - "counts = df.groupby(\"Pollutant\").count().reset_index()"
+    solution: |
+      import pandas as pd
+
+      data = {
+          "Reading_id": ["R1", "R2", "R3", "R4", "R5"],
+          "Year":       [2010, 2023, 2023, 2015, 2015],
+          "Pollutant":  ["PM2.5", "PM2.5", "NO2", "PM2.5", "NO2"],
+      }
+      df = pd.DataFrame(data)
+
+      year_range = df.groupby("Pollutant")["Year"].agg(["min", "max"]).reset_index()
+      print(year_range)
+
+      counts = df.groupby("Pollutant").count().reset_index()
+      print(counts)
+
+  - id: practice_merge_dataframes
+    title: "Practice: Merging DataFrames"
+    instructions: |
+      More practice merging two datasets — this time emissions and land area, to compute emissions per square kilometer.
+
+      **Your task:**
+      1. Merge `df_emissions` and `df_area` on `"Country"` (inner join) into `merged`
+      2. Print `merged`
+      3. Add a computed column `"emissions_per_area"` = `emissions / area_km2`
+      4. Print the country with the **highest** emissions per area
+    starter_code: |
+      import pandas as pd
+
+      df_emissions = pd.DataFrame({
+          "Country":   ["NL", "DE", "FR"],
+          "emissions": [150, 680, 310],
+      })
+      df_area = pd.DataFrame({
+          "Country":  ["NL", "DE", "FR"],
+          "area_km2": [41850, 357580, 551695],
+      })
+
+      # Merge on Country
+      merged =
+
+      print(merged)
+
+      # Add emissions_per_area
+      merged["emissions_per_area"] =
+
+      # Print the country with the highest value
+      best = merged.loc[merged["emissions_per_area"].idxmax(), "Country"]
+      print(best)
+    tests:
+      - type: output_contains
+        value: "NL"
+      - type: assert
+        code: |
+          assert "emissions_per_area" in merged.columns, "emissions_per_area column missing"
+          assert len(merged) == 3, f"merged should have 3 rows, got {len(merged)}"
+          assert "Country" in merged.columns and "emissions" in merged.columns and "area_km2" in merged.columns
+          assert abs(merged.loc[merged["Country"] == "NL", "emissions_per_area"].values[0] - 150/41850) < 0.0001
+        description: "merged should have 3 rows; NL has highest emissions per area (150/41850)"
+    hints:
+      - "merged = pd.merge(df_emissions, df_area, on=\"Country\")"
+      - "merged[\"emissions_per_area\"] = merged[\"emissions\"] / merged[\"area_km2\"]"
+      - "NL: 150/41850 is the highest ratio"
+    solution: |
+      import pandas as pd
+
+      df_emissions = pd.DataFrame({
+          "Country":   ["NL", "DE", "FR"],
+          "emissions": [150, 680, 310],
+      })
+      df_area = pd.DataFrame({
+          "Country":  ["NL", "DE", "FR"],
+          "area_km2": [41850, 357580, 551695],
+      })
+
+      merged = pd.merge(df_emissions, df_area, on="Country")
+      print(merged)
+
+      merged["emissions_per_area"] = merged["emissions"] / merged["area_km2"]
+      best = merged.loc[merged["emissions_per_area"].idxmax(), "Country"]
+      print(best)
+
+  - id: practice_sort_and_rank
+    title: "Practice: Sorting and Top-N Selection"
+    instructions: |
+      More practice sorting and selecting the top N rows — this time by recycling rate.
+
+      **Your task:**
+      Using the country recycling DataFrame below:
+      1. Sort by `"recycling_rate"` descending — store as `df_sorted` and print it
+      2. Select the top 3 countries — store as `top3` and print it
+      3. Print the name of the country with the highest rate using `top3.iloc[0]["country"]`
+    starter_code: |
+      import pandas as pd
+
+      df = pd.DataFrame({
+          "country":        ["NL", "DE", "FR", "ES", "PL", "SE", "NO"],
+          "recycling_rate": [54,   48,   41,   33,   30,   68,   62],
+          "population":     [17,   84,   68,   47,   38,   10,    5],
+      })
+
+      # Sort by recycling_rate descending
+      df_sorted =
+      print(df_sorted)
+
+      # Top 3 countries
+      top3 =
+      print(top3)
+
+      # Country with the highest recycling rate
+      best_country = top3.iloc[0]["country"]
+      print("Best:", best_country)
+    tests:
+      - type: output_contains
+        value: "Best: SE"
+      - type: assert
+        code: |
+          assert df_sorted.iloc[0]["country"] == "SE", "First sorted row should be SE (68%)"
+          assert list(top3["country"]) == ["SE", "NO", "NL"], f"Top 3 should be SE, NO, NL — got {list(top3['country'])}"
+          assert best_country == "SE"
+        description: "Sweden (68%) is #1, Norway (62%) #2, Netherlands (54%) #3"
+    hints:
+      - "df.sort_values(by=\"recycling_rate\", ascending=False)"
+      - "df_sorted.head(3) gives the top 3 rows"
+    solution: |
+      import pandas as pd
+
+      df = pd.DataFrame({
+          "country":        ["NL", "DE", "FR", "ES", "PL", "SE", "NO"],
+          "recycling_rate": [54,   48,   41,   33,   30,   68,   62],
+          "population":     [17,   84,   68,   47,   38,   10,    5],
+      })
+
+      df_sorted = df.sort_values(by="recycling_rate", ascending=False)
+      print(df_sorted)
+
+      top3 = df_sorted.head(3)
+      print(top3)
+
+      best_country = top3.iloc[0]["country"]
+      print("Best:", best_country)
+
+  - id: practice_string_operations
+    title: "Practice: String Operations on Columns"
+    instructions: |
+      More practice with the `.str` accessor — this time on Dutch province names.
+
+      **Your task:**
+      Using the provinces DataFrame below:
+      1. Add `"region_upper"` — all province names in uppercase (already done — study it)
+      2. Add `"name_length"` — the number of characters in each province name
+      3. Create `long_names` — only rows where the name is **longer than 7 characters**
+      4. Print the full DataFrame, then print `long_names`
+    starter_code: |
+      import pandas as pd
+
+      df = pd.DataFrame({
+          "region":     ["Flevoland", "Zeeland", "Drenthe", "Overijssel", "Limburg", "Friesland"],
+          "population": [420000, 385000, 493000, 1160000, 1120000, 650000],
+      })
+
+      # Uppercase province names (example — already done)
+      df["region_upper"] = df["region"].str.upper()
+
+      # Number of characters in each province name
+      df["name_length"] =
+
+      # Provinces whose name is longer than 7 characters
+      long_names =
+
+      print(df)
+      print(long_names)
+    tests:
+      - type: output_contains
+        value: "FLEVOLAND"
+      - type: output_contains
+        value: "OVERIJSSEL"
+      - type: assert
+        code: |
+          assert "name_length" in df.columns, "name_length column missing"
+          assert df.loc[df["region"] == "Zeeland", "name_length"].values[0] == 7
+          assert len(long_names) == 3, f"Expected 3 provinces with name > 7 chars, got {len(long_names)}"
+          assert set(long_names["region"].values) == {"Flevoland", "Overijssel", "Friesland"}
+        description: "name_length correct; long_names has Flevoland, Overijssel, Friesland"
+    hints:
+      - "df[\"name_length\"] = df[\"region\"].str.len()"
+      - "long_names = df[df[\"name_length\"] > 7]"
+    solution: |
+      import pandas as pd
+
+      df = pd.DataFrame({
+          "region":     ["Flevoland", "Zeeland", "Drenthe", "Overijssel", "Limburg", "Friesland"],
+          "population": [420000, 385000, 493000, 1160000, 1120000, 650000],
+      })
+
+      df["region_upper"] = df["region"].str.upper()
+      df["name_length"] = df["region"].str.len()
+      long_names = df[df["name_length"] > 7]
+
+      print(df)
+      print(long_names)

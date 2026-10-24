@@ -1,0 +1,189 @@
+# ─────────────────────────────────────────────────────────────
+# Lesson file format
+#   title       : shown in the lesson browser
+#   description : short summary shown in the lesson card
+#   exercises   : list of exercise objects (see below)
+#
+# Each exercise:
+#   id           : unique string key (used for progress tracking)
+#   title        : exercise heading
+#   instructions : markdown-formatted prompt shown to the student
+#   starter_code : pre-filled code in the editor (optional)
+#   tests        : list of checks run after the student's code
+#     - type: output_contains  →  stdout must contain `value`
+#     - type: output_equals    →  stdout (stripped) must equal `value`
+#     - type: assert           →  `code` is appended to student code
+#                                  and must not raise an exception
+#   hints        : list of progressive hints (revealed one at a time)
+#   solution     : reference solution (shown on request)
+# ─────────────────────────────────────────────────────────────
+
+title: Installing and Using Packages
+description: Learn how to install, import, and use Python packages — plus how to find help when you get stuck. We'll use pandas as our example throughout.
+
+exercises:
+
+  - id: loading_a_package
+    title: "Loading (Importing) a Package"
+    instructions: |
+      Python comes with a lot built in, but for specialised work — like handling tables of data — you need **packages**: extra code written by other people that you can add to your toolbox.
+
+      Before you can use a package, it needs to be **installed** on your computer. This is done once, in your **terminal** (not inside a Python script), using `pip` — Python's package installer:
+
+      ```bash
+      pip install pandas
+      ```
+
+      You only need to install a package once per computer (or per project environment). If you're using Anaconda, `conda install pandas` works too. Installing is a deliberate, one-time setup step — not something that happens as a side effect of running your code — so it belongs in the terminal, run by you, on purpose. Pandas is already installed for you in this app, so you won't run this command in these exercises, but you will need it the first time you set up a project on your own machine.
+
+      Once a package is installed, you still need to **import** it into every script where you want to use it — installing makes it available on your computer, importing makes it available *in that specific script*:
+
+      ```python
+      import pandas
+      ```
+
+      From this point on in the script, anything inside the `pandas` package is available to you.
+
+      **Your task:**
+      1. Import the `pandas` package
+      2. Print `"pandas is ready to use"`
+    starter_code: |
+      # Import pandas, then print "pandas is ready to use"
+
+    tests:
+      - type: output_equals
+        value: "pandas is ready to use"
+      - type: assert
+        code: |
+          import sys
+          assert 'pandas' in sys.modules, 'pandas was not imported. Use: import pandas'
+        description: "pandas must be imported"
+    hints:
+      - "import pandas — this line goes at the top of your script"
+    solution: |
+      import pandas
+
+      print("pandas is ready to use")
+
+  - id: using_a_function
+    title: "Using a Function From a Package"
+    instructions: |
+      Once a package is imported, you can use the functions inside it with **dot notation**: `package_name.function_name()`.
+
+      ```python
+      import pandas
+
+      data = pandas.Series([10, 20, 30])
+      print(data)
+      ```
+
+      Here, `Series` is something provided by the `pandas` package — a one-dimensional list of values with labels. We reach it with a dot: `pandas.Series(...)`.
+
+      One more thing you'll need: a **list** — a way to group several values together, in order, using square brackets:
+
+      ```python
+      [4, 8, 15, 16, 23, 42]
+      ```
+
+      We'll cover lists properly in a later lesson, but pandas uses them constantly to build things like a Series, so it's worth seeing the syntax now: values separated by commas, wrapped in `[ ]`.
+
+      **Your task:**
+      1. Import `pandas`
+      2. Use `pandas.Series()` to create a Series from the list `[4, 8, 15, 16, 23, 42]`, stored in a variable called `numbers`
+      3. Print `numbers`
+    starter_code: |
+      # Import pandas, create a Series from [4, 8, 15, 16, 23, 42] called numbers, and print it
+
+    tests:
+      - type: output_contains
+        value: "4"
+      - type: output_contains
+        value: "42"
+      - type: assert
+        code: "assert list(numbers) == [4, 8, 15, 16, 23, 42], 'numbers should contain [4, 8, 15, 16, 23, 42]'"
+        description: "`numbers` should be a Series of [4, 8, 15, 16, 23, 42]"
+    hints:
+      - "import pandas"
+      - "numbers = pandas.Series([4, 8, 15, 16, 23, 42])"
+    solution: |
+      import pandas
+
+      numbers = pandas.Series([4, 8, 15, 16, 23, 42])
+      print(numbers)
+
+  - id: using_an_alias
+    title: "Using an Alias"
+    instructions: |
+      Typing `pandas.` before every function gets repetitive. It's standard practice to import a package with a shorter **alias**, using `as`:
+
+      ```python
+      import pandas as pd
+
+      data = pd.Series([10, 20, 30])
+      ```
+
+      `pd` now refers to the exact same package as `pandas` — just faster to type. You'll see these conventional aliases constantly:
+
+      | Package | Standard alias |
+      |---------|-----------------|
+      | `pandas` | `pd` |
+      | `numpy` | `np` |
+      | `matplotlib.pyplot` | `plt` |
+
+      **Your task:**
+      1. Import `pandas` with the alias `pd`
+      2. Use `pd.Series()` to create a Series from `[100, 200, 300]`, stored in a variable called `values`
+      3. Print `values`
+    starter_code: |
+      # Import pandas as pd, create a Series from [100, 200, 300] called values, and print it
+
+    tests:
+      - type: output_contains
+        value: "100"
+      - type: output_contains
+        value: "300"
+      - type: assert
+        code: "assert list(values) == [100, 200, 300], 'values should contain [100, 200, 300]'"
+        description: "`values` should be a Series of [100, 200, 300]"
+    hints:
+      - "import pandas as pd"
+      - "values = pd.Series([100, 200, 300])"
+    solution: |
+      import pandas as pd
+
+      values = pd.Series([100, 200, 300])
+      print(values)
+
+  - id: finding_help
+    title: "Finding Help With Functions"
+    instructions: |
+      Nobody memorises every function and its arguments — knowing how to **look things up** is a core programming skill. Two easy ways to get help without leaving Python:
+
+      **1. The built-in `help()` function** — prints the official documentation for anything you pass it:
+
+      ```python
+      import pandas as pd
+      help(pd.Series)
+      ```
+
+      **2. Official online documentation** — search "pandas Series documentation", or go straight to the source: [pandas.pydata.org/docs](https://pandas.pydata.org/docs/). Every well-maintained package has official docs like this, and they're usually more reliable than random blog posts or forum answers.
+
+      **Your task:**
+      1. Import `pandas` as `pd`
+      2. Call `help(pd.Series)` and take a look at what gets printed
+    starter_code: |
+      import pandas as pd
+
+      # Call help() on pd.Series
+
+    tests:
+      - type: output_contains
+        value: "Series"
+      - type: output_contains
+        value: "Help on class"
+    hints:
+      - "help(pd.Series)"
+    solution: |
+      import pandas as pd
+
+      help(pd.Series)

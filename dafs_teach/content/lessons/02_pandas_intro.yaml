@@ -9,6 +9,14 @@ exercises:
       **pandas** is the go-to library for working with tabular data.
       A `DataFrame` is like a spreadsheet — rows and columns.
 
+      To use pandas, you first need to **import** it into your script — this loads its code so you can use it:
+
+      ```python
+      import pandas
+      ```
+
+      In practice you'll always see it written as `import pandas as pd` — the `as pd` part just gives it a shorter nickname so you don't have to type `pandas.` everywhere. We'll properly explain why in the next lesson; for now, just know that `pd` refers to pandas.
+
       You can create one from a Python dictionary:
 
       ```python
@@ -205,7 +213,7 @@ exercises:
          Store the result in a variable called `total_revenue`.
       2. Print it rounded to 2 decimal places.
 
-      Expected answer: **32224.4**
+      Expected answer: **36197.35**
     starter_code: |
       import pandas as pd
 
@@ -221,10 +229,10 @@ exercises:
       print(round(total_revenue, 2))
     tests:
       - type: output_equals
-        value: "32224.4"
+        value: "36197.35"
       - type: assert
-        code: "assert abs(total_revenue - 32224.4) < 0.01, f'total_revenue should be ~32224.4, got {total_revenue}'"
-        description: "`total_revenue` should be approximately 32224.4"
+        code: "assert abs(total_revenue - 36197.35) < 0.01, f'total_revenue should be ~36197.35, got {total_revenue}'"
+        description: "`total_revenue` should be approximately 36197.35"
     hints:
       - "First compute a 'revenue' column: df['revenue'] = df['price'] * df['sold']"
       - "Then sum it: total_revenue = df['revenue'].sum()"
@@ -240,3 +248,228 @@ exercises:
 
       total_revenue = (df["price"] * df["sold"]).sum()
       print(round(total_revenue, 2))
+
+  - id: practice_create_df
+    title: "Practice: Creating a DataFrame"
+    instructions: |
+      Time to practice creating a DataFrame from scratch, using a new example.
+
+      **Your task:**
+      Create a DataFrame called `books` with these columns and values:
+
+      | title       | author         | pages |
+      |-------------|----------------|-------|
+      | Dune        | Frank Herbert  | 412   |
+      | The Hobbit  | J.R.R. Tolkien | 310   |
+      | 1984        | George Orwell  | 328   |
+
+      Then print the DataFrame.
+    starter_code: |
+      import pandas as pd
+
+      books = pd.DataFrame({
+          # fill in the columns here
+      })
+
+      print(books)
+    tests:
+      - type: output_contains
+        value: "Dune"
+      - type: output_contains
+        value: "Tolkien"
+      - type: assert
+        code: |
+          assert list(books.columns) == ['title', 'author', 'pages'], 'columns should be title, author, pages'
+          assert len(books) == 3, 'books should have 3 rows'
+          assert books['pages'].tolist() == [412, 310, 328], 'pages values are wrong'
+        description: "books should have columns title/author/pages and 3 rows"
+    hints:
+      - "Each key in the dict becomes a column, each list becomes the column values"
+      - "Make sure column names match exactly: 'title', 'author', 'pages'"
+    solution: |
+      import pandas as pd
+
+      books = pd.DataFrame({
+          "title": ["Dune", "The Hobbit", "1984"],
+          "author": ["Frank Herbert", "J.R.R. Tolkien", "George Orwell"],
+          "pages": [412, 310, 328],
+      })
+
+      print(books)
+
+  - id: practice_explore
+    title: "Practice: Exploring a DataFrame"
+    instructions: |
+      Let's practice exploring a DataFrame, and add one more method to your toolkit: `df.tail(n)` — just like `df.head(n)`, but it shows the **last** n rows instead of the first.
+
+      | Method / attribute | What it shows |
+      |--------------------|---------------|
+      | `df.shape`         | (rows, columns) |
+      | `df.dtypes`        | Data type per column |
+      | `df.tail(n)`       | Last n rows |
+
+      **Your task:**
+      The DataFrame `df` below contains weather data for several cities.
+      1. Print the **shape** of the DataFrame
+      2. Print the **data types** of each column
+      3. Print the **last 2 rows**
+    starter_code: |
+      import pandas as pd
+
+      df = pd.DataFrame({
+          "city":        ["Oslo", "Amsterdam", "Berlin", "Madrid", "Rome", "Athens"],
+          "temperature": [5, 10, 8, 15, 12, 18],
+          "humidity":    [80, 75, 70, 60, 65, 55],
+      })
+
+      # 1. Print the shape
+
+
+      # 2. Print the data types
+
+
+      # 3. Print the last 2 rows
+
+    tests:
+      - type: output_contains
+        value: "(6, 3)"
+      - type: output_contains
+        value: "temperature"
+      - type: output_contains
+        value: "Rome"
+      - type: output_contains
+        value: "Athens"
+    hints:
+      - "print(df.shape) prints the shape tuple"
+      - "print(df.dtypes) prints the data type of every column"
+      - "print(df.tail(2)) prints the last 2 rows"
+    solution: |
+      import pandas as pd
+
+      df = pd.DataFrame({
+          "city":        ["Oslo", "Amsterdam", "Berlin", "Madrid", "Rome", "Athens"],
+          "temperature": [5, 10, 8, 15, 12, 18],
+          "humidity":    [80, 75, 70, 60, 65, 55],
+      })
+
+      print(df.shape)
+      print(df.dtypes)
+      print(df.tail(2))
+
+  - id: practice_select_filter
+    title: "Practice: Selecting and Filtering"
+    instructions: |
+      More practice with selecting columns and filtering rows — this time with employee data.
+
+      Reminder:
+      ```python
+      df[df["salary"] > 50000]   # rows where salary > 50000
+      ```
+
+      **Your task:**
+      Using the employees DataFrame below:
+      1. Create `high_earners` — a filtered DataFrame containing only employees with `salary > 50000`
+      2. Print the `name` column of `high_earners`
+    starter_code: |
+      import pandas as pd
+
+      df = pd.DataFrame({
+          "name":       ["Ana", "Ben", "Cleo", "Dan", "Emi"],
+          "department": ["Sales", "IT", "Sales", "IT", "HR"],
+          "salary":     [45000, 62000, 48000, 71000, 39000],
+      })
+
+      # Filter rows where salary > 50000
+      high_earners =
+
+      # Print only the name column of high_earners
+      print(high_earners["name"])
+    tests:
+      - type: output_contains
+        value: "Ben"
+      - type: output_contains
+        value: "Dan"
+      - type: assert
+        code: |
+          assert len(high_earners) == 2, 'high_earners should have 2 rows (Ben and Dan)'
+          assert "Ana" not in high_earners["name"].values, 'Ana should not be in high_earners'
+        description: "`high_earners` should contain only Ben and Dan"
+    hints:
+      - "Boolean filter: high_earners = df[df[\"salary\"] > 50000]"
+      - "Then print(high_earners[\"name\"]) for just that column"
+    solution: |
+      import pandas as pd
+
+      df = pd.DataFrame({
+          "name":       ["Ana", "Ben", "Cleo", "Dan", "Emi"],
+          "department": ["Sales", "IT", "Sales", "IT", "HR"],
+          "salary":     [45000, 62000, 48000, 71000, 39000],
+      })
+
+      high_earners = df[df["salary"] > 50000]
+      print(high_earners["name"])
+
+  - id: practice_aggregation
+    title: "Practice: Aggregating Data"
+    instructions: |
+      More practice with summary statistics — this time using `.mean()`, `.max()`, and `.min()` instead of `.sum()`.
+
+      | Method       | Result            |
+      |--------------|-------------------|
+      | `.mean()`    | Average           |
+      | `.max()`     | Largest value     |
+      | `.min()`     | Smallest value    |
+
+      **Your task:**
+      Using the trips DataFrame below (distances in km):
+      1. Create `avg_distance` — the mean of `distance_km`. Print it rounded to 1 decimal place.
+      2. Create `max_distance` — the longest trip. Print it.
+      3. Create `min_distance` — the shortest trip. Print it.
+    starter_code: |
+      import pandas as pd
+
+      df = pd.DataFrame({
+          "trip_id":     [1, 2, 3, 4, 5],
+          "distance_km": [12.5, 34.2, 8.1, 50.0, 22.3],
+      })
+
+      # Average distance
+      avg_distance =
+      print(round(avg_distance, 1))
+
+      # Longest trip
+      max_distance =
+      print(max_distance)
+
+      # Shortest trip
+      min_distance =
+      print(min_distance)
+    tests:
+      - type: output_equals
+        value: "25.4\n50.0\n8.1"
+      - type: assert
+        code: |
+          assert abs(avg_distance - 25.42) < 0.01, f'avg_distance should be ~25.42, got {avg_distance}'
+          assert max_distance == 50.0, f'max_distance should be 50.0, got {max_distance}'
+          assert min_distance == 8.1, f'min_distance should be 8.1, got {min_distance}'
+        description: "avg_distance ~25.42, max_distance=50.0, min_distance=8.1"
+    hints:
+      - "avg_distance = df['distance_km'].mean()"
+      - "max_distance = df['distance_km'].max()"
+      - "min_distance = df['distance_km'].min()"
+    solution: |
+      import pandas as pd
+
+      df = pd.DataFrame({
+          "trip_id":     [1, 2, 3, 4, 5],
+          "distance_km": [12.5, 34.2, 8.1, 50.0, 22.3],
+      })
+
+      avg_distance = df["distance_km"].mean()
+      print(round(avg_distance, 1))
+
+      max_distance = df["distance_km"].max()
+      print(max_distance)
+
+      min_distance = df["distance_km"].min()
+      print(min_distance)

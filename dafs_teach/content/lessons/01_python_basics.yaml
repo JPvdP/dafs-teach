@@ -19,176 +19,522 @@
 # ─────────────────────────────────────────────────────────────
 
 title: Python Basics
-description: Learn the fundamental building blocks of Python — variables, data types, lists, loops, and functions.
+description: Your very first steps in Python — creating variables, the difference between text/number/boolean values, the print() function, and basic math.
 
 exercises:
 
-  - id: variables
-    title: "Variables and Data Types"
+  - id: create_a_variable
+    title: "Creating Your First Variable"
     instructions: |
-      In Python you store values in **variables** using `=`.
+      Think of a **variable** as a labeled box: you put a value inside it, and give it a name so you can find and reuse it later.
 
-      Python has several basic data types:
-      - `str` — text, written in quotes: `"hello"`
-      - `int` — whole numbers: `42`
-      - `float` — decimal numbers: `3.14`
+      In Python, you create a variable by writing a name, an `=` sign, and the value you want to store:
+
+      ```python
+      score = 10
+      ```
+
+      Here we created a variable called `score` and stored the value `10` in it. From now on, wherever you write `score`, Python uses `10`.
+
+      A few rules for variable names:
+      - Names can contain letters, numbers, and underscores (`_`)
+      - Names cannot start with a number
+      - Names cannot contain spaces — use `student_name`, not `student name`
+      - Names are case-sensitive: `score` and `Score` are different variables
+
+      To display a variable's value on the screen, use Python's built-in `print()` function with the variable name between the parentheses:
+
+      ```python
+      print(score)   # displays: 10
+      ```
+
+      We'll explain `print()` properly in a couple of exercises — for now, just know that writing `print(variable_name)` shows its value.
 
       **Your task:**
-      1. Create a variable `name` with the value `"Alice"`
-      2. Create a variable `age` with the value `30`
-      3. Print them both, one per line
+      1. Create a variable called `student_name` and set it to the text `"Sam"`
+      2. Create a variable called `student_age` and set it to the number `21`
+      3. Print `student_name`
+      4. Print `student_age`
     starter_code: |
-      # Create your variables below and print them
+      # Create your variables below
+
+
+      # Now print them
 
 
     tests:
       - type: output_contains
-        value: "Alice"
+        value: "Sam"
       - type: output_contains
-        value: "30"
+        value: "21"
       - type: assert
-        code: "assert name == 'Alice', 'name should be the string Alice'"
-        description: "`name` should equal \"Alice\""
+        code: "assert student_name == 'Sam', 'student_name should be the text Sam'"
+        description: "`student_name` should equal \"Sam\""
       - type: assert
-        code: "assert age == 30, 'age should be the integer 30'"
-        description: "`age` should equal 30"
+        code: "assert student_age == 21, 'student_age should be the number 21'"
+        description: "`student_age` should equal 21"
     hints:
-      - "Assign a string with: name = \"Alice\""
-      - "Print a variable with: print(name)"
-      - "Each print() call outputs on its own line"
+      - "A variable is created with: name = value"
+      - "Text needs quotes: student_name = \"Sam\""
+      - "Numbers don't need quotes: student_age = 21"
+      - "print(student_name) displays the value stored in student_name"
     solution: |
-      name = "Alice"
-      age = 30
-      print(name)
-      print(age)
+      student_name = "Sam"
+      student_age = 21
+      print(student_name)
+      print(student_age)
 
-  - id: lists
-    title: "Working with Lists"
+  - id: text_number_boolean
+    title: "Text, Numbers, and Booleans"
     instructions: |
-      A **list** holds multiple values in order, written with square brackets:
+      Not all values are the same kind of thing. Python calls the "kind" of a value its **type**. The three types you'll use constantly are:
 
-      ```python
-      temperatures = [22.1, 19.8, 25.4, 21.0]
-      ```
+      | Type | What it is | How you write it | Example |
+      |------|-----------|-------------------|---------|
+      | text (`str`) | A piece of text | Between quotes `"..."` | `"hello"` |
+      | number (`int`/`float`) | A whole or decimal number | Just the digits, no quotes | `42` or `3.14` |
+      | boolean (`bool`) | True or False | Exactly `True` or `False` — capital letter, no quotes | `True` |
 
-      Useful list operations:
-      - `len(my_list)` — number of items
-      - `my_list[0]` — first item (index starts at 0)
-      - `my_list[-1]` — last item
-      - `my_list.append(value)` — add an item to the end
+      The quotes matter a lot: `5` is a number you can do math with, but `"5"` is text — Python treats it completely differently (more on that in a later lesson).
+
+      Booleans represent yes/no or on/off situations — for example "is the course open for enrollment? `True`".
 
       **Your task:**
-      1. Create a list called `scores` with the values `85, 92, 78, 96, 88`
-      2. Print the number of items in the list
-      3. Print the highest score (it's the 4th item, index 3)
+      1. Create a variable `course` set to the text `"Data Analysis"`
+      2. Create a variable `n_students` set to the number `25`
+      3. Create a variable `is_open` set to `True`
+      4. Print all three variables, one per line (use `print()`, like in the previous exercise)
     starter_code: |
-      # Create the scores list
-      scores =
-
-      # Print the number of items
+      # Create the three variables
 
 
-      # Print the highest score (index 3)
-
+      # Print all three, one per line
 
     tests:
+      - type: output_contains
+        value: "Data Analysis"
+      - type: output_contains
+        value: "25"
+      - type: output_contains
+        value: "True"
       - type: assert
-        code: "assert scores == [85, 92, 78, 96, 88], 'scores list is not correct'"
-        description: "`scores` should be `[85, 92, 78, 96, 88]`"
-      - type: output_contains
-        value: "5"
-      - type: output_contains
-        value: "96"
+        code: |
+          assert course == 'Data Analysis', 'course should be the text "Data Analysis"'
+          assert n_students == 25, 'n_students should be the number 25'
+          assert is_open == True, 'is_open should be True'
+        description: "course=\"Data Analysis\", n_students=25, is_open=True"
     hints:
-      - "A list literal: scores = [85, 92, 78, 96, 88]"
-      - "len(scores) gives you the number of items"
-      - "scores[3] gives you the item at index 3 (the 4th item)"
+      - "Text always needs quotes: course = \"Data Analysis\""
+      - "Numbers never need quotes: n_students = 25"
+      - "True starts with a capital T and needs no quotes: is_open = True"
+      - "print(course), then print(n_students), then print(is_open) — one per line"
     solution: |
-      scores = [85, 92, 78, 96, 88]
-      print(len(scores))
-      print(scores[3])
+      course = "Data Analysis"
+      n_students = 25
+      is_open = True
 
-  - id: loops
-    title: "Loops and Aggregation"
+      print(course)
+      print(n_students)
+      print(is_open)
+
+  - id: using_print
+    title: "The print() Function"
     instructions: |
-      A `for` loop lets you repeat code for each item in a list:
+      `print()` is a **function** — ready-made code that does something when you call it. `print()` displays whatever you put between the parentheses on the screen.
 
       ```python
-      for value in my_list:
-          print(value)
+      print("Hello!")   # displays: Hello!
+      print(42)         # displays: 42
+      ```
+
+      You can print more than one thing at once by separating the values with a comma. Python automatically puts a space between them:
+
+      ```python
+      name = "Sam"
+      age = 21
+      print("Name:", name, "Age:", age)
+      # displays: Name: Sam Age: 21
+      ```
+
+      Every call to `print()` starts a new line in the output — this is how we'll ask you to show results throughout the rest of this course.
+
+      **Your task:**
+      Using the variables `subject = "Python"` and `grade = 8` (already created for you):
+      1. Print the text `"Subject:"` together with the variable `subject`, on one line
+      2. Print the text `"Grade:"` together with the variable `grade`, on one line
+    starter_code: |
+      subject = "Python"
+      grade = 8
+
+      # Print "Subject:" and the subject variable together
+
+
+      # Print "Grade:" and the grade variable together
+
+    tests:
+      - type: output_equals
+        value: "Subject: Python\nGrade: 8"
+    hints:
+      - "Separate each thing you want to print with a comma"
+      - "print(\"Subject:\", subject)"
+      - "print(\"Grade:\", grade)"
+    solution: |
+      subject = "Python"
+      grade = 8
+
+      print("Subject:", subject)
+      print("Grade:", grade)
+
+  - id: basic_math_operations
+    title: "Basic Mathematical Operations"
+    instructions: |
+      Python can be used as a calculator. The main mathematical operators are:
+
+      | Operator | Meaning | Example | Result |
+      |----------|---------|---------|--------|
+      | `+` | addition | `5 + 2` | `7` |
+      | `-` | subtraction | `5 - 2` | `3` |
+      | `*` | multiplication | `5 * 2` | `10` |
+      | `/` | division | `5 / 2` | `2.5` |
+      | `**` | power | `5 ** 2` | `25` |
+
+      Just like in regular math, Python follows the standard order of operations (multiplication/division before addition/subtraction), and you can use parentheses `()` to control the order.
+
+      ```python
+      x = 4
+      y = 3
+      total = x + y
+      print(total)   # 7
       ```
 
       **Your task:**
-      Write a loop that calculates the **total** of the numbers in `values`, and then print it.
-
-      The expected total is **150**.
+      Using `price = 12` and `quantity = 4` (already created for you):
+      1. Create a variable `total_cost` equal to `price * quantity`
+      2. Create a variable `discounted_cost` equal to `total_cost - 10`
+      3. Print `total_cost`
+      4. Print `discounted_cost`
     starter_code: |
-      values = [10, 20, 30, 40, 50]
+      price = 12
+      quantity = 4
 
-      total = 0
-      for value in values:
-          # add each value to total
+      # Calculate the total cost
+      total_cost =
+
+      # Subtract a discount of 10
+      discounted_cost =
+
+      print(total_cost)
+      print(discounted_cost)
+    tests:
+      - type: output_equals
+        value: "48\n38"
+      - type: assert
+        code: |
+          assert total_cost == 48, 'total_cost should be price * quantity = 48'
+          assert discounted_cost == 38, 'discounted_cost should be total_cost - 10 = 38'
+        description: "total_cost=48, discounted_cost=38"
+    hints:
+      - "total_cost = price * quantity"
+      - "discounted_cost = total_cost - 10"
+    solution: |
+      price = 12
+      quantity = 4
+
+      total_cost = price * quantity
+      discounted_cost = total_cost - 10
+
+      print(total_cost)
+      print(discounted_cost)
+
+  - id: practice_more_variables
+    title: "Practice: Creating Variables"
+    instructions: |
+      Time to practice on your own, using a new example.
+
+      **Your task:**
+      You're building a small profile for a library member. Create:
+      1. `member_name` — text, set to `"Jordan"`
+      2. `books_borrowed` — a number, set to `3`
+      3. `has_late_fee` — a boolean, set to `False`
+
+      Then print all three, one per line.
+    starter_code: |
+      # Create the three variables
 
 
+      # Print them, one per line
+
+    tests:
+      - type: output_contains
+        value: "Jordan"
+      - type: output_contains
+        value: "3"
+      - type: output_contains
+        value: "False"
+      - type: assert
+        code: |
+          assert member_name == 'Jordan', 'member_name should be the text "Jordan"'
+          assert books_borrowed == 3, 'books_borrowed should be the number 3'
+          assert has_late_fee == False, 'has_late_fee should be False'
+        description: "member_name=\"Jordan\", books_borrowed=3, has_late_fee=False"
+    hints:
+      - "member_name = \"Jordan\""
+      - "books_borrowed = 3"
+      - "has_late_fee = False — no quotes, and a capital F"
+    solution: |
+      member_name = "Jordan"
+      books_borrowed = 3
+      has_late_fee = False
+
+      print(member_name)
+      print(books_borrowed)
+      print(has_late_fee)
+
+  - id: practice_print_formats
+    title: "Practice: Printing Multiple Values"
+    instructions: |
+      Let's practice combining variables and text with `print()`.
+
+      **Your task:**
+      Using `item = "Notebook"` and `price = 4` (already created for you), write three `print()` calls that produce exactly this output:
+
+      ```
+      Item: Notebook
+      Price: 4
+      Notebook costs 4 dollars
+      ```
+    starter_code: |
+      item = "Notebook"
+      price = 4
+
+      # 1. Print "Item:" and item together
+
+
+      # 2. Print "Price:" and price together
+
+
+      # 3. Print item, "costs", price, and "dollars" together
+
+    tests:
+      - type: output_equals
+        value: |
+          Item: Notebook
+          Price: 4
+          Notebook costs 4 dollars
+    hints:
+      - "print(\"Item:\", item)"
+      - "print(\"Price:\", price)"
+      - "print(item, \"costs\", price, \"dollars\")"
+    solution: |
+      item = "Notebook"
+      price = 4
+
+      print("Item:", item)
+      print("Price:", price)
+      print(item, "costs", price, "dollars")
+
+  - id: practice_math_word_problem
+    title: "Practice: A Math Word Problem"
+    instructions: |
+      Let's use math operators to solve a small word problem.
+
+      You're calculating the total cost of a shopping cart: 3 items at $8 each, plus a flat shipping fee of $5.
+
+      **Your task:**
+      Using `item_price = 8`, `quantity = 3`, and `shipping = 5` (already created for you):
+      1. Create `subtotal` equal to `item_price * quantity`
+      2. Create `total` equal to `subtotal + shipping`
+      3. Print `subtotal`
+      4. Print `total`
+    starter_code: |
+      item_price = 8
+      quantity = 3
+      shipping = 5
+
+      # Calculate the subtotal
+      subtotal =
+
+      # Calculate the total
+      total =
+
+      print(subtotal)
       print(total)
     tests:
       - type: output_equals
-        value: "150"
+        value: "24\n29"
       - type: assert
-        code: "assert total == 150, 'total should be 150'"
-        description: "`total` should equal 150"
+        code: |
+          assert subtotal == 24, 'subtotal should be item_price * quantity = 24'
+          assert total == 29, 'total should be subtotal + shipping = 29'
+        description: "subtotal=24, total=29"
     hints:
-      - "Inside the loop, use: total = total + value"
-      - "You can also write it as: total += value"
+      - "subtotal = item_price * quantity"
+      - "total = subtotal + shipping"
     solution: |
-      values = [10, 20, 30, 40, 50]
+      item_price = 8
+      quantity = 3
+      shipping = 5
 
-      total = 0
-      for value in values:
-          total += value
+      subtotal = item_price * quantity
+      total = subtotal + shipping
 
+      print(subtotal)
       print(total)
 
-  - id: functions
-    title: "Writing Functions"
+  - id: reading_error_messages
+    title: "Reading Error Messages"
     instructions: |
-      A **function** packages reusable logic:
+      Making mistakes is a normal part of programming — even experienced programmers see error messages every day. Learning to **read** one is one of the most useful skills you can build early on.
+
+      Two very common beginner mistakes:
+
+      **1. Mixing text and numbers**
 
       ```python
-      def greet(name):
-          return "Hello, " + name
+      age = 25
+      print("Age: " + age)
+      ```
+
+      Running this gives:
+
+      ```
+      TypeError: can only concatenate str (not "int") to str
+      ```
+
+      Python is telling you that it tried to combine (`+`) text with a number, and doesn't know how to do that automatically. The fix is to convert the number to text first, with `str()`:
+
+      ```python
+      print("Age: " + str(age))
+      ```
+
+      **2. A missing bracket**
+
+      ```python
+      print("Hello"
+      ```
+
+      Running this gives:
+
+      ```
+      SyntaxError: '(' was never closed
+      ```
+
+      Python is telling you it found an opening `(` but never found the matching `)`. The fix is to make sure every bracket you open is closed.
+
+      **Your task:**
+      The code below has **two bugs**: a missing closing bracket, and text being combined with a number using `+`. Click Run, read the error message, fix the first bug, run again, read the next error, and fix that one too — until the code runs and prints `Price: 12`.
+    starter_code: |
+      price = 12
+
+      print("Price: " + price
+    tests:
+      - type: output_equals
+        value: "Price: 12"
+    hints:
+      - "Run the code first and read the red error message carefully — it names the problem and the line it's on"
+      - "The first error is a SyntaxError: '(' was never closed. Add the missing closing parenthesis to the print() call"
+      - "After fixing that, you'll get a TypeError — you can't add text and a number directly. Convert price to text first with str(price)"
+      - "print(\"Price: \" + str(price))"
+    solution: |
+      price = 12
+
+      print("Price: " + str(price))
+
+  - id: reading_error_messages_nameerror
+    title: "Reading Error Messages: NameError"
+    instructions: |
+      A tip for reading **any** error message: Python shows a lot of text, but the **last line** is the one that matters most. It always has the form `SomeErrorType: what went wrong`. Start there, then look up at the line number if you need more context.
+
+      One very common error is the **NameError**. It happens when you use a name Python doesn't recognize as an existing variable — usually a typo, or text you forgot to put in quotes.
+
+      ```python
+      favorite_color = blue
+      print(favorite_color)
+      ```
+
+      Running this gives:
+
+      ```
+      NameError: name 'blue' is not defined
+      ```
+
+      Without quotes, Python assumes `blue` is meant to be a variable — and since no variable called `blue` exists, it gives up. The fix is to add quotes, since `blue` was meant to be text:
+
+      ```python
+      favorite_color = "blue"
+      ```
+
+      A typo causes the exact same error:
+
+      ```python
+      score = 10
+      print(scroe)   # typo!
+      ```
+
+      ```
+      NameError: name 'scroe' is not defined
       ```
 
       **Your task:**
-      Write a function called `calculate_mean` that:
-      - Takes a list of numbers as input
-      - Returns the arithmetic mean (average)
-
-      Then call it with `[4, 8, 15, 16, 23, 42]` and print the result.
-      The expected mean is **18.0**.
+      The code below tries to print a city name, but has a `NameError` bug. Click Run, read the last line of the error message, and fix the code so it prints `Amsterdam`.
     starter_code: |
-      def calculate_mean(numbers):
-          # your code here
+      city = Amsterdam
 
+      print(city)
+    tests:
+      - type: output_equals
+        value: "Amsterdam"
+    hints:
+      - "Run the code and read the last line of the error message — it names exactly which word Python couldn't find"
+      - "NameError: name 'Amsterdam' is not defined means Python thinks Amsterdam is a variable, not text"
+      - "Amsterdam was meant to be text — add quotes around it"
+      - 'city = "Amsterdam"'
+    solution: |
+      city = "Amsterdam"
 
-      result = calculate_mean([4, 8, 15, 16, 23, 42])
-      print(result)
+      print(city)
+
+  - id: reading_error_messages_zerodivision
+    title: "Reading Error Messages: ZeroDivisionError"
+    instructions: |
+      Just like in regular math, dividing by zero isn't allowed. Python raises a **ZeroDivisionError** when it happens:
+
+      ```python
+      total = 10
+      people = 0
+      average = total / people
+      ```
+
+      Running this gives:
+
+      ```
+      ZeroDivisionError: division by zero
+      ```
+
+      This error usually means a variable unexpectedly ended up being `0` — often because of a bug earlier in the code, or a case you didn't account for (like calculating an average before any data exists).
+
+      **Your task:**
+      The code below calculates the average score of a class, but `n_students` has a bug — there are actually 5 students, not 0. Click Run, read the error message, and fix it so the code prints the correct average, `18.0`.
+    starter_code: |
+      total_score = 90
+      n_students = 0
+
+      average = total_score / n_students
+      print(average)
     tests:
       - type: output_equals
         value: "18.0"
       - type: assert
-        code: "assert calculate_mean([1, 2, 3]) == 2.0, 'mean of [1,2,3] should be 2.0'"
-        description: "`calculate_mean([1, 2, 3])` should return 2.0"
-      - type: assert
-        code: "assert calculate_mean([10, 20]) == 15.0, 'mean of [10,20] should be 15.0'"
-        description: "`calculate_mean([10, 20])` should return 15.0"
+        code: "assert n_students == 5, 'n_students should be 5, not 0'"
+        description: "n_students should equal 5"
     hints:
-      - "Sum the numbers and divide by how many there are"
-      - "Use sum(numbers) and len(numbers)"
-      - "return sum(numbers) / len(numbers)"
+      - "Run the code and read the last line of the error message — ZeroDivisionError: division by zero means one of your numbers is 0 where it shouldn't be"
+      - "n_students is currently 0 — that's the bug, not the division itself"
+      - "There are 5 students in the class"
+      - "n_students = 5"
     solution: |
-      def calculate_mean(numbers):
-          return sum(numbers) / len(numbers)
+      total_score = 90
+      n_students = 5
 
-      result = calculate_mean([4, 8, 15, 16, 23, 42])
-      print(result)
+      average = total_score / n_students
+      print(average)

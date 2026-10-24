@@ -1,0 +1,185 @@
+---
+title: "Getting started with the DAFS Teaching App"
+subtitle: "Data Analysis for Sustainability"
+format:
+  html:
+    toc: true
+    toc-depth: 2
+    number-sections: true
+    code-copy: true
+---
+
+The DAFS Teaching App is a small program that runs on your own laptop and opens
+in your web browser. It walks you through the course's Python lessons: you read
+a short explanation, write code in an editor, press **Run**, and get feedback
+straight away.
+
+This guide shows you how to install it, start it, and keep it up to date.
+
+# What you need
+
+- **Python 3.10 or newer.** Check which version you have by opening a terminal
+  (see below) and typing:
+
+  ```bash
+  python --version
+  ```
+
+  If this prints `Python 3.10` or higher, you're fine. If it prints an older
+  version or an error, install Python from [python.org](https://www.python.org/downloads/)
+  or install [Anaconda](https://www.anaconda.com/download) first.
+
+- **A terminal.** This is where you type the commands in this guide.
+
+::: {.panel-tabset}
+
+## Windows
+
+Open the Start menu and search for **Anaconda Prompt** (if you installed
+Anaconda) or **Command Prompt** (if you installed Python from python.org).
+
+## macOS
+
+Press `Cmd + Space`, type **Terminal**, and press Enter.
+
+## Linux
+
+Open your terminal application (often `Ctrl + Alt + T`).
+
+:::
+
+::: {.callout-tip}
+## `python` or `python3`?
+On some computers the command is `python3` instead of `python` (and `pip3`
+instead of `pip`). If `python --version` doesn't work, try `python3 --version`
+and use `python3` / `pip3` everywhere in this guide.
+:::
+
+# Installing the app
+
+Copy the command below into your terminal and press Enter:
+
+```bash
+pip install https://github.com/JPvdP/dafs-teach/archive/refs/heads/main.zip
+```
+
+This downloads the app together with everything it needs (Streamlit, pandas,
+NumPy and matplotlib). It can take a minute or two the first time.
+
+::: {.callout-note collapse="true"}
+## Already have Git installed?
+You can also install it with Git, which does the same thing:
+
+```bash
+pip install git+https://github.com/JPvdP/dafs-teach.git
+```
+:::
+
+# Starting the app
+
+In your terminal, type:
+
+```bash
+dafs-teach
+```
+
+After a few seconds your web browser opens a new tab with the app. If it
+doesn't, look in the terminal for a line like
+`Local URL: http://localhost:8501` and paste that address into your browser.
+
+::: {.callout-important}
+## Keep the terminal open
+The terminal window is what runs the app. If you close it, the app stops
+working in your browser. When you're done, go back to the terminal and press
+`Ctrl + C` to stop the app.
+:::
+
+# Using the app
+
+## The first time: enter your name
+
+When you open the app for the first time it asks for your name.
+
+::: {.callout-warning}
+Use your **full name exactly as it appears on Brightspace**, and always use
+the same spelling. Your completion codes (see below) are linked to this name,
+so a typo or a nickname means your codes won't match.
+:::
+
+## Working through a lesson
+
+1. On the home page, pick a lesson and click **Open**. Lessons are numbered in
+   the order we cover them in class.
+2. Read the instructions, then write your code in the editor.
+3. Click **▶ Run** to run your code. The app tells you whether your answer
+   passes the checks.
+4. Stuck? Click **💡 Show hint** to reveal hints one at a time. Use
+   **👁 Solution** only as a last resort — you learn far more by trying first.
+5. Click **Next →** to go to the next exercise. Use the sidebar to jump between
+   exercises, or **← Home** to go back to the list of lessons.
+
+Your progress is saved automatically on your own computer, so you can close
+the app and carry on later where you left off.
+
+## Getting your completion code
+
+When you've finished **every** exercise in a lesson, open that lesson's card on
+the home page and expand **🎓 Get completion code**. Upload this code to
+Brightspace as proof you completed the module.
+
+# Updating the app
+
+New lessons are added during the course. When we announce an update, run:
+
+```bash
+pip install --upgrade https://github.com/JPvdP/dafs-teach/archive/refs/heads/main.zip
+```
+
+Then start the app again with `dafs-teach`. Your progress is kept.
+
+# Good to know
+
+- **Where is my progress stored?** In a folder called `.dafs_teach` in your
+  home folder. Nothing about you is uploaded anywhere.
+- **Anonymous progress reports.** After a weekly deadline has passed, the app
+  may send your instructor an *anonymous* summary of how the class did on that
+  week's exercises (for example, how many attempts an exercise took). Your name
+  is never included. You'll see a small notice when this happens.
+- **Settings from your instructor.** If your instructor asks you to set a
+  variable such as `DAFS_TEACH_SECRET` before starting the app, follow their
+  instructions exactly. If you haven't been told to, you don't need to do
+  anything.
+
+# Troubleshooting
+
+**`dafs-teach: command not found`** (or "not recognized as an internal or
+external command")
+: The installation worked, but your terminal can't find the command. Start the
+  app this way instead:
+
+  ```bash
+  python -m dafs_teach
+  ```
+
+**`pip: command not found`**
+: Use `python -m pip` instead of `pip`, for example:
+
+  ```bash
+  python -m pip install https://github.com/JPvdP/dafs-teach/archive/refs/heads/main.zip
+  ```
+
+**An error saying Python 3.10 or higher is required**
+: Your Python is too old. Install a newer version (see [What you need]) and try
+  again.
+
+**The browser shows "Connection refused" or the page stops responding**
+: Check that the terminal running `dafs-teach` is still open. If not, start the
+  app again.
+
+**Port 8501 is already in use**
+: You probably have the app running in another terminal already. Use that one,
+  or close it with `Ctrl + C` and start again.
+
+**Something else?**
+: Copy the full error message from the terminal and bring it to the lab
+  session, or post it on the course forum on Brightspace.

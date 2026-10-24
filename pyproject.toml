@@ -23,4 +23,4 @@ where = ["."]
 include = ["dafs_teach*"]
 
 [tool.setuptools.package-data]
-dafs_teach = ["content/lessons/*.yaml"]
+dafs_teach = ["content/lessons/*.yaml", "content/deadlines.yaml", "assets/*.png"]
