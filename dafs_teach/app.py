@@ -3,7 +3,7 @@ from pathlib import Path
 import streamlit as st
 
 from dafs_teach.core.lesson_loader import load_lessons, Lesson, Exercise
-from dafs_teach.core.executor import run_code
+from dafs_teach.core.executor import run_code, RunResult
 from dafs_teach.core.progress import ProgressTracker
 from dafs_teach.core.verification import generate_code
 from dafs_teach.core.deadlines import load_deadlines
@@ -15,6 +15,8 @@ BASE_DIR = Path(__file__).parent
 ASSETS_DIR = BASE_DIR / "assets"
 DATA_DIR = Path.home() / ".dafs_teach"
 DATA_DIR.mkdir(exist_ok=True)
+
+COURSE_BANNER = "Data Analytics For Sustainability || Python Track || 2026"
 
 st.set_page_config(
     page_title="DAFS Teaching App",
@@ -229,6 +231,7 @@ def render_exercise():
     already_passed = exercise.id in completed_ids
 
     # ── Header
+    st.caption(COURSE_BANNER)
     st.markdown(f"#### {lesson.title}  ›  Exercise {idx + 1}/{len(lesson.exercises)}")
     st.subheader(exercise.title)
     st.divider()
@@ -236,7 +239,12 @@ def render_exercise():
     # ── Two-column layout: instructions | code editor
     left, right = st.columns([1, 1], gap="large")
 
+    is_explain = exercise.type == "explain"
+
     with left:
+        if is_explain:
+            st.markdown("**The script**")
+            st.code(exercise.script, language="python", line_numbers=True)
         st.markdown("**Instructions**")
         st.markdown(exercise.instructions)
 
@@ -251,10 +259,10 @@ def render_exercise():
                 st.info(f"**Hint {i + 1}:** {exercise.hints[i]}")
 
     with right:
-        st.markdown("**Your code**")
+        st.markdown("**Your explanation**" if is_explain else "**Your code**")
         default_code = get_code(lesson.id, exercise)
         code = st.text_area(
-            label="code editor",
+            label="explanation" if is_explain else "code editor",
             value=default_code,
             height=320,
             key=code_key(lesson.id, exercise.id),
@@ -263,16 +271,43 @@ def render_exercise():
 
         run_col, sol_col = st.columns([1, 1])
         with run_col:
-            run_clicked = st.button("▶ Run", type="primary", use_container_width=True)
+            run_clicked = st.button(
+                "📝 Submit explanation" if is_explain else "▶ Run",
+                type="primary", use_container_width=True,
+            )
         with sol_col:
-            if st.button("👁 Solution", use_container_width=True):
+            if st.button("👁 Model answer" if is_explain else "👁 Solution", use_container_width=True):
                 if not st.session_state.show_solution:
                     tracker.record_solution_view(st.session_state.student_name, lesson.id, exercise.id)
                 st.session_state.show_solution = not st.session_state.show_solution
                 st.rerun()
 
         if st.session_state.show_solution and exercise.solution:
-            st.code(exercise.solution, language="python")
+            if is_explain:
+                with st.container(border=True):
+                    st.markdown(exercise.solution)
+            else:
+                st.code(exercise.solution, language="python")
+
+    # ── Submit explanation (nothing to run: completed once it's long enough,
+    #    then the model answer is revealed so students can compare)
+    if run_clicked and is_explain:
+        n_words = len(code.split()) - len(exercise.starter_code.split())
+        passed = n_words >= exercise.min_words
+        if passed:
+            feedback = ("Explanation saved! Now compare it with the model answer: "
+                        "did you describe every step, and understand each new function correctly?")
+            # Revealing it here is part of the exercise, so it isn't counted as a solution view
+            st.session_state.show_solution = True
+        else:
+            feedback = (f"Your explanation is still quite short ({max(n_words, 0)} words). "
+                        f"Write at least {exercise.min_words} words: describe what each part of "
+                        "the script does, and what it prints at the end.")
+        st.session_state.last_result = RunResult("", "", False, passed, feedback)
+        tracker.record_attempt(
+            st.session_state.student_name, lesson.id, exercise.id, code, passed
+        )
+        st.rerun()
 
     # ── Run code
     if run_clicked:
@@ -288,7 +323,13 @@ def render_exercise():
 
     # ── Output & feedback
     result = st.session_state.last_result
-    if result is not None:
+    if result is not None and is_explain:
+        st.divider()
+        if result.passed:
+            st.success("✅ " + result.feedback)
+        else:
+            st.error("❌ " + result.feedback)
+    elif result is not None:
         st.divider()
         out_col, fb_col = st.columns([1, 1], gap="large")
 

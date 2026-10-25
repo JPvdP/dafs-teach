@@ -39,7 +39,7 @@ def main():
         "verify", help="Check a student's module completion code"
     )
     verify_parser.add_argument("student_name", help="Student name, exactly as they entered it")
-    verify_parser.add_argument("lesson_id", help="Lesson id, e.g. 03_packages_and_variables")
+    verify_parser.add_argument("lesson_id", help="Lesson id, e.g. 01_python_basics")
     verify_parser.add_argument("code", help="The code the student sent you")
     verify_parser.set_defaults(func=verify)
 

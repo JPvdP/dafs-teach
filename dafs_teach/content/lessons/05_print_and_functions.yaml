@@ -1,5 +1,5 @@
 title: Print, F-strings and Functions
-description: Learn to display information with print(), combine text and variables with f-strings, and use functions with dot notation.
+description: Learn to display information with print(), combine text and variables with f-strings, and call your own functions.
 
 exercises:
 
@@ -150,73 +150,6 @@ exercises:
       print(f"The sum of a and b is {a + b}")
       print(f"The difference of a and b is {a - b}")
       print(f"The product of a and b is {a * b}")
-
-  - id: dot_notation
-    title: Functions and Dot Notation
-    instructions: |
-      When you see something between parentheses in Python, it means you are **calling a function**, and the value inside is an **argument**:
-
-      ```python
-      print("Hello")   # calls print() with the argument "Hello"
-      ```
-
-      In Python, **dot notation** (`.`) is used to access attributes or methods (functions) of objects. For example:
-
-      ```python
-      import numpy as np
-
-      data = np.array([1, 2, 3, 4])   # create a NumPy array
-      print(data.shape)               # .shape is an attribute — no parentheses
-      data_reshaped = data.reshape(2, 2)  # .reshape() is a method — parentheses required
-      ```
-
-      Key rules:
-      - **Parentheses** are used to call functions; the values inside are arguments.
-      - **Dot notation** accesses methods or attributes of an object.
-      - **Attributes** (like `.shape`) have no parentheses.
-      - **Methods** (like `.reshape()`) do have parentheses.
-
-      **Your task:**
-      1. Import numpy as np
-      2. Create `data = np.array([10, 20, 30, 40])`
-      3. Print `data.shape`
-      4. Create `data_reshaped = data.reshape(2, 2)`
-      5. Print `data_reshaped.shape`
-    starter_code: |
-      import numpy as np
-
-      data = np.array([10, 20, 30, 40])
-
-      # Print the shape of data
-
-
-      # Reshape to 2x2 and store in data_reshaped
-      data_reshaped =
-
-      # Print the shape of data_reshaped
-
-
-    tests:
-      - type: output_contains
-        value: "(4,)"
-      - type: output_contains
-        value: "(2, 2)"
-      - type: assert
-        code: |
-          assert data.shape == (4,), 'data should have shape (4,)'
-          assert data_reshaped.shape == (2, 2), 'data_reshaped should have shape (2, 2)'
-        description: "data.shape == (4,) and data_reshaped.shape == (2, 2)"
-    hints:
-      - "print(data.shape) — no parentheses on .shape"
-      - "data_reshaped = data.reshape(2, 2)"
-    solution: |
-      import numpy as np
-
-      data = np.array([10, 20, 30, 40])
-      print(data.shape)
-
-      data_reshaped = data.reshape(2, 2)
-      print(data_reshaped.shape)
 
   - id: call_function
     title: Calling a Custom Function
@@ -382,52 +315,6 @@ exercises:
 
       print(f"The area of the rectangle is {length * width}")
       print(f"The perimeter of the rectangle is {2 * (length + width)}")
-
-  - id: practice_dot_notation
-    title: "Practice: Functions and Dot Notation"
-    instructions: |
-      More practice with dot notation on a NumPy array.
-
-      **Your task:**
-      1. Import numpy as np
-      2. Create `data = np.array([5, 10, 15, 20, 25, 30])`
-      3. Print `data.shape`
-      4. Create `data_reshaped = data.reshape(2, 3)`
-      5. Print `data_reshaped.shape`
-    starter_code: |
-      import numpy as np
-
-      data = np.array([5, 10, 15, 20, 25, 30])
-
-      # Print the shape of data
-
-
-      # Reshape to 2x3 and store in data_reshaped
-      data_reshaped =
-
-      # Print the shape of data_reshaped
-
-    tests:
-      - type: output_contains
-        value: "(6,)"
-      - type: output_contains
-        value: "(2, 3)"
-      - type: assert
-        code: |
-          assert data.shape == (6,), 'data should have shape (6,)'
-          assert data_reshaped.shape == (2, 3), 'data_reshaped should have shape (2, 3)'
-        description: "data.shape == (6,) and data_reshaped.shape == (2, 3)"
-    hints:
-      - "print(data.shape) — no parentheses on .shape"
-      - "data_reshaped = data.reshape(2, 3)"
-    solution: |
-      import numpy as np
-
-      data = np.array([5, 10, 15, 20, 25, 30])
-      print(data.shape)
-
-      data_reshaped = data.reshape(2, 3)
-      print(data_reshaped.shape)
 
   - id: practice_call_function
     title: "Practice: Calling a Custom Function"

@@ -6,18 +6,28 @@ exercises:
   - id: create_df
     title: "Creating a DataFrame"
     instructions: |
-      **pandas** is the go-to library for working with tabular data.
-      A `DataFrame` is like a spreadsheet — rows and columns.
+      **pandas** is the go-to package for working with tabular data.
+      A `DataFrame` is like a spreadsheet — rows and columns. Unlike a NumPy matrix, each column can hold a different kind of data: one column of text, one of numbers, one of `True`/`False`.
 
-      To use pandas, you first need to **import** it into your script — this loads its code so you can use it:
+      As you saw in the previous lesson, you first **import** pandas, with its usual nickname `pd`:
 
       ```python
-      import pandas
+      import pandas as pd
       ```
 
-      In practice you'll always see it written as `import pandas as pd` — the `as pd` part just gives it a shorter nickname so you don't have to type `pandas.` everywhere. We'll properly explain why in the next lesson; for now, just know that `pd` refers to pandas.
+      **Using a tool from a package: the dot `.`**
 
-      You can create one from a Python dictionary:
+      This works exactly like `np.array()` in the previous lesson. To use a function from pandas, you write the package's short name, a **dot**, and then the name of the function:
+
+      ```python
+      pd.DataFrame( ... )
+      ```
+
+      Read the dot as **"from"**: `pd.DataFrame` means *"the `DataFrame` function **from** pandas"*. The `pd.` part tells Python which toolbox to look in. If you leave it out and write just `DataFrame( ... )`, Python doesn't know where to find it and you get `NameError: name 'DataFrame' is not defined`.
+
+      **Building a DataFrame from a dictionary**
+
+      Remember the dictionary of lists from the previous lesson? `pd.DataFrame()` turns exactly that into a table: each **key** becomes a column name, and each **list** becomes the values in that column.
 
       ```python
       import pandas as pd
@@ -26,7 +36,25 @@ exercises:
           "column_a": [1, 2, 3],
           "column_b": ["x", "y", "z"],
       })
+
+      print(df)
       ```
+
+      Output:
+
+      ```
+         column_a column_b
+      0         1        x
+      1         2        y
+      2         3        z
+      ```
+
+      The numbers `0`, `1`, `2` on the left are row labels (the **index**) that pandas adds automatically.
+
+      A few details to watch:
+      - Notice the round brackets `( )` *and* the curly brackets `{ }`: the dictionary `{ ... }` goes **inside** the function call `pd.DataFrame( ... )`.
+      - All lists must have the same length — every column needs a value for every row.
+      - The comma after the last column (`"column_b": ["x", "y", "z"],`) is **optional**. Python allows a comma after the last item in a dictionary or list, and both versions work. Many programmers keep it, so that adding another column later is just adding one more line.
 
       **Your task:**
       Create a DataFrame called `df` with these columns and values:
@@ -74,15 +102,40 @@ exercises:
   - id: explore
     title: "Exploring a DataFrame"
     instructions: |
-      Before analysing data, you need to understand its shape and contents.
-      Key methods:
+      Before analysing data, you need to understand its shape and contents. For that you'll use the dot again — but in a new way.
 
-      | Method / attribute | What it shows |
-      |--------------------|---------------|
-      | `df.shape`         | (rows, columns) |
-      | `df.head(n)`       | First n rows |
-      | `df.columns`       | Column names |
-      | `df.dtypes`        | Data types per column |
+      **The dot, part 2: asking a DataFrame about itself**
+
+      In the previous exercise, the dot came after the **package** name: `pd.DataFrame` — "the `DataFrame` tool from pandas".
+
+      Now the dot comes after **your own variable**: `df.shape`. The dot still means "from" / "belonging to", but what's on the left of it has changed:
+
+      | Code | What's left of the dot | Read it as |
+      |------|------------------------|------------|
+      | `pd.DataFrame(...)` | `pd` — the pandas package | "use the `DataFrame` tool from pandas" |
+      | `df.shape` | `df` — your DataFrame | "the shape of `df`" |
+      | `df.head(3)` | `df` — your DataFrame | "show the first 3 rows of `df`" |
+
+      Why can you write things after `df.`? Because when `pd.DataFrame()` creates a DataFrame, pandas gives it a set of built-in information and tools. **Every** DataFrame gets them automatically, so `df.head()` works on any DataFrame you create. A plain number such as `score = 10` doesn't have them — `score.head()` would give an error.
+
+      **Rule of thumb:**
+      - `pd.something` → you use a tool from the pandas package (for example, to *create* a DataFrame)
+      - `df.something` → you ask *your* DataFrame for information, or tell it to do something
+
+      **With or without parentheses?**
+
+      There are two kinds of things that can come after `df.`:
+      - **Attributes** are *information* stored about the DataFrame. You write them **without** parentheses: `df.shape`, `df.columns`, `df.dtypes`.
+      - **Methods** are *actions* the DataFrame can perform. You write them **with** parentheses, sometimes with a value inside: `df.head(3)`. We'll look at methods in more detail in the "Aggregating Data" exercise.
+
+      Mixing them up gives an error: `df.shape()` gives `TypeError: 'tuple' object is not callable`, because `shape` is information, not an action.
+
+      | Code | Kind | What it shows |
+      |------|------|---------------|
+      | `df.shape`   | attribute | (number of rows, number of columns) |
+      | `df.columns` | attribute | Column names |
+      | `df.dtypes`  | attribute | Data type of each column |
+      | `df.head(n)` | method | First n rows |
 
       **Your task:**
       The DataFrame `df` below contains sales data.
@@ -138,23 +191,78 @@ exercises:
   - id: select_filter
     title: "Selecting and Filtering"
     instructions: |
-      pandas makes it easy to select columns and filter rows.
+      pandas makes it easy to select columns and filter rows. All examples below use the products DataFrame from the previous exercise.
 
-      **Selecting a column:**
+      **Selecting one column — a Series**
+
       ```python
-      df["price"]          # returns a Series
-      df[["name", "price"]] # returns a DataFrame with two columns
+      df["product"]
       ```
 
-      **Filtering rows** (boolean indexing):
-      ```python
-      df[df["price"] > 100]   # rows where price > 100
+      You put the column name in square brackets after `df` — just like looking up a key in a dictionary. The result is that single column, which pandas calls a **Series**.
+
+      A **Series** is one column of data: a list of values, together with the row labels (the index). Printing `df["product"]` shows:
+
       ```
+      0      Laptop
+      1       Mouse
+      2    Keyboard
+      3     Monitor
+      4      Webcam
+      Name: product, dtype: object
+      ```
+
+      - On the **left**: the row labels (`0` to `4`), the same as in the DataFrame
+      - On the **right**: the values in the column
+      - On the **last line**: the column's name, and its data type (`object` is how pandas usually shows text)
+
+      You can think of a DataFrame as several Series side by side, sharing the same row labels. A Series has its own methods too — you'll use `.sum()` and `.mean()` on Series in the next exercise.
+
+      **Selecting several columns — double brackets `[[ ]]`**
+
+      ```python
+      df[["product", "price"]]
+      ```
+
+      The two pairs of brackets each have a different job:
+      - The **inner** brackets `["product", "price"]` are a **list** (like in the previous lesson), containing the names of the columns you want
+      - The **outer** brackets `df[ ... ]` mean "select from `df`"
+
+      So read it as: *"select from `df` the columns in this list"*. Because you're selecting more than one column, the result is a **DataFrame**, not a Series:
+
+      ```
+          product   price
+      0    Laptop  999.99
+      1     Mouse   29.99
+      2  Keyboard   79.99
+      3   Monitor  349.99
+      4    Webcam   89.99
+      ```
+
+      With single brackets, `df["product", "price"]` gives a `KeyError` — pandas then looks for *one* column with the strange name `("product", "price")`, and can't find it.
+
+      **Filtering rows**
+
+      ```python
+      df[df["price"] > 100]   # only the rows where price > 100
+      ```
+
+      Read this from the inside out:
+      1. `df["price"] > 100` compares **every** price with 100. The result is a Series of `True`/`False` values, one per row:
+         ```
+         0     True
+         1    False
+         2    False
+         3     True
+         4    False
+         Name: price, dtype: bool
+         ```
+      2. `df[ ... ]` around it keeps only the rows where the value is `True` — here rows 0 (Laptop) and 3 (Monitor).
 
       **Your task:**
-      Using the products DataFrame from the previous exercise:
+      Using the products DataFrame:
       1. Create `expensive` — a filtered DataFrame containing only products with `price > 100`
-      2. Print the `product` column of `expensive`
+      2. Print only the `product` column of `expensive` (this will be a Series)
     starter_code: |
       import pandas as pd
 
@@ -168,20 +276,24 @@ exercises:
       expensive =
 
       # Print only the product column of expensive
-      print(expensive["product"])
+      print()
     tests:
       - type: output_contains
         value: "Laptop"
       - type: output_contains
         value: "Monitor"
+      - type: output_contains
+        value: "Name: product"
       - type: assert
         code: |
           assert len(expensive) == 2, 'expensive should have 2 rows (Laptop and Monitor)'
           assert "Mouse" not in expensive["product"].values, 'Mouse should not be in expensive'
         description: "`expensive` should contain only Laptop and Monitor"
     hints:
-      - "Boolean filter: expensive = df[df[\"price\"] > 100]"
-      - "Then print(expensive[\"product\"]) for just that column"
+      - "Start with the comparison: df[\"price\"] > 100 gives True/False for every row"
+      - "Put that comparison inside df[ ]: expensive = df[df[\"price\"] > 100]"
+      - "Select one column by putting its name in square brackets after the DataFrame: expensive[\"product\"]"
+      - "print(expensive[\"product\"])"
     solution: |
       import pandas as pd
 
@@ -197,23 +309,62 @@ exercises:
   - id: aggregation
     title: "Aggregating Data"
     instructions: |
-      pandas has built-in methods for summary statistics:
+      Now that you can select a column, you can summarise it — for example, calculate its total or its average.
 
-      | Method       | Result            |
-      |--------------|-------------------|
-      | `.sum()`     | Total             |
-      | `.mean()`    | Average           |
-      | `.max()`     | Largest value     |
-      | `.min()`     | Smallest value    |
-      | `.describe()`| Full summary      |
+      **Doing math with whole columns**
+
+      You can use the normal math operators on columns. pandas then calculates **row by row**:
+
+      ```python
+      df["price"] * 2             # every price doubled
+      df["price"] * df["sold"]    # row 0's price × row 0's sold, row 1's price × row 1's sold, ...
+      ```
+
+      The result is a new Series, with one value per row.
+
+      **Summarising a column with methods**
+
+      ```python
+      df["sold"].max()    # 120 — the largest number of items sold
+      ```
+
+      `.max()` is a **method**. pandas has methods for all the common summary statistics:
+
+      | Method        | Result            |
+      |---------------|-------------------|
+      | `.sum()`      | Total             |
+      | `.mean()`     | Average           |
+      | `.max()`      | Largest value     |
+      | `.min()`      | Smallest value    |
+      | `.describe()` | Full summary      |
+
+      **What is a method, and how is it different from a function?**
+
+      You've now seen three ways of telling Python to do something:
+
+      | | How you write it | Examples | What it does |
+      |---|---|---|---|
+      | **Operator** | A symbol *between* two values | `price * sold`, `a + b` | Combines the values on its left and right |
+      | **Function** | `name(value)` | `print(x)`, `len(x)`, `sum(x)`, `round(x, 2)` | A standalone tool: you give it a value *inside* the parentheses |
+      | **Method** | `value.name()` | `df.head(3)`, `df["sold"].sum()` | A tool that *belongs to* a value: you write it *after* the value, with a dot |
+
+      A method is a function that belongs to a particular kind of value. Compare:
+
+      ```python
+      sum(daily_energy_kwh)   # function: you hand the list to sum()
+      df["sold"].sum()        # method: the Series calculates its own sum
+      ```
+
+      Both calculate a total, but they're written differently. With a function, the value goes *inside* the parentheses. With a method, the value comes *before* the dot, and the parentheses are often empty.
+
+      Which methods exist depends on the type of value. A Series has `.sum()`, `.mean()` and `.max()`, because pandas built those in. A list from the previous lesson doesn't have a `.mean()` method: `[1, 2, 3].mean()` gives an error.
+
+      Don't forget the parentheses: `df["sold"].sum` (without `()`) doesn't calculate anything — it just refers to the method without running it.
 
       **Your task:**
       Using the products DataFrame:
-      1. Calculate and print the **total revenue** (price × sold) for all products combined.
-         Store the result in a variable called `total_revenue`.
+      1. Calculate the **total revenue** (price × sold) for all products combined, and store the result in a variable called `total_revenue`.
       2. Print it rounded to 2 decimal places.
-
-      Expected answer: **36197.35**
     starter_code: |
       import pandas as pd
 
@@ -228,13 +379,12 @@ exercises:
 
       print(round(total_revenue, 2))
     tests:
-      - type: output_equals
-        value: "36197.35"
       - type: assert
-        code: "assert abs(total_revenue - 36197.35) < 0.01, f'total_revenue should be ~36197.35, got {total_revenue}'"
-        description: "`total_revenue` should be approximately 36197.35"
+        code: "assert abs(total_revenue - 36197.35) < 0.01, 'total_revenue is not correct yet. Did you multiply price by sold for each product, and then add everything up?'"
+        description: "`total_revenue` should be the combined revenue of all products"
     hints:
-      - "First compute a 'revenue' column: df['revenue'] = df['price'] * df['sold']"
+      - "Revenue per product is price × sold: df['price'] * df['sold'] gives one value per product"
+      - "You can store that as a new column: df['revenue'] = df['price'] * df['sold']"
       - "Then sum it: total_revenue = df['revenue'].sum()"
       - "Or in one line: total_revenue = (df['price'] * df['sold']).sum()"
     solution: |
@@ -383,12 +533,14 @@ exercises:
       high_earners =
 
       # Print only the name column of high_earners
-      print(high_earners["name"])
+      print()
     tests:
       - type: output_contains
         value: "Ben"
       - type: output_contains
         value: "Dan"
+      - type: output_contains
+        value: "Name: name"
       - type: assert
         code: |
           assert len(high_earners) == 2, 'high_earners should have 2 rows (Ben and Dan)'

@@ -1,0 +1,411 @@
+title: "Reading Unfamiliar Code"
+description: "Explain in your own words what a script does — including functions you haven't seen before. Each new function is explained in the exercise, just like it would be on the exam."
+
+exercises:
+
+  - id: explain_sensor_cleaning
+    type: explain
+    title: "Cleaning Air Quality Readings"
+    min_words: 40
+    script: |
+      import pandas as pd
+
+      readings = pd.DataFrame({
+          "sensor": ["A", "B", "C", "D", "E"],
+          "pm25": [12.0, None, 35.5, -3.0, 180.0],
+      })
+
+      readings["pm25"] = readings["pm25"].fillna(readings["pm25"].mean())
+      readings["pm25"] = readings["pm25"].clip(lower=0, upper=150)
+
+      print(readings)
+      print("Average PM2.5:", round(readings["pm25"].mean(), 1))
+    instructions: |
+      In this lesson you won't write code. Instead, you'll **read** a script and **explain in your own words** what it does. Each script mixes things you already know with a few functions you haven't seen before. Those new functions are explained below the script — just like on the exam, where you'll also meet functions you don't know yet.
+
+      **A strategy that works:**
+      1. Read the explanation of the new functions first.
+      2. Go through the script top to bottom. After each line, ask yourself: *which variable changes, and what is in it now?*
+      3. Write down what you think gets printed — work out the actual values.
+
+      ---
+
+      This script cleans air quality measurements (PM2.5 = fine dust, in µg/m³) from five sensors.
+
+      **New functions in this script**
+
+      - **`None`** means "no value" — the measurement is missing. pandas shows a missing value as `NaN` ("Not a Number").
+      - **`.fillna(value)`** — fills in every missing value (`NaN`) in a column with `value`. All other values stay the same.
+        ```python
+        pd.Series([1.0, None, 3.0]).fillna(0)    # 1.0, 0.0, 3.0
+        ```
+      - **`.clip(lower=..., upper=...)`** — limits every value to a range. Values below `lower` become `lower`, values above `upper` become `upper`, everything in between stays the same.
+        ```python
+        pd.Series([-5, 10, 99]).clip(lower=0, upper=50)   # 0, 10, 50
+        ```
+
+      **Your task:**
+      Explain what this script does. Mention what happens to **each sensor's** value, and work out what the last line prints.
+    starter_code: |
+      What does the script do overall?
+
+
+      Step by step (you can refer to line numbers):
+
+
+      What does it print at the end?
+
+    hints:
+      - "Work out the mean on line 8 yourself. It is calculated from the four values that are not missing (pandas skips NaN)"
+      - "The mean on line 8 is calculated BEFORE line 9 runs. Which values are in the column at that moment?"
+      - "On line 9, which sensors have a value below 0 or above 150?"
+    solution: |
+      **Overall:** the script fills in a missing measurement and removes impossible or extreme values, then prints the cleaned table and its average.
+
+      **Step by step**
+      - **Line 1:** imports pandas as `pd`.
+      - **Lines 3–6:** create a DataFrame `readings` with 5 sensors. Sensor B has a missing value (`None`), sensor D has an impossible negative value (−3.0), and sensor E has an extreme value (180.0).
+      - **Line 8:** `readings["pm25"].mean()` calculates the average of the values that are **not** missing: (12.0 + 35.5 − 3.0 + 180.0) / 4 = **56.125**. `.fillna()` puts that average in the place of B's missing value. The result is stored back in the same column, so the original column is overwritten.
+      - **Line 9:** `.clip(lower=0, upper=150)` limits all values to the range 0–150: D's −3.0 becomes **0.0**, and E's 180.0 becomes **150.0**. A, B and C don't change.
+      - **Line 11:** prints the cleaned table.
+      - **Line 12:** prints the new average, rounded to 1 decimal: (12 + 56.125 + 35.5 + 0 + 150) / 5 = 50.725 → **50.7**.
+
+      **Output**
+      ```
+        sensor     pm25
+      0      A   12.000
+      1      B   56.125
+      2      C   35.500
+      3      D    0.000
+      4      E  150.000
+      Average PM2.5: 50.7
+      ```
+
+      **Worth noticing:** the order of lines 8 and 9 matters. The missing value is filled in with an average that still includes the "wrong" values −3.0 and 180.0, because the clipping happens only afterwards. If you swapped the two lines, B would get a different value. Spotting things like this is exactly what reading code carefully is about.
+
+  - id: explain_energy_labels
+    type: explain
+    title: "Labelling Efficient Homes"
+    min_words: 40
+    script: |
+      import numpy as np
+      import pandas as pd
+
+      homes = pd.DataFrame({
+          "home": ["H1", "H2", "H3", "H4", "H5", "H6"],
+          "kwh_per_m2": [95, 210, 140, 60, 180, 125],
+      })
+
+      homes["efficient"] = np.where(homes["kwh_per_m2"] < 130, "yes", "no")
+      share = (homes["efficient"] == "yes").mean()
+
+      print(homes)
+      print(f"{round(share * 100)}% of the homes are efficient")
+    instructions: |
+      This script looks at the yearly energy use of six homes, in kWh per square metre, and labels which ones are energy efficient.
+
+      **New functions in this script**
+
+      - **`np.where(condition, value_if_true, value_if_false)`** — checks a condition for **every** value, and gives back one result per value: `value_if_true` where the condition is `True`, `value_if_false` where it is `False`.
+        ```python
+        temps = pd.Series([12, 25, 18])
+        np.where(temps > 20, "warm", "cool")    # "cool", "warm", "cool"
+        ```
+      - **The mean of `True`/`False` values** — when you calculate with booleans, Python counts `True` as `1` and `False` as `0`. So the mean of a column of `True`/`False` values is the **share** of values that are `True`.
+        ```python
+        pd.Series([True, False, True, True]).mean()   # 0.75 → 75% is True
+        ```
+
+      **Your task:**
+      Explain what this script does. Which homes get which label, and what is the percentage on the last line?
+    starter_code: |
+      What does the script do overall?
+
+
+      Step by step (you can refer to line numbers):
+
+
+      What does it print at the end?
+
+    hints:
+      - "On line 9, go through the six values one by one: is each one below 130?"
+      - "On line 10, homes[\"efficient\"] == \"yes\" gives True or False for every home. What's the mean of those?"
+    solution: |
+      **Overall:** the script labels every home as efficient ("yes") or not ("no"), based on a limit of 130 kWh/m², and then calculates which percentage of the homes is efficient.
+
+      **Step by step**
+      - **Lines 1–2:** import numpy and pandas.
+      - **Lines 4–7:** create a DataFrame with six homes and their energy use per m².
+      - **Line 9:** `np.where()` checks for each home whether `kwh_per_m2` is below 130. Where that's true the new column `efficient` gets `"yes"`, otherwise `"no"`. H1 (95), H4 (60) and H6 (125) get **yes**; H2 (210), H3 (140) and H5 (180) get **no**.
+      - **Line 10:** `homes["efficient"] == "yes"` gives `True`/`False` per home (True, False, False, True, False, True). The mean of that is 3 / 6 = **0.5**, stored in `share`.
+      - **Line 12:** prints the table, now with the extra column.
+      - **Line 13:** turns 0.5 into a percentage (0.5 × 100 = 50), rounds it, and prints it in a sentence.
+
+      **Output**
+      ```
+        home  kwh_per_m2 efficient
+      0   H1          95       yes
+      1   H2         210        no
+      2   H3         140        no
+      3   H4          60       yes
+      4   H5         180        no
+      5   H6         125       yes
+      50% of the homes are efficient
+      ```
+
+      **Worth noticing:** the condition is `< 130`, not `<= 130`. A home using exactly 130 kWh/m² would be labelled "no".
+
+  - id: explain_solar_growth
+    type: explain
+    title: "Tracking Solar Production"
+    min_words: 50
+    script: |
+      import pandas as pd
+
+      solar = pd.DataFrame({
+          "month": ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+          "kwh": [120, 180, 310, 420, 510, 540],
+      })
+
+      solar["cumulative_kwh"] = solar["kwh"].cumsum()
+      solar["growth_pct"] = (solar["kwh"].pct_change() * 100).round(1)
+
+      goal = 1000
+      month_reached = solar.loc[solar["cumulative_kwh"] >= goal, "month"].iloc[0]
+
+      print(solar)
+      print(f"The goal of {goal} kWh was reached in {month_reached}.")
+    instructions: |
+      This script analyses the monthly production of a school's solar panels in the first half of the year.
+
+      **New functions in this script**
+
+      - **`.cumsum()`** — the *cumulative sum*, or running total: each value is added to everything that came before it.
+        ```python
+        pd.Series([5, 3, 2]).cumsum()    # 5, 8, 10
+        ```
+      - **`.pct_change()`** — the change compared to the **previous** value, as a fraction (0.5 means +50%). The first value has no previous value, so its result is missing (`NaN`).
+        ```python
+        pd.Series([100, 150, 120]).pct_change()   # NaN, 0.5, -0.2
+        ```
+      - **`.round(1)`** — the method version of `round()`: rounds every value in the column to 1 decimal.
+
+      **A reminder:** `df.loc[condition, "column"]` selects the rows where the condition is `True`, and from those rows only the given column. `.iloc[0]` then takes the **first** of those values.
+
+      **Your task:**
+      Explain what this script does. Describe what the two new columns contain, and explain how line 12 finds the month.
+    starter_code: |
+      What does the script do overall?
+
+
+      Step by step (you can refer to line numbers):
+
+
+      What does it print at the end?
+
+    hints:
+      - "Write out the running total for line 8 month by month: 120, 120 + 180, ..."
+      - "For line 9, February's growth is (180 − 120) / 120. Multiply by 100 to get a percentage"
+      - "Line 12: which months have a cumulative total of 1000 or more? Which of those comes first?"
+    solution: |
+      **Overall:** the script calculates the running total of solar production and the growth from month to month, and finds the first month in which the total production reached 1000 kWh.
+
+      **Step by step**
+      - **Lines 3–6:** create a DataFrame with the production (kWh) for January to June.
+      - **Line 8:** `.cumsum()` adds up the production month by month, giving a new column `cumulative_kwh`: 120, 300, 610, 1030, 1540, 2080.
+      - **Line 9:** `.pct_change()` calculates how much production grew compared to the month before, as a fraction. `* 100` turns that into a percentage and `.round(1)` rounds it to 1 decimal. January has no previous month, so it gets `NaN`. For example February: (180 − 120) / 120 = 0.5 → **50.0%**.
+      - **Line 11:** stores the goal, 1000 kWh, in a variable.
+      - **Line 12:** `solar["cumulative_kwh"] >= goal` is `True` for April, May and June. `.loc[..., "month"]` selects the month names of those rows, and `.iloc[0]` takes the first one: **"Apr"**.
+      - **Lines 14–15:** print the table and a sentence with the result.
+
+      **Output**
+      ```
+        month  kwh  cumulative_kwh  growth_pct
+      0   Jan  120             120         NaN
+      1   Feb  180             300        50.0
+      2   Mar  310             610        72.2
+      3   Apr  420            1030        35.5
+      4   May  510            1540        21.4
+      5   Jun  540            2080         5.9
+      The goal of 1000 kWh was reached in Apr.
+      ```
+
+      **Worth noticing:** production keeps **rising** every month, but the growth percentage goes **down** from March onwards. "Growing more slowly" is not the same as "shrinking". This is a common trap when reading percentage changes.
+
+  - id: explain_green_trips
+    type: explain
+    title: "Comparing Green Travel Between Cities"
+    min_words: 50
+    script: |
+      import pandas as pd
+
+      trips = pd.DataFrame({
+          "city": ["Utrecht", "Utrecht", "Amsterdam", "Rotterdam",
+                   "Amsterdam", "Eindhoven", "Utrecht", "Rotterdam"],
+          "mode": ["bike", "car", "bike", "car", "tram", "bike", "bike", "bike"],
+          "km":   [4.2, 12.5, 3.1, 18.0, 6.4, 5.5, 2.8, 7.1],
+      })
+
+      green_modes = ["bike", "tram", "walk"]
+      green = trips[trips["mode"].isin(green_modes)]
+
+      km_per_city = green.groupby("city")["km"].sum()
+      top_two = km_per_city.nlargest(2)
+
+      print(km_per_city)
+      print(top_two)
+    instructions: |
+      This script uses a small travel survey to compare how many kilometres people travel in a "green" way in four cities.
+
+      **New functions in this script**
+
+      - **`.isin(list)`** — checks for every value whether it appears in the list, and gives `True` or `False`. It works like `==`, but for several allowed values at once.
+        ```python
+        pd.Series(["NL", "BE", "US"]).isin(["NL", "BE", "DE"])   # True, True, False
+        ```
+      - **`.nlargest(n)`** — keeps only the `n` largest values, sorted from largest to smallest.
+        ```python
+        pd.Series([4, 9, 1, 7]).nlargest(2)   # 9, 7
+        ```
+
+      **A reminder:** `df.groupby("column")["other"].sum()` groups the rows by the values in `"column"`, and adds up `"other"` within each group. The group names are sorted alphabetically.
+
+      **Your task:**
+      Explain what this script does. Which trips are left after line 11, and what do the two printed results show?
+    starter_code: |
+      What does the script do overall?
+
+
+      Step by step (you can refer to line numbers):
+
+
+      What does it print at the end?
+
+    hints:
+      - "Line 11 works like a filter: df[condition]. Which modes are in green_modes, and which trips have one of those modes?"
+      - "\"walk\" is in green_modes, but does any trip use it?"
+      - "For line 13, add up the km of the remaining trips per city. Utrecht: 4.2 + 2.8"
+    solution: |
+      **Overall:** the script keeps only the trips made by bike, tram or on foot, adds up the green kilometres per city, and shows the two cities with the most green kilometres.
+
+      **Step by step**
+      - **Lines 3–8:** create a DataFrame with 8 trips: the city, the mode of transport, and the distance in km.
+      - **Line 10:** a list of the modes of transport that count as green.
+      - **Line 11:** `trips["mode"].isin(green_modes)` is `True` for every trip by bike or tram, and `False` for the two car trips. Using that as a filter keeps **6 trips** and removes the car trips (Utrecht 12.5 km and Rotterdam 18.0 km). Nobody walked, so `"walk"` in the list doesn't change anything.
+      - **Line 13:** groups the green trips by city and adds up the km per city: Amsterdam 3.1 + 6.4 = 9.5, Eindhoven 5.5, Rotterdam 7.1, Utrecht 4.2 + 2.8 = 7.0.
+      - **Line 14:** `.nlargest(2)` keeps the two highest totals: Amsterdam (9.5) and Rotterdam (7.1).
+      - **Lines 16–17:** print both results.
+
+      **Output**
+      ```
+      city
+      Amsterdam    9.5
+      Eindhoven    5.5
+      Rotterdam    7.1
+      Utrecht      7.0
+      Name: km, dtype: float64
+      city
+      Amsterdam    9.5
+      Rotterdam    7.1
+      Name: km, dtype: float64
+      ```
+
+      **Worth noticing:** the first result is sorted **alphabetically** by city (that's what `groupby` does), while the second is sorted by **value**, from high to low (that's what `.nlargest()` does). Also, Utrecht had the most trips overall but doesn't make the top two: only kilometres count, not the number of trips.
+
+  - id: explain_emission_categories
+    type: explain
+    title: "Categorising Countries by Emissions"
+    min_words: 60
+    script: |
+      import pandas as pd
+
+      def classify_emissions(tonnes):
+          if tonnes < 5:
+              return "low"
+          elif tonnes < 10:
+              return "medium"
+          else:
+              return "high"
+
+      countries = pd.DataFrame({
+          "country": ["netherlands", "france", "poland",
+                      "sweden", "germany", "luxembourg"],
+          "co2_per_person": [8.1, 4.6, 8.0, 3.6, 7.9, 13.1],
+      })
+
+      countries["country"] = countries["country"].str.title()
+      countries["category"] = countries["co2_per_person"].apply(classify_emissions)
+      counts = countries["category"].value_counts()
+
+      print(countries)
+      for category, n in zip(counts.index, counts.values):
+          print(f"{category}: {n} countries")
+    instructions: |
+      This script puts countries into categories based on their CO₂ emissions per person (in tonnes per year; the numbers are illustrative). It combines several new functions with a function the script defines itself.
+
+      **New functions in this script**
+
+      - **`.str.title()`** — makes the first letter of every word a capital letter, and the rest lowercase. (You've already seen `.str.upper()`, which works the same way.)
+        ```python
+        pd.Series(["new york", "PARIS"]).str.title()   # "New York", "Paris"
+        ```
+      - **`.apply(function)`** — calls `function` once for **every** value in a column, and collects the results in a new column. Note that you write the function's name **without** parentheses: `.apply()` does the calling for you.
+        ```python
+        def double(x):
+            return x * 2
+
+        pd.Series([1, 2, 3]).apply(double)   # 2, 4, 6
+        ```
+      - **`zip(a, b)`** — walks through two lists (or other sequences) at the same time, giving you one item from each per step.
+        ```python
+        for name, age in zip(["Ana", "Ben"], [21, 34]):
+            print(name, age)     # Ana 21, then Ben 34
+        ```
+
+      **A reminder:** `.value_counts()` counts how often each value appears, sorted from most to least common. The values themselves are in `.index`, the counts in `.values`.
+
+      **Your task:**
+      Explain what this script does. Explain what the function on lines 3–9 does, which category every country gets, and what the loop on lines 22–23 prints.
+    starter_code: |
+      What does the script do overall?
+
+
+      Step by step (you can refer to line numbers):
+
+
+      What does it print at the end?
+
+    hints:
+      - "Lines 3–9 only define the function: nothing happens until it is called. Where is it called?"
+      - "Go through the six emission values one by one and follow the if/elif/else: which return line does each one reach?"
+      - "On line 22, zip pairs each category name in counts.index with its count in counts.values"
+      - "Look closely at the very last line of the output. Is the sentence for 'high' grammatically correct?"
+    solution: |
+      **Overall:** the script tidies up the country names, labels each country "low", "medium" or "high" based on its CO₂ emissions per person, and counts how many countries fall into each category.
+
+      **Step by step**
+      - **Lines 3–9:** define a function `classify_emissions` that takes one number and returns a label: below 5 → `"low"`, from 5 up to (not including) 10 → `"medium"`, 10 or more → `"high"`. Defining it doesn't run it yet.
+      - **Lines 11–15:** create a DataFrame with six countries (written in lowercase) and their emissions.
+      - **Line 17:** `.str.title()` capitalises the names ("netherlands" → "Netherlands") and overwrites the `country` column.
+      - **Line 18:** `.apply(classify_emissions)` calls the function once for every emission value and stores the labels in a new column `category`: Netherlands, Poland and Germany → **medium**; France and Sweden → **low**; Luxembourg → **high**.
+      - **Line 19:** `.value_counts()` counts the labels: medium 3, low 2, high 1 (sorted from most to least common).
+      - **Line 21:** prints the table with the new column.
+      - **Lines 22–23:** `zip` pairs every category with its count, and the loop prints one sentence per category.
+
+      **Output**
+      ```
+             country  co2_per_person category
+      0  Netherlands             8.1   medium
+      1       France             4.6      low
+      2       Poland             8.0   medium
+      3       Sweden             3.6      low
+      4      Germany             7.9   medium
+      5   Luxembourg            13.1     high
+      medium: 3 countries
+      low: 2 countries
+      high: 1 countries
+      ```
+
+      **Worth noticing:**
+      - The last line says "1 countries": the script always adds "countries", even when there's only one. The script runs without errors, but the output isn't quite right. Reading the output critically is part of reading code.
+      - The function checks `tonnes < 5` **first**. That's why `elif tonnes < 10` only needs one condition: any value that reaches the `elif` is already known to be 5 or more.

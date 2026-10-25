@@ -26,6 +26,17 @@ exercises:
       - `isinstance(variable, int)` — returns `True` or `False`
       - `type(variable)` — returns the type directly
 
+      **Calculating a value is not the same as showing it**
+
+      A line like `isinstance(my_value, int)` does work out the answer (`True`), but it doesn't display it — Python calculates the result and then throws it away. To see the result, put `print( )` around it:
+
+      ```python
+      isinstance(my_value, int)          # calculated, but nothing appears
+      print(isinstance(my_value, int))   # displays: True
+      ```
+
+      If you've used Jupyter notebooks, this may surprise you: Jupyter automatically shows the value of the **last line** in a cell. This app (like any normal Python script) only shows what you explicitly `print()`.
+
       **Your task:**
       1. Create a variable `my_value` with the integer `42`
       2. Print `isinstance(my_value, int)` — should print `True`
@@ -54,57 +65,6 @@ exercises:
       my_value = 42
       print(isinstance(my_value, int))
       print(type(my_value))
-
-  - id: string_vs_number
-    title: Text vs Numbers — An Important Distinction
-    instructions: |
-      Any value between quotes is understood as **text** by Python — even if it looks like a number:
-
-      ```python
-      variable_numeric = 42   # this is the number 42
-      variable_text = "42"    # this is the text "42"
-      ```
-
-      This distinction matters because Python behaves differently depending on the type. For example, multiplying text by a number does not give you a larger number — it **repeats** the text:
-
-      ```python
-      variable_text = "42"
-      variable_text * 2
-      # Result: '4242'   ← not a number, still text!
-      ```
-
-      It's good practice — especially when loading data from an external source — to check that what you expect to be numbers really are numbers.
-
-      **Your task:**
-      1. Create `variable_text = "42"`
-      2. Print `isinstance(variable_text, str)` — should be `True`
-      3. Print `variable_text * 2` — observe what happens
-    starter_code: |
-      # Assign the text value
-      variable_text =
-
-      # Check its type
-
-
-      # Multiply it by 2 and print the result
-
-
-    tests:
-      - type: output_contains
-        value: "True"
-      - type: output_contains
-        value: "4242"
-      - type: assert
-        code: "assert isinstance(variable_text, str), 'variable_text should be a string'"
-        description: "variable_text should be the string \"42\""
-    hints:
-      - "variable_text = \"42\" — note the quotes"
-      - "print(isinstance(variable_text, str))"
-      - "print(variable_text * 2)"
-    solution: |
-      variable_text = "42"
-      print(isinstance(variable_text, str))
-      print(variable_text * 2)
 
   - id: type_conversion
     title: Converting Between Types
@@ -290,41 +250,6 @@ exercises:
       temperature = 21.5
       print(isinstance(temperature, float))
       print(type(temperature))
-
-  - id: practice_string_vs_number
-    title: "Practice: Text vs Numbers"
-    instructions: |
-      More practice with the text-vs-number distinction — this time with a code that *looks* numeric but is stored as text.
-
-      **Your task:**
-      1. Create `product_code = "007"`
-      2. Print `isinstance(product_code, str)` — should be `True`
-      3. Print `product_code * 3` — observe what happens
-    starter_code: |
-      # Assign the text value
-
-
-      # Check its type
-
-
-      # Multiply it by 3 and print the result
-
-    tests:
-      - type: output_contains
-        value: "True"
-      - type: output_contains
-        value: "007007007"
-      - type: assert
-        code: "assert isinstance(product_code, str), 'product_code should be a string'"
-        description: "product_code should be the string \"007\""
-    hints:
-      - "product_code = \"007\" — note the quotes"
-      - "print(isinstance(product_code, str))"
-      - "print(product_code * 3)"
-    solution: |
-      product_code = "007"
-      print(isinstance(product_code, str))
-      print(product_code * 3)
 
   - id: practice_type_conversion
     title: "Practice: Converting Between Types"

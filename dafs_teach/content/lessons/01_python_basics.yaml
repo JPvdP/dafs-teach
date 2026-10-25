@@ -19,14 +19,68 @@
 # ─────────────────────────────────────────────────────────────
 
 title: Python Basics
-description: Your very first steps in Python — creating variables, the difference between text/number/boolean values, the print() function, and basic math.
+description: Your very first steps in Python — importing packages, creating and overwriting variables, text/number/boolean values, lists, NumPy arrays and matrices, dictionaries, and reading error messages.
 
 exercises:
 
-  - id: create_a_variable
-    title: "Creating Your First Variable"
+  - id: import_packages
+    title: "Importing Packages"
     instructions: |
-      Think of a **variable** as a labeled box: you put a value inside it, and give it a name so you can find and reuse it later.
+      Python comes with a set of basic, built-in **functions** — like `print()`, `len()`, and `max()`. A function is a ready-made tool that does one specific job. Think of Python as a basic toolbox with some essential tools available right away.
+
+      However, sometimes you need more specialized tools. Other people have written many extra functions for specific purposes, and they share them in **packages**. A package is like an extra toolbox full of new functions that someone else has created for a specific purpose.
+
+      The three packages you'll use most in this course:
+
+      - **`pandas`** — for data in **tables** (like Excel). Each column in a table can hold a different kind of data: text, numbers, dates, or `True`/`False`. Most of your data analysis will happen in pandas.
+      - **`numpy`** — for **arrays and matrices**: grids of values that are all of the same type, which in practice means **numbers**. Because everything is a number, numpy can do math on large amounts of data very quickly. (pandas is actually built on top of numpy.)
+      - **`matplotlib`** — for making **graphs**.
+
+      Packages only need to be **installed once** (more on that in a later lesson). After that, you **import** them each time you start working:
+
+      ```python
+      import pandas as pd
+      ```
+
+      It is common practice to give packages a short nickname. For `pandas` we use `pd`, for `numpy` we use `np`, and for `matplotlib.pyplot` we use `plt`. This way, instead of writing `pandas.DataFrame()`, you can write `pd.DataFrame()`. You'll see exactly how that works when we use numpy later in this lesson.
+
+      **Your task:**
+      Import the three core data analysis packages with their standard short names:
+      - `numpy` as `np`
+      - `pandas` as `pd`
+      - `matplotlib.pyplot` as `plt`
+
+      Then print `"Packages loaded!"`.
+    starter_code: |
+      # Import the three packages here
+
+
+      print("Packages loaded!")
+    tests:
+      - type: output_equals
+        value: "Packages loaded!"
+      - type: assert
+        code: |
+          import sys
+          assert 'numpy' in sys.modules, 'numpy was not imported. Use: import numpy as np'
+          assert 'pandas' in sys.modules, 'pandas was not imported. Use: import pandas as pd'
+          assert 'matplotlib.pyplot' in sys.modules, 'matplotlib.pyplot was not imported. Use: import matplotlib.pyplot as plt'
+        description: "numpy, pandas and matplotlib.pyplot must all be imported"
+    hints:
+      - "import numpy as np"
+      - "import pandas as pd"
+      - "import matplotlib.pyplot as plt"
+    solution: |
+      import numpy as np
+      import pandas as pd
+      import matplotlib.pyplot as plt
+
+      print("Packages loaded!")
+
+  - id: create_a_variable
+    title: "Creating Variables"
+    instructions: |
+      A **variable** is like a labeled storage box: you put a value inside it, and give it a name so you can find and reuse it later.
 
       In Python, you create a variable by writing a name, an `=` sign, and the value you want to store:
 
@@ -34,7 +88,22 @@ exercises:
       score = 10
       ```
 
-      Here we created a variable called `score` and stored the value `10` in it. From now on, wherever you write `score`, Python uses `10`.
+      Why do we create variables?
+
+      - **Convenience:** Instead of typing the same value repeatedly, you store it once and use its name.
+      - **Flexibility:** If the value changes, you only update it in one place.
+      - **Reusability:** Once stored, a value can be reused as many times as you want, which makes your code cleaner.
+
+      ```python
+      # Without variables
+      print(20 + 30)
+
+      # With variables
+      a = 20
+      b = 30
+      result = a + b
+      print(result)
+      ```
 
       A few rules for variable names:
       - Names can contain letters, numbers, and underscores (`_`)
@@ -42,47 +111,85 @@ exercises:
       - Names cannot contain spaces — use `student_name`, not `student name`
       - Names are case-sensitive: `score` and `Score` are different variables
 
-      To display a variable's value on the screen, use Python's built-in `print()` function with the variable name between the parentheses:
+      **Showing a value with `print()`**
+
+      Creating a variable doesn't show anything on the screen — Python just stores the value quietly. To actually *see* a value, you use the `print()` function: write `print`, then put the thing you want to see between the parentheses `( )`.
+
+      This code:
 
       ```python
-      print(score)   # displays: 10
+      city = "Utrecht"
+      population = 360000
+      print(city)
+      print(population)
       ```
 
-      We'll explain `print()` properly in a couple of exercises — for now, just know that writing `print(variable_name)` shows its value.
+      produces this output when you click **▶ Run**:
+
+      ```
+      Utrecht
+      360000
+      ```
+
+      Notice that `print(city)` shows the *value* stored in `city` (`Utrecht`), not the word "city". Each `print()` puts its result on a new line.
+
+      **Doing math**
+
+      You can use Python as a calculator, with these operators:
+
+      | Operator | Meaning | Example | Result |
+      |----------|---------|---------|--------|
+      | `+` | addition | `5 + 2` | `7` |
+      | `-` | subtraction | `5 - 2` | `3` |
+      | `*` | multiplication | `5 * 2` | `10` |
+      | `/` | division | `5 / 2` | `2.5` |
+      | `**` | power | `5 ** 2` | `25` |
+
+      Python follows the normal order of operations (multiplication and division before addition and subtraction), and you can use parentheses `()` to control the order.
 
       **Your task:**
-      1. Create a variable called `student_name` and set it to the text `"Sam"`
-      2. Create a variable called `student_age` and set it to the number `21`
-      3. Print `student_name`
-      4. Print `student_age`
+      1. Create a variable `a` with the value `45`
+      2. Create a variable `b` with the value `18`
+      3. Create `result` equal to `a + b`, `difference` equal to `a - b`, and `ratio` equal to `a / b`
+      4. Print `result`, `difference` and `ratio`, one per line
     starter_code: |
-      # Create your variables below
+      # Create your variables here
+      a =
+      b =
 
+      result =
+      difference =
+      ratio =
 
-      # Now print them
-
-
+      print(result)
+      print(difference)
+      print(ratio)
     tests:
-      - type: output_contains
-        value: "Sam"
-      - type: output_contains
-        value: "21"
+      - type: output_equals
+        value: "63\n27\n2.5"
       - type: assert
-        code: "assert student_name == 'Sam', 'student_name should be the text Sam'"
-        description: "`student_name` should equal \"Sam\""
-      - type: assert
-        code: "assert student_age == 21, 'student_age should be the number 21'"
-        description: "`student_age` should equal 21"
+        code: |
+          assert a == 45, 'a should be 45'
+          assert b == 18, 'b should be 18'
+          assert result == 63, 'result should be a + b'
+          assert difference == 27, 'difference should be a - b'
+          assert ratio == 2.5, 'ratio should be a / b'
+        description: "a=45, b=18, and result, difference and ratio calculated from them"
     hints:
-      - "A variable is created with: name = value"
-      - "Text needs quotes: student_name = \"Sam\""
-      - "Numbers don't need quotes: student_age = 21"
-      - "print(student_name) displays the value stored in student_name"
+      - "a = 45 stores the value 45 in the variable a"
+      - "result = a + b adds a and b together"
+      - "Use - for subtraction and / for division"
     solution: |
-      student_name = "Sam"
-      student_age = 21
-      print(student_name)
-      print(student_age)
+      a = 45
+      b = 18
+
+      result = a + b
+      difference = a - b
+      ratio = a / b
+
+      print(result)
+      print(difference)
+      print(ratio)
 
   - id: text_number_boolean
     title: "Text, Numbers, and Booleans"
@@ -95,7 +202,7 @@ exercises:
       | number (`int`/`float`) | A whole or decimal number | Just the digits, no quotes | `42` or `3.14` |
       | boolean (`bool`) | True or False | Exactly `True` or `False` — capital letter, no quotes | `True` |
 
-      The quotes matter a lot: `5` is a number you can do math with, but `"5"` is text — Python treats it completely differently (more on that in a later lesson).
+      The quotes matter a lot: `5` is a number you can do math with, but `"5"` is text — Python treats it completely differently (more on that in the next exercise).
 
       Booleans represent yes/no or on/off situations — for example "is the course open for enrollment? `True`".
 
@@ -137,249 +244,526 @@ exercises:
       print(n_students)
       print(is_open)
 
-  - id: using_print
-    title: "The print() Function"
+  - id: numbers_vs_text_math
+    title: "Numbers vs. Text That Looks Like a Number"
     instructions: |
-      `print()` is a **function** — ready-made code that does something when you call it. `print()` displays whatever you put between the parentheses on the screen.
+      Earlier you saw that `5` and `"5"` are different things. Let's see what that means in practice, because it **will** happen to you when working with data.
+
+      Take these two variables:
 
       ```python
-      print("Hello!")   # displays: Hello!
-      print(42)         # displays: 42
+      a = 30      # a number
+      b = "42"    # text — it only *looks* like a number
       ```
 
-      You can print more than one thing at once by separating the values with a comma. Python automatically puts a space between them:
+      Now watch what the same operators do to each of them:
+
+      | Code | Result | Why |
+      |------|--------|-----|
+      | `a * 2` | `60` | Number × 2 is normal math |
+      | `b * 2` | `"4242"` | Text × 2 means "repeat the text twice" |
+      | `b + b` | `"4242"` | `+` on text glues the pieces together |
+      | `a + b` | **`TypeError`** | Python refuses to add a number to text |
+
+      So `"42" * 2` doesn't give you `84` — it gives you `4242`, and Python won't warn you about it. That's what makes this mistake dangerous: your code runs, but the answer is wrong.
+
+      **Why this matters for data:** when you load a spreadsheet or CSV file, a column of numbers is sometimes read in as text (for example because one cell contains `"n/a"` or a stray space). Calculations on that column then give strange results or errors.
+
+      The fix is to **convert** the text to a number first, using `int()` (for whole numbers) or `float()` (for decimals):
 
       ```python
-      name = "Sam"
-      age = 21
-      print("Name:", name, "Age:", age)
-      # displays: Name: Sam Age: 21
-      ```
-
-      Every call to `print()` starts a new line in the output — this is how we'll ask you to show results throughout the rest of this course.
-
-      **Your task:**
-      Using the variables `subject = "Python"` and `grade = 8` (already created for you):
-      1. Print the text `"Subject:"` together with the variable `subject`, on one line
-      2. Print the text `"Grade:"` together with the variable `grade`, on one line
-    starter_code: |
-      subject = "Python"
-      grade = 8
-
-      # Print "Subject:" and the subject variable together
-
-
-      # Print "Grade:" and the grade variable together
-
-    tests:
-      - type: output_equals
-        value: "Subject: Python\nGrade: 8"
-    hints:
-      - "Separate each thing you want to print with a comma"
-      - "print(\"Subject:\", subject)"
-      - "print(\"Grade:\", grade)"
-    solution: |
-      subject = "Python"
-      grade = 8
-
-      print("Subject:", subject)
-      print("Grade:", grade)
-
-  - id: basic_math_operations
-    title: "Basic Mathematical Operations"
-    instructions: |
-      Python can be used as a calculator. The main mathematical operators are:
-
-      | Operator | Meaning | Example | Result |
-      |----------|---------|---------|--------|
-      | `+` | addition | `5 + 2` | `7` |
-      | `-` | subtraction | `5 - 2` | `3` |
-      | `*` | multiplication | `5 * 2` | `10` |
-      | `/` | division | `5 / 2` | `2.5` |
-      | `**` | power | `5 ** 2` | `25` |
-
-      Just like in regular math, Python follows the standard order of operations (multiplication/division before addition/subtraction), and you can use parentheses `()` to control the order.
-
-      ```python
-      x = 4
-      y = 3
-      total = x + y
-      print(total)   # 7
+      int(b)        # 42 — now a real number
+      a + int(b)    # 72
       ```
 
       **Your task:**
-      Using `price = 12` and `quantity = 4` (already created for you):
-      1. Create a variable `total_cost` equal to `price * quantity`
-      2. Create a variable `discounted_cost` equal to `total_cost - 10`
-      3. Print `total_cost`
-      4. Print `discounted_cost`
+      1. Create a variable `a` set to the number `30`
+      2. Create a variable `b` set to the text `"42"`
+      3. Create `double_a` equal to `a * 2`, and `double_b` equal to `b * 2`
+      4. Create `total` equal to `a` plus `b` converted to a number with `int()`
+      5. Print `double_a`, `double_b` and `total`, one per line
+
+      Before you click Run, try to predict what each line will print!
     starter_code: |
-      price = 12
-      quantity = 4
-
-      # Calculate the total cost
-      total_cost =
-
-      # Subtract a discount of 10
-      discounted_cost =
-
-      print(total_cost)
-      print(discounted_cost)
-    tests:
-      - type: output_equals
-        value: "48\n38"
-      - type: assert
-        code: |
-          assert total_cost == 48, 'total_cost should be price * quantity = 48'
-          assert discounted_cost == 38, 'discounted_cost should be total_cost - 10 = 38'
-        description: "total_cost=48, discounted_cost=38"
-    hints:
-      - "total_cost = price * quantity"
-      - "discounted_cost = total_cost - 10"
-    solution: |
-      price = 12
-      quantity = 4
-
-      total_cost = price * quantity
-      discounted_cost = total_cost - 10
-
-      print(total_cost)
-      print(discounted_cost)
-
-  - id: practice_more_variables
-    title: "Practice: Creating Variables"
-    instructions: |
-      Time to practice on your own, using a new example.
-
-      **Your task:**
-      You're building a small profile for a library member. Create:
-      1. `member_name` — text, set to `"Jordan"`
-      2. `books_borrowed` — a number, set to `3`
-      3. `has_late_fee` — a boolean, set to `False`
-
-      Then print all three, one per line.
-    starter_code: |
-      # Create the three variables
+      # 1-2. Create a (a number) and b (text)
 
 
-      # Print them, one per line
+      # 3. Multiply both by 2
+      double_a =
+      double_b =
 
-    tests:
-      - type: output_contains
-        value: "Jordan"
-      - type: output_contains
-        value: "3"
-      - type: output_contains
-        value: "False"
-      - type: assert
-        code: |
-          assert member_name == 'Jordan', 'member_name should be the text "Jordan"'
-          assert books_borrowed == 3, 'books_borrowed should be the number 3'
-          assert has_late_fee == False, 'has_late_fee should be False'
-        description: "member_name=\"Jordan\", books_borrowed=3, has_late_fee=False"
-    hints:
-      - "member_name = \"Jordan\""
-      - "books_borrowed = 3"
-      - "has_late_fee = False — no quotes, and a capital F"
-    solution: |
-      member_name = "Jordan"
-      books_borrowed = 3
-      has_late_fee = False
-
-      print(member_name)
-      print(books_borrowed)
-      print(has_late_fee)
-
-  - id: practice_print_formats
-    title: "Practice: Printing Multiple Values"
-    instructions: |
-      Let's practice combining variables and text with `print()`.
-
-      **Your task:**
-      Using `item = "Notebook"` and `price = 4` (already created for you), write three `print()` calls that produce exactly this output:
-
-      ```
-      Item: Notebook
-      Price: 4
-      Notebook costs 4 dollars
-      ```
-    starter_code: |
-      item = "Notebook"
-      price = 4
-
-      # 1. Print "Item:" and item together
-
-
-      # 2. Print "Price:" and price together
-
-
-      # 3. Print item, "costs", price, and "dollars" together
-
-    tests:
-      - type: output_equals
-        value: |
-          Item: Notebook
-          Price: 4
-          Notebook costs 4 dollars
-    hints:
-      - "print(\"Item:\", item)"
-      - "print(\"Price:\", price)"
-      - "print(item, \"costs\", price, \"dollars\")"
-    solution: |
-      item = "Notebook"
-      price = 4
-
-      print("Item:", item)
-      print("Price:", price)
-      print(item, "costs", price, "dollars")
-
-  - id: practice_math_word_problem
-    title: "Practice: A Math Word Problem"
-    instructions: |
-      Let's use math operators to solve a small word problem.
-
-      You're calculating the total cost of a shopping cart: 3 items at $8 each, plus a flat shipping fee of $5.
-
-      **Your task:**
-      Using `item_price = 8`, `quantity = 3`, and `shipping = 5` (already created for you):
-      1. Create `subtotal` equal to `item_price * quantity`
-      2. Create `total` equal to `subtotal + shipping`
-      3. Print `subtotal`
-      4. Print `total`
-    starter_code: |
-      item_price = 8
-      quantity = 3
-      shipping = 5
-
-      # Calculate the subtotal
-      subtotal =
-
-      # Calculate the total
+      # 4. Add a and b, after converting b to a number
       total =
 
-      print(subtotal)
+      print(double_a)
+      print(double_b)
       print(total)
     tests:
       - type: output_equals
-        value: "24\n29"
+        value: "60\n4242\n72"
       - type: assert
         code: |
-          assert subtotal == 24, 'subtotal should be item_price * quantity = 24'
-          assert total == 29, 'total should be subtotal + shipping = 29'
-        description: "subtotal=24, total=29"
+          assert a == 30, 'a should be the number 30 (no quotes)'
+          assert b == '42', 'b should be the text "42" (with quotes)'
+          assert total == 72, 'total should be a + int(b) = 72'
+        description: "a=30, b=\"42\", total=72"
     hints:
-      - "subtotal = item_price * quantity"
-      - "total = subtotal + shipping"
+      - "a = 30 has no quotes; b = \"42\" has quotes"
+      - "double_a = a * 2 and double_b = b * 2"
+      - "a + b gives a TypeError — convert b first with int(b)"
+      - "total = a + int(b)"
     solution: |
-      item_price = 8
-      quantity = 3
-      shipping = 5
+      a = 30
+      b = "42"
 
-      subtotal = item_price * quantity
-      total = subtotal + shipping
+      double_a = a * 2
+      double_b = b * 2
 
-      print(subtotal)
+      total = a + int(b)
+
+      print(double_a)
+      print(double_b)
       print(total)
+
+  - id: overwriting_variables
+    title: "Overwriting Variables"
+    instructions: |
+      A variable holds **one** value at a time. If you assign a new value to a name that already exists, the old value is **replaced** — it's gone, and Python doesn't keep a copy.
+
+      ```python
+      plop = 10
+      print(plop)   # 10
+
+      plop = 20
+      print(plop)   # 20 — the 10 has been overwritten
+      ```
+
+      You can also use a variable's current value to calculate its new value:
+
+      ```python
+      plop = plop + 5
+      print(plop)   # 25
+      ```
+
+      Python first works out the right-hand side (`20 + 5`), and then stores the result back in `plop`.
+
+      **Why this matters for data:** later in the course you'll write things like `df = df[df["year"] > 2000]` — keeping only some rows of a dataset and storing the result under the *same* name. That's convenient, but the original data is now gone from that variable. If you make a mistake (filter the wrong rows, or run the same line twice), you can't simply "undo" it: you have to **go back and re-run your code from the beginning**, starting from loading the data.
+
+      This is especially tricky in Jupyter notebooks, where you can run cells one at a time and in any order. Running `plop = plop + 5` twice adds 5 twice! In this app, every click on **▶ Run** starts fresh from the top, so you won't have that problem here — but keep it in mind for later.
+
+      **Your task:**
+      You're tracking a factory's yearly CO₂ emissions (in tonnes).
+      1. Create `emissions` set to `120` and print it
+      2. The measurement was wrong — overwrite `emissions` with `95` and print it
+      3. A new filter reduces emissions by 15: set `emissions` to `emissions - 15` and print it
+    starter_code: |
+      # 1. Create emissions and print it
+
+
+      # 2. Overwrite emissions with 95 and print it
+
+
+      # 3. Reduce emissions by 15 and print it
+
+    tests:
+      - type: output_equals
+        value: "120\n95\n80"
+      - type: assert
+        code: "assert emissions == 80, f'emissions should end at 80, got {emissions}'"
+        description: "`emissions` should end at 80"
+    hints:
+      - "Start with emissions = 120, then print(emissions)"
+      - "Overwrite it by assigning again: emissions = 95"
+      - "emissions = emissions - 15 uses the current value (95) to calculate the new one"
+    solution: |
+      emissions = 120
+      print(emissions)
+
+      emissions = 95
+      print(emissions)
+
+      emissions = emissions - 15
+      print(emissions)
+
+  - id: lists_in_practice
+    title: "Lists: Many Values in One Variable"
+    instructions: |
+      So far each variable held a single value. But data almost always comes in **many** values: a temperature for every day, an energy reading for every hour, a name for every country. Creating a separate variable for each (`day1`, `day2`, `day3`, …) would be hopeless.
+
+      A **list** stores many values, in order, under one name. You write it with square brackets `[ ]` and separate the values with commas:
+
+      ```python
+      cities = ["Utrecht", "Amsterdam", "Rotterdam"]
+      ```
+
+      **Where you'll use lists in practice:**
+      - **A column of data** — the daily rainfall measurements from a weather station are naturally a list of numbers. In the next lesson you'll see that a pandas table is built from lists like these.
+      - **A selection** — e.g. the list of countries you want to include in your analysis: `["Netherlands", "Germany", "Belgium"]`
+      - **Repeating work** — later you'll *loop* over a list to do the same calculation for every item (every year, every file, every country).
+
+      A few things you can do with a list:
+
+      ```python
+      rainfall_mm = [4.2, 0.0, 11.5, 3.1]
+
+      rainfall_mm[0]     # 4.2  — the first item (Python counts from 0!)
+      len(rainfall_mm)   # 4    — how many items there are
+      sum(rainfall_mm)   # 18.8 — all items added up
+      ```
+
+      **Your task:**
+      A household's solar panels produced the following energy (in kWh) over five days. It's already stored in a list called `daily_energy_kwh`.
+      1. Print the energy produced on the **first** day
+      2. Create `n_days` with the number of days in the list (use `len()`) and print it
+      3. Create `total_energy` with the total over all days (use `sum()`) and print it
+    starter_code: |
+      daily_energy_kwh = [12.5, 9.8, 14.1, 11.0, 10.6]
+
+      # 1. Print the first day's energy
+
+
+      # 2. Number of days
+      n_days =
+      print(n_days)
+
+      # 3. Total energy
+      total_energy =
+      print(total_energy)
+    tests:
+      - type: output_equals
+        value: "12.5\n5\n58.0"
+      - type: assert
+        code: |
+          assert n_days == 5, 'n_days should be len(daily_energy_kwh) = 5'
+          assert abs(total_energy - 58.0) < 0.001, 'total_energy should be sum(daily_energy_kwh) = 58.0'
+        description: "n_days=5, total_energy=58.0"
+    hints:
+      - "The first item is at position 0: daily_energy_kwh[0]"
+      - "n_days = len(daily_energy_kwh)"
+      - "total_energy = sum(daily_energy_kwh)"
+    solution: |
+      daily_energy_kwh = [12.5, 9.8, 14.1, 11.0, 10.6]
+
+      print(daily_energy_kwh[0])
+
+      n_days = len(daily_energy_kwh)
+      print(n_days)
+
+      total_energy = sum(daily_energy_kwh)
+      print(total_energy)
+
+  - id: numpy_arrays
+    title: "NumPy Arrays: Lists Built for Math"
+    instructions: |
+      In the previous exercise you stored many values in a list. Lists are great for *keeping* values together, but they're not built for math. Look what happens:
+
+      ```python
+      prices = [10, 20, 30]
+
+      prices * 2   # [10, 20, 30, 10, 20, 30] — the list is repeated, just like text!
+      prices + 5   # TypeError: can only concatenate list (not "int") to list
+      ```
+
+      For calculations, we use a **NumPy array** instead. An array looks a lot like a list, but math is applied to **every value** in it:
+
+      ```python
+      import numpy as np
+
+      prices = np.array([10, 20, 30])
+
+      print(prices * 2)   # [20 40 60]
+      print(prices + 5)   # [15 25 35]
+      ```
+
+      **Calling a function from a package: `np.`**
+
+      `array()` is a function that lives in the numpy package. To use it, you write the package's short name, a **dot**, and the function name:
+
+      ```python
+      np.array( ... )
+      ```
+
+      Read the dot as **"from"**: `np.array` means *"the `array` function **from** numpy"*. The `np.` part tells Python which toolbox to look in. If you leave it out and write just `array( ... )`, Python doesn't know where to find it, and you get `NameError: name 'array' is not defined`. Every numpy function works this way — and in the next lesson, pandas works exactly the same: `pd.DataFrame( ... )`.
+
+      **What goes between the parentheses?**
+
+      Look closely at `np.array([10, 20, 30])`. There are two kinds of brackets:
+      - The round brackets `( )` belong to the **function call**, just like in `print( )`
+      - The square brackets `[ ]` are the **list** you hand to the function
+
+      The value you give a function between its parentheses is called an **argument**. Here, the argument is a list, and `np.array()` turns that list into an array.
+
+      **Arrays with rows and columns**
+
+      An array can also have rows and columns, like a grid. That's called a **matrix**. You make one from a list of lists, where each inner list is one row:
+
+      ```python
+      grid = np.array([[1, 2, 3],
+                       [4, 5, 6]])
+      print(grid)
+      ```
+
+      ```
+      [[1 2 3]
+       [4 5 6]]
+      ```
+
+      This matrix has 2 rows and 3 columns. Python describes that size as `(2, 3)`: **rows first, then columns**. You'll use that in the next exercise.
+
+      **Your task:**
+      A weather station measured these temperatures in °C: `12.0`, `15.5`, `9.0` and `20.0`.
+      1. Import `numpy` as `np`
+      2. Create an array called `temps_c` containing these four values
+      3. Convert all of them to °F at once, using the formula `temps_c * 1.8 + 32`, and store the result in `temps_f`
+      4. Print `temps_f`
+    starter_code: |
+      # 1. Import numpy
+
+
+      # 2. Create the array of temperatures in °C
+      temps_c =
+
+      # 3. Convert to °F
+      temps_f =
+
+      print(temps_f)
+    tests:
+      - type: output_contains
+        value: "53.6"
+      - type: output_contains
+        value: "68."
+      - type: assert
+        code: |
+          import numpy as _np
+          assert isinstance(temps_c, _np.ndarray), 'temps_c should be a NumPy array — create it with np.array([...])'
+          assert _np.allclose(temps_c, [12.0, 15.5, 9.0, 20.0]), 'temps_c should contain 12.0, 15.5, 9.0 and 20.0'
+          assert _np.allclose(temps_f, [53.6, 59.9, 48.2, 68.0]), 'temps_f should be temps_c * 1.8 + 32'
+        description: "temps_c should be a NumPy array, and temps_f the converted values"
+    hints:
+      - "Start with import numpy as np"
+      - "Put the values in a list, and the list inside np.array( ): np.array([12.0, 15.5, 9.0, 20.0])"
+      - "Math on an array is applied to every value: temps_f = temps_c * 1.8 + 32"
+    solution: |
+      import numpy as np
+
+      temps_c = np.array([12.0, 15.5, 9.0, 20.0])
+
+      temps_f = temps_c * 1.8 + 32
+
+      print(temps_f)
+
+  - id: numpy_matrix
+    title: "Creating a NumPy Matrix"
+    instructions: |
+      Typing out every value with `np.array()` works for small arrays. But often you want a matrix of a certain size, filled with a starting value. numpy has a function for that: `np.zeros()` creates a matrix filled with zeros.
+
+      ```python
+      import numpy as np
+
+      small_matrix = np.zeros((3, 3))
+      print(small_matrix)
+      ```
+
+      ```
+      [[0. 0. 0.]
+       [0. 0. 0.]
+       [0. 0. 0.]]
+      ```
+
+      (The dot in `0.` means these are decimal numbers: `0.0`.)
+
+      **Why the double parentheses `(( ))`?**
+
+      Each pair of round brackets has a different job:
+      - The **outer** brackets `np.zeros( ... )` belong to the function call, just like `np.array( ... )` in the previous exercise
+      - The **inner** brackets `(3, 3)` are the **argument**: the size of the matrix, written as *(rows, columns)*, just like the `(2, 3)` you saw in the previous exercise
+
+      A pair of values in round brackets like `(3, 3)` is called a **tuple**. It's similar to a list, but you can't change it afterwards. `np.zeros()` expects the whole size as **one** argument, so the rows and columns have to be grouped together in their own brackets.
+
+      If you forget the inner brackets and write `np.zeros(3, 3)`, numpy reads that as two separate arguments, and you get `TypeError: Cannot interpret '3' as a data type`.
+
+      Another example — 2 rows and 4 columns:
+
+      ```python
+      print(np.zeros((2, 4)))
+      ```
+
+      ```
+      [[0. 0. 0. 0.]
+       [0. 0. 0. 0.]]
+      ```
+
+      **Your task:**
+      1. Import `numpy` as `np`
+      2. Create a matrix of zeros with **2 rows and 5 columns**, stored in a variable called `small_matrix`
+      3. Print `small_matrix`
+    starter_code: |
+      import numpy as np
+
+      # Create a matrix of zeros with 2 rows and 5 columns
+      small_matrix =
+
+      print(small_matrix)
+    tests:
+      - type: output_contains
+        value: "0."
+      - type: assert
+        code: |
+          assert small_matrix.shape != (5, 2), 'You swapped rows and columns: the size is written as (rows, columns)'
+          assert small_matrix.shape == (2, 5), f'small_matrix should have 2 rows and 5 columns, but it has {small_matrix.shape[0]} rows and {small_matrix.shape[1]} columns'
+          assert (small_matrix == 0).all(), 'all values in the matrix should be zero'
+        description: "small_matrix should be a matrix of zeros with 2 rows and 5 columns"
+    hints:
+      - "np.zeros() creates a matrix of zeros"
+      - "The size goes in its own brackets, rows first: (2, 5)"
+      - "small_matrix = np.zeros((2, 5))"
+    solution: |
+      import numpy as np
+
+      small_matrix = np.zeros((2, 5))
+      print(small_matrix)
+
+  - id: matrix_operations
+    title: "Matrix Operations: Overwrite or Keep?"
+    instructions: |
+      Just like with numbers, you can do math on a whole matrix at once — the operation is applied to every value, as you saw with arrays.
+
+      Remember from the "Overwriting Variables" exercise that assigning to an existing name replaces its old value. With matrices (and later with data tables) you always have a choice: **overwrite** the original variable, or **create a new one**.
+
+      ```python
+      # Overwrites small_matrix — the original (all zeros) is lost
+      small_matrix = small_matrix + 3
+
+      # Creates a new variable — both the original and the new one are kept
+      small_matrix_3 = small_matrix + 3
+      ```
+
+      If you write the same name on both sides of the `=`, the variable is replaced. If you want to keep both versions, create a new variable with a different name. When working with data, keeping the original around is often the safer choice: if something goes wrong, you can compare with it, or start again from it.
+
+      **Your task:**
+      Starting from `small_matrix` (a 4×4 matrix of zeros, already provided):
+      1. Create `small_matrix_5` by adding `5` to every element of `small_matrix`, **without** changing `small_matrix`
+      2. Print `small_matrix` (should still be zeros)
+      3. Print `small_matrix_5` (should be all fives)
+    starter_code: |
+      import numpy as np
+
+      small_matrix = np.zeros((4, 4))
+
+      # Create small_matrix_5 without modifying small_matrix
+      small_matrix_5 =
+
+      print(small_matrix)
+      print(small_matrix_5)
+    tests:
+      - type: output_contains
+        value: "0."
+      - type: output_contains
+        value: "5."
+      - type: assert
+        code: |
+          assert (small_matrix == 0).all(), 'small_matrix should still be all zeros — store the result under a new name instead of overwriting it'
+          assert (small_matrix_5 == 5).all(), 'small_matrix_5 should be all fives'
+          assert small_matrix_5.shape == (4, 4), 'small_matrix_5 should still be a 4x4 matrix'
+        description: "small_matrix stays all zeros; small_matrix_5 is all fives"
+    hints:
+      - "Adding a number to a matrix adds it to every element"
+      - "Store the result under the new name: small_matrix_5 = small_matrix + 5"
+    solution: |
+      import numpy as np
+
+      small_matrix = np.zeros((4, 4))
+
+      small_matrix_5 = small_matrix + 5
+
+      print(small_matrix)
+      print(small_matrix_5)
+
+  - id: intro_dictionaries
+    title: "Dictionaries: Values With Labels"
+    instructions: |
+      A list keeps values **in order**, and you find them by position (`[0]`, `[1]`, …). Often it's more useful to find a value by a **name**. That's what a **dictionary** (`dict`) does: it stores pairs of a **key** (the label) and a **value**.
+
+      You write a dictionary with curly brackets `{ }`, with `key: value` pairs separated by commas:
+
+      ```python
+      station = {
+          "name": "De Bilt",
+          "temperature": 14.3,
+          "is_active": True,
+      }
+      ```
+
+      You look up a value by putting its key in square brackets:
+
+      ```python
+      print(station["name"])          # De Bilt
+      print(station["temperature"])   # 14.3
+      ```
+
+      And just like a normal variable, you can overwrite a value by assigning to its key:
+
+      ```python
+      station["temperature"] = 15.0
+      ```
+
+      **Why you need this for the next lesson:** the values in a dictionary can also be lists. A dictionary where every key is a column name and every value is a list of values is exactly how you'll build a pandas table (a *DataFrame*) in the next lesson:
+
+      ```python
+      data = {
+          "city": ["Utrecht", "Amsterdam", "Rotterdam"],
+          "bike_lanes_km": [420, 513, 300],
+      }
+      ```
+
+      Read it as: "the column `city` contains these three values, the column `bike_lanes_km` contains those three values".
+
+      **Your task:**
+      1. Create a dictionary called `country` with three keys: `"name"` set to `"Netherlands"`, `"capital"` set to `"Amsterdam"`, and `"renewable_share"` set to `15`
+      2. Print the value stored under `"name"`
+      3. New figures are in: overwrite `"renewable_share"` with `17`
+      4. Print the value stored under `"renewable_share"`
+    starter_code: |
+      # 1. Create the dictionary
+      country = {
+
+      }
+
+      # 2. Print the name
+
+
+      # 3. Update renewable_share to 17
+
+
+      # 4. Print renewable_share
+
+    tests:
+      - type: output_equals
+        value: "Netherlands\n17"
+      - type: assert
+        code: |
+          assert isinstance(country, dict), 'country should be a dictionary, written with { }'
+          assert country.get('name') == 'Netherlands', 'country["name"] should be "Netherlands"'
+          assert country.get('capital') == 'Amsterdam', 'country["capital"] should be "Amsterdam"'
+          assert country.get('renewable_share') == 17, 'country["renewable_share"] should be updated to 17'
+        description: "country should have name, capital and renewable_share=17"
+    hints:
+      - "Inside the { }, write each pair as \"key\": value, separated by commas"
+      - "country = {\"name\": \"Netherlands\", \"capital\": \"Amsterdam\", \"renewable_share\": 15}"
+      - "Look up a value with print(country[\"name\"])"
+      - "Overwrite a value with country[\"renewable_share\"] = 17"
+    solution: |
+      country = {
+          "name": "Netherlands",
+          "capital": "Amsterdam",
+          "renewable_share": 15,
+      }
+
+      print(country["name"])
+
+      country["renewable_share"] = 17
+
+      print(country["renewable_share"])
 
   - id: reading_error_messages
     title: "Reading Error Messages"

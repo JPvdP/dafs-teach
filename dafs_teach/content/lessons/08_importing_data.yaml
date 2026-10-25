@@ -61,6 +61,115 @@ exercises:
       print(df.shape)
       print(list(df.columns))
 
+  - id: file_paths
+    title: "File Paths: Telling Python Where Your File Is"
+    instructions: |
+      In `pd.read_csv("sample_data.csv")`, the text between the quotes is a **file path**: the address of the file on your computer. Python needs that address to find the file.
+
+      **What does a file path look like?**
+
+      A path lists the folders you go through to reach the file, from the top of your drive down to the file itself:
+
+      | System | Example path |
+      |--------|--------------|
+      | Windows | `C:\Users\Sam\Documents\DAFS\emissions.csv` |
+      | macOS | `/Users/sam/Documents/DAFS/emissions.csv` |
+
+      Windows separates folders with a **backslash** `\` and starts with a drive letter (`C:`). macOS and Linux use a **forward slash** `/`.
+
+      **Full path or just the file name?**
+
+      - A **full path** (like the examples above) always works, no matter where your script is.
+      - If you write **just the file name**, `pd.read_csv("emissions.csv")`, Python looks for the file only in the folder it is currently working in (the *working directory*). If the file is somewhere else, you get:
+        ```
+        FileNotFoundError: [Errno 2] No such file or directory: 'emissions.csv'
+        ```
+        You can check which folder Python is working in with:
+        ```python
+        import os
+        print(os.getcwd())
+        ```
+
+      When you're starting out, the full path is the easiest choice.
+
+      **How do I find the path of a file?**
+
+      - **Windows:** in File Explorer, right-click the file and choose **Copy as path**. (On Windows 10, hold **Shift** while you right-click.) The path is copied *with* quotes around it, so you can paste it straight between the parentheses.
+      - **macOS:** in Finder, select the file and press **Option + Cmd + C**. Or right-click the file, hold the **Option** key, and choose **Copy "emissions.csv" as Pathname**.
+      - **VS Code / Jupyter:** right-click the file in the file panel and choose **Copy Path**.
+
+      **The Windows backslash problem**
+
+      Inside Python text, a backslash `\` has a special meaning: it starts a *special character*. You've already seen `\t`, which means "tab". Similarly, `\n` means "new line". So when you paste a Windows path, Python misreads parts of it:
+
+      ```python
+      path = "C:\Users\Sam\data\new_emissions.csv"
+      ```
+
+      ```
+      SyntaxError: (unicode error) 'unicodeescape' codec can't decode bytes in position 2-3: truncated \UXXXXXXXX escape
+      ```
+
+      Here `\U` is the problem: Python thinks a special character code starts there. And even when there's no error, `\n` in `\new_emissions.csv` silently becomes a line break, so the path is wrong and pandas can't find the file.
+
+      There are three ways to fix this. All three work:
+
+      | Fix | Example | How it works |
+      |-----|---------|--------------|
+      | **Forward slashes** | `"C:/Users/Sam/data/new_emissions.csv"` | Windows also understands `/`, and `/` has no special meaning in Python |
+      | **Double backslashes** | `"C:\\Users\\Sam\\data\\new_emissions.csv"` | `\\` means "one real backslash" |
+      | **Raw string** | `r"C:\Users\Sam\data\new_emissions.csv"` | The `r` before the quotes tells Python to leave all backslashes alone |
+
+      The raw string is the quickest fix after pasting a path from File Explorer: just type an `r` in front of the opening quote. On macOS you don't need any of this, because paths use forward slashes.
+
+      Note that it's **back**slashes that need doubling on Windows. Forward slashes `/` never need to be doubled.
+
+      **Your task:**
+      The three lines below each contain the same broken Windows path. Click **Run** to see the error, then fix each line in a different way:
+      1. `path_forward`: replace the backslashes with forward slashes
+      2. `path_double`: double every backslash
+      3. `path_raw`: turn it into a raw string by adding `r` in front of the opening quote
+    starter_code: |
+      # 1. Fix with forward slashes
+      path_forward = "C:\Users\Sam\data\new_emissions.csv"
+
+      # 2. Fix with double backslashes
+      path_double = "C:\Users\Sam\data\new_emissions.csv"
+
+      # 3. Fix with a raw string
+      path_raw = "C:\Users\Sam\data\new_emissions.csv"
+
+      print(path_forward)
+      print(path_double)
+      print(path_raw)
+    tests:
+      - type: output_contains
+        value: "new_emissions.csv"
+      - type: assert
+        code: |
+          assert path_forward == "C:/Users/Sam/data/new_emissions.csv", 'path_forward should use forward slashes: "C:/Users/..."'
+          assert path_double == "C:\\Users\\Sam\\data\\new_emissions.csv", 'path_double should have every backslash doubled'
+          assert path_raw == r"C:\Users\Sam\data\new_emissions.csv", 'path_raw should be the original path with r in front of the quotes'
+          import re as _re
+          _src = open(__file__, encoding="utf-8").read()
+          assert _re.search(r"^path_raw\s*=\s*[rR]['\"]", _src, _re.M), 'path_raw should be a raw string: put r directly in front of the opening quote'
+        description: "all three paths should point to C:\\Users\\Sam\\data\\new_emissions.csv, each fixed in its own way"
+    hints:
+      - "Run the code first and read the error: Python trips over the \\U in C:\\Users"
+      - "path_forward = \"C:/Users/Sam/data/new_emissions.csv\""
+      - "path_double = \"C:\\\\Users\\\\Sam\\\\data\\\\new_emissions.csv\""
+      - "path_raw = r\"C:\\Users\\Sam\\data\\new_emissions.csv\""
+    solution: |
+      path_forward = "C:/Users/Sam/data/new_emissions.csv"
+
+      path_double = "C:\\Users\\Sam\\data\\new_emissions.csv"
+
+      path_raw = r"C:\Users\Sam\data\new_emissions.csv"
+
+      print(path_forward)
+      print(path_double)
+      print(path_raw)
+
   - id: read_csv_separator
     title: Reading Files with a Different Separator
     instructions: |

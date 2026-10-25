@@ -23,25 +23,25 @@
   lessons:
     - 01_python_basics
     - 02_pandas_intro
-    - 03_packages_and_variables
-    - 04_data_types_and_logic
-    - 05_installing_packages
+    - 03_data_types_and_logic
+    - 04_installing_packages
 
 - id: week2
   deadline: "2026-08-25T23:59:00"
   lessons:
-    - 06_print_and_functions
-    - 07_reading_scripts
-    - 08_if_else_elif
-    - 09_lists_and_dicts
-    - 10_importing_data
-    - 11_dataframe_operations
+    - 05_print_and_functions
+    - 06_if_else_elif
+    - 07_lists_and_dicts
+    - 08_importing_data
+    - 09_dataframe_operations
 
 - id: week3
   deadline: "2026-09-01T23:59:00"
   lessons:
-    - 12_reading_scripts_week2
-    - 13_for_loops
-    - 14_while_loops
-    - 15_loops_with_data
+    - 10_for_loops
+    - 11_while_loops
+    - 12_loops_with_data
+    - 13_reading_scripts
+    - 14_reading_scripts_dataframes
+    - 15_reading_unfamiliar_code
     - 16_exam_prep

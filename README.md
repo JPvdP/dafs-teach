@@ -79,13 +79,38 @@ exercises:
 | `output_equals` | The student's printed output must exactly equal `value` (whitespace stripped) |
 | `assert` | `code` is appended to the student's code and run — any exception counts as failure |
 
+### "Explain the script" exercises
+
+Instead of writing code, students can be asked to explain a script in their own
+words. Set `type: explain` and give the script to read; it is shown with line
+numbers. There are no tests: the exercise is completed once the explanation is
+at least `min_words` long (not counting the template), after which the model
+answer in `solution` is shown so students can compare.
+
+```yaml
+  - id: explain_something
+    type: explain
+    title: Exercise Title
+    min_words: 40                 # optional, default 30
+    script: |
+      # The code students have to read
+    instructions: |
+      Explain any functions students haven't seen before, then the task.
+    starter_code: |
+      Template shown in the explanation box (optional)
+    hints:
+      - "Hints work as usual"
+    solution: |
+      **Model explanation** in markdown, shown after submitting.
+```
+
 ### Checking module completions
 
 When a student finishes every exercise in a lesson, the app shows them a short
 completion code (under "🎓 Get completion code") to send you. Verify one with:
 
 ```bash
-dafs-teach verify "Alice Example" 03_packages_and_variables ABCDE-12345
+dafs-teach verify "Alice Example" 01_python_basics ABCDE-12345
 ```
 
 This prints `VALID` or `INVALID` — no shared database needed, the code is
