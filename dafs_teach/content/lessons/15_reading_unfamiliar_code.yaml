@@ -188,9 +188,7 @@ exercises:
         ```python
         pd.Series([100, 150, 120]).pct_change()   # NaN, 0.5, -0.2
         ```
-      - **`.round(1)`** — the method version of `round()`: rounds every value in the column to 1 decimal.
-
-      **A reminder:** `df.loc[condition, "column"]` selects the rows where the condition is `True`, and from those rows only the given column. `.iloc[0]` then takes the **first** of those values.
+      **Reminders:** `.round(1)` rounds every value in the column to 1 decimal. `df.loc[condition, "column"]` selects the rows where the condition is `True`, and from those rows only the given column. `.iloc[0]` then takes the **first** of those values.
 
       **Your task:**
       Explain what this script does. Describe what the two new columns contain, and explain how line 12 finds the month.

@@ -18,141 +18,75 @@
 #   solution     : reference solution (shown on request)
 # ─────────────────────────────────────────────────────────────
 
-title: Installing and Using Packages
-description: Learn how to install, import, and use Python packages — plus how to find help when you get stuck. We'll use pandas as our example throughout.
+title: Installing Packages and Finding Help
+description: Learn the difference between installing and importing a package, what to do when Python can't find one, and how to look up how a function works.
 
 exercises:
 
   - id: loading_a_package
-    title: "Loading (Importing) a Package"
+    title: "Installing vs. Importing a Package"
     instructions: |
-      Python comes with a lot built in, but for specialised work — like handling tables of data — you need **packages**: extra code written by other people that you can add to your toolbox.
+      In the first lesson you **imported** packages with `import pandas as pd`. But a package can only be imported if it is **installed** on your computer first. These are two different steps:
 
-      Before you can use a package, it needs to be **installed** on your computer. This is done once, in your **terminal** (not inside a Python script), using `pip` — Python's package installer:
+      | Step | Where | How often |
+      |------|-------|-----------|
+      | **Install** — download the package onto your computer | In the **terminal** (not in your Python script) | **Once** per computer |
+      | **Import** — load the package into your script | At the top of your **script** | **Every** script that uses it |
+
+      You install a package with `pip`, Python's package installer, in the terminal:
 
       ```bash
       pip install pandas
       ```
 
-      You only need to install a package once per computer (or per project environment). If you're using Anaconda, `conda install pandas` works too. Installing is a deliberate, one-time setup step — not something that happens as a side effect of running your code — so it belongs in the terminal, run by you, on purpose. Pandas is already installed for you in this app, so you won't run this command in these exercises, but you will need it the first time you set up a project on your own machine.
+      If you use Anaconda, `conda install pandas` works too. In this app pandas, numpy and matplotlib are already installed, so you won't need to install anything for the exercises. But you will need it the first time you work on your own computer.
 
-      Once a package is installed, you still need to **import** it into every script where you want to use it — installing makes it available on your computer, importing makes it available *in that specific script*:
+      Sometimes the name you install isn't the same as the name you import. For example, you install the machine learning package with `pip install scikit-learn`, but import it with `import sklearn`. The package's documentation always tells you both names.
 
-      ```python
-      import pandas
+      **When Python can't find a package**
+
+      If you import a package that Python can't find, you get a `ModuleNotFoundError`:
+
+      ```
+      ModuleNotFoundError: No module named 'seaborn'
       ```
 
-      From this point on in the script, anything inside the `pandas` package is available to you.
+      There are two possible causes:
+      1. **A typo** in the package name. Check the spelling first: it's the most common cause.
+      2. The package is **not installed** yet. Fix it by running `pip install seaborn` in the terminal (not in your script), and then run your script again.
 
       **Your task:**
-      1. Import the `pandas` package
-      2. Print `"pandas is ready to use"`
+      The script below gives a `ModuleNotFoundError`. Click **Run**, read the last line of the error, and fix the import so the script prints the table.
     starter_code: |
-      # Import pandas, then print "pandas is ready to use"
+      import panda as pd
 
+      df = pd.DataFrame({
+          "city": ["Utrecht", "Groningen"],
+          "solar_panels": [5200, 3100],
+      })
+
+      print(df)
     tests:
-      - type: output_equals
-        value: "pandas is ready to use"
+      - type: output_contains
+        value: "Groningen"
       - type: assert
         code: |
           import sys
-          assert 'pandas' in sys.modules, 'pandas was not imported. Use: import pandas'
+          assert 'pandas' in sys.modules, 'pandas was not imported. Check the spelling of the package name'
         description: "pandas must be imported"
     hints:
-      - "import pandas — this line goes at the top of your script"
-    solution: |
-      import pandas
-
-      print("pandas is ready to use")
-
-  - id: using_a_function
-    title: "Using a Function From a Package"
-    instructions: |
-      Once a package is imported, you can use the functions inside it with **dot notation**: `package_name.function_name()`.
-
-      ```python
-      import pandas
-
-      data = pandas.Series([10, 20, 30])
-      print(data)
-      ```
-
-      Here, `Series` is something provided by the `pandas` package — a one-dimensional list of values with labels. We reach it with a dot: `pandas.Series(...)`.
-
-      One more thing you'll need: a **list** — a way to group several values together, in order, using square brackets:
-
-      ```python
-      [4, 8, 15, 16, 23, 42]
-      ```
-
-      We'll cover lists properly in a later lesson, but pandas uses them constantly to build things like a Series, so it's worth seeing the syntax now: values separated by commas, wrapped in `[ ]`.
-
-      **Your task:**
-      1. Import `pandas`
-      2. Use `pandas.Series()` to create a Series from the list `[4, 8, 15, 16, 23, 42]`, stored in a variable called `numbers`
-      3. Print `numbers`
-    starter_code: |
-      # Import pandas, create a Series from [4, 8, 15, 16, 23, 42] called numbers, and print it
-
-    tests:
-      - type: output_contains
-        value: "4"
-      - type: output_contains
-        value: "42"
-      - type: assert
-        code: "assert list(numbers) == [4, 8, 15, 16, 23, 42], 'numbers should contain [4, 8, 15, 16, 23, 42]'"
-        description: "`numbers` should be a Series of [4, 8, 15, 16, 23, 42]"
-    hints:
-      - "import pandas"
-      - "numbers = pandas.Series([4, 8, 15, 16, 23, 42])"
-    solution: |
-      import pandas
-
-      numbers = pandas.Series([4, 8, 15, 16, 23, 42])
-      print(numbers)
-
-  - id: using_an_alias
-    title: "Using an Alias"
-    instructions: |
-      Typing `pandas.` before every function gets repetitive. It's standard practice to import a package with a shorter **alias**, using `as`:
-
-      ```python
-      import pandas as pd
-
-      data = pd.Series([10, 20, 30])
-      ```
-
-      `pd` now refers to the exact same package as `pandas` — just faster to type. You'll see these conventional aliases constantly:
-
-      | Package | Standard alias |
-      |---------|-----------------|
-      | `pandas` | `pd` |
-      | `numpy` | `np` |
-      | `matplotlib.pyplot` | `plt` |
-
-      **Your task:**
-      1. Import `pandas` with the alias `pd`
-      2. Use `pd.Series()` to create a Series from `[100, 200, 300]`, stored in a variable called `values`
-      3. Print `values`
-    starter_code: |
-      # Import pandas as pd, create a Series from [100, 200, 300] called values, and print it
-
-    tests:
-      - type: output_contains
-        value: "100"
-      - type: output_contains
-        value: "300"
-      - type: assert
-        code: "assert list(values) == [100, 200, 300], 'values should contain [100, 200, 300]'"
-        description: "`values` should be a Series of [100, 200, 300]"
-    hints:
+      - "Read the last line of the error message: which module name couldn't Python find?"
+      - "The package is called pandas, with an s at the end"
       - "import pandas as pd"
-      - "values = pd.Series([100, 200, 300])"
     solution: |
       import pandas as pd
 
-      values = pd.Series([100, 200, 300])
-      print(values)
+      df = pd.DataFrame({
+          "city": ["Utrecht", "Groningen"],
+          "solar_panels": [5200, 3100],
+      })
+
+      print(df)
 
   - id: finding_help
     title: "Finding Help With Functions"
@@ -187,3 +121,76 @@ exercises:
       import pandas as pd
 
       help(pd.Series)
+
+  - id: using_the_docs
+    title: "Using the Documentation to Learn a New Function"
+    instructions: |
+      Now let's use `help()` for what it's really for: finding out how to use a function you don't know yet.
+
+      A help page always follows the same structure. The most useful parts are:
+
+      - **The first line**, e.g. `round(self, decimals: 'int' = 0, ...)` — the function's name and its **arguments**. `decimals = 0` means the argument is called `decimals`, and if you don't give it, it is `0`.
+      - **The one-line summary** of what the function does.
+      - **Parameters** — an explanation of every argument.
+      - **Examples** — short pieces of code showing how it's used. Often the quickest way to understand a function.
+
+      Here is part of the help page you get with `help(pd.Series.round)`:
+
+      ```
+      round(self, decimals: 'int' = 0, *args, **kwargs) -> 'Series'
+          Round each value in a Series to the given number of decimals.
+
+          Parameters
+          ----------
+          decimals : int, default 0
+              Number of decimal places to round to. If decimals is negative,
+              it specifies the number of positions to the left of the decimal point.
+      ```
+
+      You can give an argument by its position, `.round(2)`, or by its **name**, `.round(decimals=2)`. Using the name makes your code easier to read.
+
+      **Your task:**
+      The temperatures below have far too many decimals.
+      1. Run `help(pd.Series.round)` yourself and read the help page (you can remove that line afterwards)
+      2. Use `.round()` with the `decimals` argument to round the `temp_c` column to **1 decimal**, and store the result back in the `temp_c` column
+      3. Print `df`
+    starter_code: |
+      import pandas as pd
+
+      df = pd.DataFrame({
+          "station": ["De Bilt", "Eelde", "Vlissingen", "Maastricht"],
+          "temp_c": [11.4637, 9.8251, 12.0549, 11.9912],
+      })
+
+      # 1. Read the help page
+
+
+      # 2. Round temp_c to 1 decimal
+
+
+      # 3. Print df
+
+    tests:
+      - type: output_contains
+        value: "Vlissingen"
+      - type: assert
+        code: |
+          assert df["temp_c"].tolist() == [11.5, 9.8, 12.1, 12.0], 'temp_c should be rounded to 1 decimal, and stored back in df["temp_c"]'
+        description: "the temp_c column should be rounded to 1 decimal"
+    hints:
+      - "help(pd.Series.round) shows the help page"
+      - "The argument for the number of decimals is called decimals"
+      - "df[\"temp_c\"] = df[\"temp_c\"].round(decimals=1)"
+    solution: |
+      import pandas as pd
+
+      df = pd.DataFrame({
+          "station": ["De Bilt", "Eelde", "Vlissingen", "Maastricht"],
+          "temp_c": [11.4637, 9.8251, 12.0549, 11.9912],
+      })
+
+      help(pd.Series.round)
+
+      df["temp_c"] = df["temp_c"].round(decimals=1)
+
+      print(df)

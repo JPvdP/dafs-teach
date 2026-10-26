@@ -1,6 +1,6 @@
 # DAFS Teaching App
 
-An interactive Python learning app for the **Data Analysis for Sustainability** course. Students work through lessons, write real Python code, and get instant feedback — all from their browser.
+An interactive Python learning app for the **Data Analytics For Sustainability** course. Students work through lessons, write real Python code, and get instant feedback — all from their browser.
 
 ## For students
 

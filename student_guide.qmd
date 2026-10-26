@@ -1,6 +1,6 @@
 ---
 title: "Getting started with the DAFS Teaching App"
-subtitle: "Data Analysis for Sustainability"
+subtitle: "Data Analytics For Sustainability"
 format:
   html:
     toc: true

@@ -35,10 +35,10 @@ exercises:
       - What is printed when the sum equals 7?
 
       **Your task:**
-      Run the script above (add `random.seed(42)` as the first line to make the result repeatable). Then extend it: add a variable `even_sums` that **counts how many times** the dice sum was even before finding 7. Print `even_sums` after the loop.
+      Run the script above (add `random.seed(11)` after the import to make the result repeatable). Then extend it: add a variable `even_sums` that **counts how many times** the dice sum was even before finding 7. Print `even_sums` after the loop.
     starter_code: |
       import random
-      random.seed(42)
+      random.seed(11)
 
       total_attempts = 0
       target_reached = False
@@ -67,14 +67,14 @@ exercises:
         code: |
           assert target_reached == True, "target_reached should be True after the loop"
           assert total_attempts >= 1, "at least one attempt must have been made"
-          assert even_sums >= 0, "even_sums should be a non-negative integer"
-        description: "Loop must terminate with target_reached=True and even_sums counted"
+          assert even_sums == 3, "even_sums is not correct yet. Look at the printed attempts: how many of those sums are even?"
+        description: "even_sums should count the even sums rolled before the 7"
     hints:
       - "if sum_dice % 2 == 0: even_sums += 1 — inside the else block"
       - "An even sum means the remainder when divided by 2 is 0"
     solution: |
       import random
-      random.seed(42)
+      random.seed(11)
 
       total_attempts = 0
       target_reached = False

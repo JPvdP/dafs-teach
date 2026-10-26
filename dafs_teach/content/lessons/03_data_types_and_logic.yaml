@@ -6,14 +6,7 @@ exercises:
   - id: numeric_types
     title: Checking Numeric Types
     instructions: |
-      A variable is a labeled container that holds information. An important distinction is the difference between **numerical** and **textual** values. When we assign a number, we can use it for mathematical operations. This needs to be differentiated from assigning the text `"42"`.
-
-      ```python
-      variable_numeric = 42    # a number
-      variable_text = "42"     # text — any value between quotes is understood as text
-      ```
-
-      Python has several core data types:
+      Every value in Python has a **type**. In the first lesson you met text, numbers and booleans, and saw that `42` and `"42"` behave very differently. Here are the official names of the core types:
 
       | Type | Description | Example |
       |------|-------------|---------|
@@ -148,22 +141,23 @@ exercises:
       y = 8
 
       # 1. Is x equal to 4?
-      print(x == 4)
+
 
       # 2. Is x equal to y?
-      print(x == y)
+
 
       # 3. Are both conditions true?
-      print(x == 4 and y == 8)
+
 
       # 4. Is at least one condition true?
-      print(x == 5 or y == 8)
+
     tests:
       - type: output_equals
         value: "True\nFalse\nTrue\nTrue"
     hints:
-      - "The starter code is nearly complete — just run it and check the output"
-      - "x == 4 is True, x == y is False (4 != 8), both is True, or is True (y==8)"
+      - "Put each comparison inside print( ), for example: print(x == 4)"
+      - "Use and when both conditions must be true: print(x == 4 and y == 8)"
+      - "Use or when one true condition is enough: print(x == 5 or y == 8)"
     solution: |
       x = 4
       y = 8

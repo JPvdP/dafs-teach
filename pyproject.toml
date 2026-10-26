@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "dafs-teach"
 version = "0.1.0"
-description = "Interactive Python for Data Analysis — teaching app"
+description = "Interactive Python teaching app for Data Analytics For Sustainability"
 requires-python = ">=3.10"
 dependencies = [
     "streamlit>=1.35.0",

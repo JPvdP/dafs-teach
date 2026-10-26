@@ -145,18 +145,17 @@ exercises:
       }
       df = pd.DataFrame(data)
 
-      # Part 1: for loop — print sustainable rows with EnergyUsage > 20
-      for index, row in df.iterrows():
-          if row["Sustainable"] and row["EnergyUsage"] > 20:
-              print(f"Region: {row['Region']}, Energy: {row['EnergyUsage']}")
+      # Part 1: for loop — print sustainable rows with EnergyUsage > 20,
+      # in the format "Region: A, Energy: 30"
 
-      # Part 2: while loop — cumulative sum of sustainable rows, stop when > 50
+
+
+      # Part 2: while loop — add up EnergyUsage of sustainable rows,
+      # stop as soon as cumulative is above 50
       cumulative = 0
-      i = 0
-      while cumulative <= 50 and i < len(df):
-          if df.iloc[i]["Sustainable"]:
-              cumulative += df.iloc[i]["EnergyUsage"]
-          i += 1
+      i = 0   # position of the row you're looking at
+
+
 
       print(cumulative)
     tests:
@@ -173,9 +172,11 @@ exercises:
           assert cumulative == 90, f"cumulative should be 90, got {cumulative}"
         description: "Filtered rows: 30, 50, 70. Cumulative stops at 90 (10+30+50 = 90 > 50)"
     hints:
+      - "Part 1: start with for index, row in df.iterrows(): and check both conditions inside the loop with if"
       - "Part 1: if row[\"Sustainable\"] and row[\"EnergyUsage\"] > 20:"
-      - "Part 2: the sustainable EnergyUsage values in order are 10, 30, 50, 70"
-      - "10+30=40 (<=50, continue), +50=90 (>50, stop) → print 90"
+      - "Part 2: keep looping while cumulative is 50 or less, and you haven't run out of rows: while cumulative <= 50 and i < len(df):"
+      - "Part 2: inside the loop, look at row df.iloc[i]. If it's sustainable, add its EnergyUsage to cumulative. Don't forget i += 1, or the loop never ends"
+      - "Part 2: the sustainable EnergyUsage values in order are 10, 30, 50, 70. 10+30=40 (<=50, continue), +50=90 (>50, stop)"
     solution: |
       import pandas as pd
 
