@@ -8,7 +8,7 @@ version = "0.1.0"
 description = "Interactive Python teaching app for Data Analytics For Sustainability"
 requires-python = ">=3.10"
 dependencies = [
-    "streamlit>=1.35.0",
+    "streamlit>=1.48.0",
     "pyyaml>=6.0",
     "pandas>=2.0",
     "numpy>=1.24",

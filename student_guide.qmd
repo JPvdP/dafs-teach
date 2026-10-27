@@ -50,9 +50,8 @@ Open your terminal application (often `Ctrl + Alt + T`).
 
 ::: {.callout-tip}
 ## `python` or `python3`?
-On some computers the command is `python3` instead of `python` (and `pip3`
-instead of `pip`). If `python --version` doesn't work, try `python3 --version`
-and use `python3` / `pip3` everywhere in this guide.
+On some computers the command is `python3` instead of `python`. If `python --version` doesn't work, try `python3 --version`
+and use `python3` everywhere in this guide.
 :::
 
 # Installing the app
@@ -60,18 +59,27 @@ and use `python3` / `pip3` everywhere in this guide.
 Copy the command below into your terminal and press Enter:
 
 ```bash
-pip install https://github.com/JPvdP/dafs-teach/archive/refs/heads/main.zip
+python -m pip install https://github.com/JPvdP/dafs-teach/archive/refs/heads/main.zip
 ```
 
 This downloads the app together with everything it needs (Streamlit, pandas,
 NumPy and matplotlib). It can take a minute or two the first time.
+
+::: {.callout-note}
+## Why `python -m pip` and not just `pip`?
+If you have more than one Python on your computer (for example Anaconda *and*
+Python from python.org), `pip` and `python` can belong to different ones. The
+installation then seems to work, but the app can't find its packages.
+`python -m pip` always installs into the Python you get when you type
+`python`.
+:::
 
 ::: {.callout-note collapse="true"}
 ## Already have Git installed?
 You can also install it with Git, which does the same thing:
 
 ```bash
-pip install git+https://github.com/JPvdP/dafs-teach.git
+python -m pip install git+https://github.com/JPvdP/dafs-teach.git
 ```
 :::
 
@@ -90,9 +98,40 @@ doesn't, look in the terminal for a line like
 ::: {.callout-important}
 ## Keep the terminal open
 The terminal window is what runs the app. If you close it, the app stops
-working in your browser. When you're done, go back to the terminal and press
-`Ctrl + C` to stop the app.
+working in your browser. Leave it open (you can minimise it) for as long as
+you're using the app.
 :::
+
+# Stopping the app
+
+When you're done, stop the app **in the terminal**, not in the browser:
+
+1. Go back to the terminal window where you typed `dafs-teach`, and click
+   inside it.
+2. Press **`Ctrl + C`** (also on a Mac: `Ctrl`, not `Cmd`).
+3. The terminal shows `Stopping...` and then its normal prompt again. The app
+   has now stopped. You can close the browser tab and the terminal.
+
+On Windows you may be asked `Terminate batch job (Y/N)?`. Type `Y` and press
+Enter. If nothing happens after `Ctrl + C`, wait a few seconds or press it a
+second time.
+
+::: {.callout-warning}
+## Closing the browser tab does not stop the app
+If you only close the browser tab, the app keeps running in the terminal. If
+you then start `dafs-teach` again in a new terminal, you end up with **two
+copies** of the app running at the same time. The second one opens on a
+different address (`localhost:8502` instead of `localhost:8501`), and it's
+easy to lose track of which tab belongs to which copy.
+
+So: always stop the app with `Ctrl + C` before you start it again. And if you
+just closed the tab by accident, you don't need to restart anything: type
+`localhost:8501` in your browser's address bar to get back to the running
+app.
+:::
+
+Your progress is saved after every exercise you run, so stopping the app never
+loses any work.
 
 # Using the app
 
@@ -129,10 +168,11 @@ Brightspace as proof you completed the module.
 
 # Updating the app
 
-New lessons are added during the course. When we announce an update, run:
+New lessons are added during the course. When we announce an update, first
+stop the app if it's running (see [Stopping the app]), then run:
 
 ```bash
-pip install --upgrade https://github.com/JPvdP/dafs-teach/archive/refs/heads/main.zip
+python -m pip install --upgrade https://github.com/JPvdP/dafs-teach/archive/refs/heads/main.zip
 ```
 
 Then start the app again with `dafs-teach`. Your progress is kept.
@@ -141,6 +181,12 @@ Then start the app again with `dafs-teach`. Your progress is kept.
 
 - **Where is my progress stored?** In a folder called `.dafs_teach` in your
   home folder. Nothing about you is uploaded anywhere.
+- **A file called `output.csv` appeared on my computer.** Some exercises
+  practise saving data to a file. Those files end up in the folder your
+  terminal was in when you started the app (usually your home folder). They're
+  harmless, and you can delete them.
+- **Only you can open the app.** The app only accepts connections from your
+  own computer, so classmates on the same Wi-Fi can't open it.
 - **Anonymous progress reports.** After a weekly deadline has passed, the app
   may send your instructor an *anonymous* summary of how the class did on that
   week's exercises (for example, how many attempts an exercise took). Your name
@@ -161,12 +207,34 @@ external command")
   python -m dafs_teach
   ```
 
-**`pip: command not found`**
-: Use `python -m pip` instead of `pip`, for example:
+**`No module named pip`**
+: Your Python was installed without pip. Run `python -m ensurepip --upgrade`,
+  then try the installation again.
+
+**A permission error during installation** (`Permission denied`, `Access is
+denied`, or `Could not install packages due to an OSError`)
+: This often happens on laptops managed by the university, where you don't have
+  administrator rights. Add `--user` to install the app just for yourself:
 
   ```bash
-  python -m pip install https://github.com/JPvdP/dafs-teach/archive/refs/heads/main.zip
+  python -m pip install --user https://github.com/JPvdP/dafs-teach/archive/refs/heads/main.zip
   ```
+
+  If `dafs-teach` is then "not found", start the app with
+  `python -m dafs_teach` (see above).
+
+**`error: externally-managed-environment`** (Mac or Linux)
+: Your Python is managed by Homebrew or by your Linux system, and it doesn't
+  allow installing packages into it. Don't work around this with
+  `--break-system-packages`. Instead, install Python from
+  [python.org](https://www.python.org/downloads/) or install
+  [Anaconda](https://www.anaconda.com/download), open a new terminal, and run
+  the installation command again.
+
+**`No module named dafs_teach`**
+: The app was installed into a different Python than the one `python` starts.
+  Install it again with `python -m pip install ...` (exactly as in
+  [Installing the app]), then start it with `python -m dafs_teach`.
 
 **An error saying Python 3.10 or higher is required**
 : Your Python is too old. Install a newer version (see [What you need]) and try
@@ -176,9 +244,12 @@ external command")
 : Check that the terminal running `dafs-teach` is still open. If not, start the
   app again.
 
-**Port 8501 is already in use**
-: You probably have the app running in another terminal already. Use that one,
-  or close it with `Ctrl + C` and start again.
+**The app opens on `localhost:8502` (or 8503, …) instead of `localhost:8501`**,
+or a message says **port 8501 is already in use**
+: Another copy of the app is still running, probably in a terminal you
+  forgot about or minimised. Find that terminal and stop it with `Ctrl + C`
+  (see [Stopping the app]), or simply close all terminal windows. Then start
+  the app again: it opens on `localhost:8501` once more.
 
 **Something else?**
 : Copy the full error message from the terminal and bring it to the lab

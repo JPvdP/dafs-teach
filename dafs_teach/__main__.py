@@ -7,7 +7,16 @@ from streamlit.web import cli as stcli
 
 def run_app():
     app_path = str(Path(__file__).parent / "app.py")
-    sys.argv = ["streamlit", "run", app_path]
+    # Without showEmailPrompt=false, a first-time Streamlit user gets an "Email:"
+    # question in the terminal and the app doesn't start until they press Enter.
+    # address=localhost: by default Streamlit listens on all network connections,
+    # so classmates on campus Wi-Fi could open the app, and Windows Firewall asks
+    # for permission.
+    sys.argv = [
+        "streamlit", "run", app_path,
+        "--server.showEmailPrompt=false",
+        "--server.address=localhost",
+    ]
     sys.exit(stcli.main())
 
 

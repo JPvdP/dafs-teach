@@ -16,7 +16,16 @@ class RunResult:
     failed_test_idx: int = -1  # index of the first failing test, -1 if all pass
 
 
-def _run_file(path: str, timeout: int = 10) -> tuple[str, str, bool, bool]:
+# Generous, because the first import of pandas/matplotlib on a fresh (Windows)
+# laptop can take well over 10 seconds while caches are built.
+TIMEOUT_SECONDS = 30
+
+# UTF-8 mode: on Windows, piped output otherwise uses the locale encoding
+# (e.g. cp1252), and printing a character like "₂" crashes the student's code.
+_CHILD_ENV = {**os.environ, "PYTHONUTF8": "1", "PYTHONIOENCODING": "utf-8"}
+
+
+def _run_file(path: str, timeout: int = TIMEOUT_SECONDS) -> tuple[str, str, bool, bool]:
     """Run a Python file, return (stdout, stderr, crashed, timed_out).
 
     `crashed` is based on the exit code, not on stderr, so warnings (which also
@@ -27,6 +36,9 @@ def _run_file(path: str, timeout: int = 10) -> tuple[str, str, bool, bool]:
             [sys.executable, path],
             capture_output=True,
             text=True,
+            encoding="utf-8",
+            errors="replace",
+            env=_CHILD_ENV,
             timeout=timeout,
         )
         return result.stdout, result.stderr, result.returncode != 0, False
@@ -46,7 +58,7 @@ def run_code(student_code: str, tests: List) -> RunResult:
         os.unlink(student_path)
 
     if timed_out:
-        return RunResult("", "", True, False, "Your code timed out after 10 seconds. Check for infinite loops.")
+        return RunResult("", "", True, False, f"Your code timed out after {TIMEOUT_SECONDS} seconds. Check for infinite loops.")
 
     if crashed and not stdout:
         # Pure error — no output at all
