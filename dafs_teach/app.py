@@ -48,6 +48,30 @@ lessons = get_lessons()
 lessons_by_id = {l.id: l for l in lessons}
 tracker = get_tracker()
 
+
+def lesson_label(lesson: Lesson) -> str:
+    # Lesson ids start with their number ("05_print_and_functions"), so the
+    # number students see always matches the order in the lessons folder.
+    return f"Lesson {int(lesson.id.split('_')[0])}: {lesson.title}"
+
+
+def lessons_by_week() -> list[tuple[str, list[Lesson]]]:
+    """Group lessons under their weekly deadline, in deadline order.
+
+    Lessons that belong to no deadline are listed last, under "More lessons".
+    """
+    groups = []
+    placed = set()
+    for week, dl in enumerate(sorted(get_deadlines(), key=lambda d: d.deadline), start=1):
+        week_lessons = [lessons_by_id[i] for i in dl.lessons if i in lessons_by_id]
+        placed.update(l.id for l in week_lessons)
+        due = f"{dl.deadline:%A} {dl.deadline.day} {dl.deadline:%B %Y}"
+        groups.append((f"Week {week} · deadline {due}", week_lessons))
+    rest = [l for l in lessons if l.id not in placed]
+    if rest:
+        groups.append(("More lessons", rest))
+    return groups
+
 # ── Anonymous deadline reporting (once per app launch) ─────────────────────────
 
 if "deadline_check_done" not in st.session_state:
@@ -143,47 +167,53 @@ def render_lesson_browser():
 
     all_progress = tracker.get_all_progress(st.session_state.student_name)
 
-    for lesson in lessons:
-        completed = all_progress.get(lesson.id, {})
-        n_done = sum(1 for ex in lesson.exercises if completed.get(ex.id, {}).get("completed"))
-        n_total = len(lesson.exercises)
-        pct = n_done / n_total if n_total else 0
+    for heading, week_lessons in lessons_by_week():
+        st.header(heading, divider="gray")
+        for lesson in week_lessons:
+            render_lesson_card(lesson, all_progress)
 
-        with st.container(border=True):
-            c1, c2 = st.columns([3, 1])
-            with c1:
-                st.subheader(lesson.title)
-                st.caption(lesson.description)
-                st.progress(pct, text=f"{n_done}/{n_total} exercises completed")
-            with c2:
-                st.write("")
-                st.write("")
-                if st.button("Open", key=f"open_{lesson.id}", type="primary"):
-                    # Jump to first incomplete exercise
-                    first_incomplete = next(
-                        (i for i, ex in enumerate(lesson.exercises)
-                         if not completed.get(ex.id, {}).get("completed")),
-                        0,
-                    )
-                    go_to_lesson(lesson.id, first_incomplete)
-                    st.rerun()
 
-            if n_total and n_done == n_total:
-                n_viewed_solution = sum(
-                    1 for ex in lesson.exercises if completed.get(ex.id, {}).get("solution_views", 0) > 0
+def render_lesson_card(lesson: Lesson, all_progress: dict):
+    completed = all_progress.get(lesson.id, {})
+    n_done = sum(1 for ex in lesson.exercises if completed.get(ex.id, {}).get("completed"))
+    n_total = len(lesson.exercises)
+    pct = n_done / n_total if n_total else 0
+
+    with st.container(border=True):
+        c1, c2 = st.columns([3, 1])
+        with c1:
+            st.subheader(lesson_label(lesson))
+            st.caption(lesson.description)
+            st.progress(pct, text=f"{n_done}/{n_total} exercises completed")
+        with c2:
+            st.write("")
+            st.write("")
+            if st.button("Open", key=f"open_{lesson.id}", type="primary"):
+                # Jump to first incomplete exercise
+                first_incomplete = next(
+                    (i for i, ex in enumerate(lesson.exercises)
+                     if not completed.get(ex.id, {}).get("completed")),
+                    0,
                 )
-                if n_viewed_solution:
-                    st.caption(
-                        f"💡 You viewed the solution on {n_viewed_solution}/{n_total} exercises in this "
-                        "lesson — worth revisiting those on your own to make sure it sticks."
-                    )
+                go_to_lesson(lesson.id, first_incomplete)
+                st.rerun()
 
-                code = generate_code(st.session_state.student_name, lesson.id)
-                with st.expander("🎓 Get completion code"):
-                    st.markdown(
-                        "Upload this code to Brightspace as proof you finished this module:"
-                    )
-                    st.code(code, language="text")
+        if n_total and n_done == n_total:
+            n_viewed_solution = sum(
+                1 for ex in lesson.exercises if completed.get(ex.id, {}).get("solution_views", 0) > 0
+            )
+            if n_viewed_solution:
+                st.caption(
+                    f"💡 You viewed the solution on {n_viewed_solution}/{n_total} exercises in this "
+                    "lesson — worth revisiting those on your own to make sure it sticks."
+                )
+
+            code = generate_code(st.session_state.student_name, lesson.id)
+            with st.expander("🎓 Get completion code"):
+                st.markdown(
+                    "Upload this code to Brightspace as proof you finished this module:"
+                )
+                st.code(code, language="text")
 
 
 # ── Sidebar ───────────────────────────────────────────────────────────────────
@@ -199,7 +229,7 @@ def render_sidebar():
 
         if st.session_state.current_lesson_id:
             lesson = lessons_by_id[st.session_state.current_lesson_id]
-            st.markdown(f"**{lesson.title}**")
+            st.markdown(f"**{lesson_label(lesson)}**")
 
             completed = tracker.get_completed(
                 st.session_state.student_name, lesson.id
@@ -218,7 +248,7 @@ def render_sidebar():
                 n_done = sum(1 for ex in lesson.exercises if completed.get(ex.id, {}).get("completed"))
                 n_total = len(lesson.exercises)
                 icon = "✅" if n_done == n_total else "⭕"
-                st.markdown(f"{icon} {lesson.title} ({n_done}/{n_total})")
+                st.markdown(f"{icon} {lesson_label(lesson)} ({n_done}/{n_total})")
 
 
 # ── Exercise view ─────────────────────────────────────────────────────────────
@@ -232,7 +262,7 @@ def render_exercise():
 
     # ── Header
     st.caption(COURSE_BANNER)
-    st.markdown(f"#### {lesson.title}  ›  Exercise {idx + 1}/{len(lesson.exercises)}")
+    st.markdown(f"#### {lesson_label(lesson)}  ›  Exercise {idx + 1}/{len(lesson.exercises)}")
     st.subheader(exercise.title)
     st.divider()
 

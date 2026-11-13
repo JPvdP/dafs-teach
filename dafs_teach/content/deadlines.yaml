@@ -15,28 +15,29 @@
 # a student's report isn't sent more than once per deadline.
 # `lessons` lists the lesson ids (matching the .yaml filenames in
 # content/lessons/, without the .yaml extension) that belong to that
-# deadline/week.
+# deadline/week. The home page groups the lessons by these weeks, in
+# deadline order, and shows each week's deadline.
 # ─────────────────────────────────────────────────────────────
 
 - id: week1
-  deadline: "2026-08-18T23:59:00"
+  deadline: "2026-11-25T23:59:00"
   lessons:
     - 01_python_basics
     - 02_pandas_intro
     - 03_data_types_and_logic
     - 04_installing_packages
+    - 05_print_and_functions
 
 - id: week2
-  deadline: "2026-08-25T23:59:00"
+  deadline: "2026-12-02T23:59:00"
   lessons:
-    - 05_print_and_functions
     - 06_if_else_elif
     - 07_lists_and_dicts
     - 08_importing_data
     - 09_dataframe_operations
 
 - id: week3
-  deadline: "2026-09-01T23:59:00"
+  deadline: "2026-12-09T23:59:00"
   lessons:
     - 10_for_loops
     - 11_while_loops
