@@ -17,6 +17,10 @@ DATA_DIR = Path.home() / ".dafs_teach"
 DATA_DIR.mkdir(exist_ok=True)
 
 COURSE_BANNER = "Data Analytics For Sustainability || Python Track || 2026"
+THANKS_NOTE = (
+    "🙏 A big thank you to the students of the 2026 class for reporting errors "
+    "and helping to make this app better!"
+)
 
 st.set_page_config(
     page_title="DAFS Teaching App",
@@ -171,6 +175,9 @@ def render_lesson_browser():
         st.header(heading, divider="gray")
         for lesson in week_lessons:
             render_lesson_card(lesson, all_progress)
+
+    st.divider()
+    st.caption(THANKS_NOTE)
 
 
 def render_lesson_card(lesson: Lesson, all_progress: dict):
