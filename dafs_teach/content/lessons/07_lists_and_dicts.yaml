@@ -3,278 +3,6 @@ description: Learn two essential Python data structures, lists for ordered colle
 
 exercises:
 
-  - id: create_list
-    title: Creating and Accessing Lists
-    instructions: |
-      A **list** in Python is a data structure used to store multiple items in a single variable. Think of it as a container that keeps things organised, like a box with numbered compartments.
-
-      We use lists because instead of creating lots of separate variables:
-
-      ```python
-      Techno_1 = "Wind Energy"
-      Techno_2 = "Solar Energy"
-      Techno_3 = "Water Energy"
-      ```
-
-      We can store the same information in one object:
-
-      ```python
-      Technologies = ["Wind Energy", "Solar Energy", "Water Energy"]
-      ```
-
-      Accessing elements uses the **index** (position), which starts at **0**:
-
-      ```python
-      Technologies[0]   # "Wind Energy"   ← first element
-      Technologies[1]   # "Solar Energy"  ← second element
-      Technologies[-1]  # "Water Energy"  ← last element
-      ```
-
-      **Your task:**
-      1. Create a list called `Technologies` with three items: `"Wind Energy"`, `"Solar Energy"`, `"Water Energy"`
-      2. Print the **second** element (index 1)
-      3. Print the **last** element using index `-1`
-      4. Print the **total number** of items using `len()`
-    starter_code: |
-      Technologies = [        ]
-
-      # Print the second element
-
-
-      # Print the last element
-
-
-      # Print the number of items
-
-
-    tests:
-      - type: output_contains
-        value: "Solar Energy"
-      - type: output_contains
-        value: "Water Energy"
-      - type: output_contains
-        value: "3"
-      - type: assert
-        code: |
-          assert Technologies == ["Wind Energy", "Solar Energy", "Water Energy"]
-          assert len(Technologies) == 3
-        description: "Technologies should have exactly these 3 items"
-    hints:
-      - "Technologies = [\"Wind Energy\", \"Solar Energy\", \"Water Energy\"]"
-      - "print(Technologies[1])  # second element"
-      - "print(Technologies[-1])  # last element"
-      - "print(len(Technologies))  # count"
-    solution: |
-      Technologies = ["Wind Energy", "Solar Energy", "Water Energy"]
-
-      print(Technologies[1])
-      print(Technologies[-1])
-      print(len(Technologies))
-
-  - id: list_operations
-    title: Building Lists Dynamically
-    instructions: |
-      You can start with an empty list and **append** items to it one by one:
-
-      ```python
-      # Creating an empty list
-      my_list = []
-
-      # Adding items with .append()
-      my_list.append("Wind Energy")
-      my_list.append("Solar Energy")
-      ```
-
-      This is useful when you are collecting results inside a loop, or building a list from multiple sources:
-
-      ```python
-      data_files = []
-      data_files.append("pollution.csv")
-      data_files.append("population.csv")
-      data_files.append("gdp.json")
-      ```
-
-      **Your task:**
-      1. Create an empty list called `energy_sources`
-      2. Append these three items to it: `"Solar"`, `"Wind"`, `"Hydro"`
-      3. Print the length of the list
-      4. Print the last item using index `-1`
-    starter_code: |
-      # Start with an empty list
-      energy_sources = []
-
-      # Append three items
-
-
-      # Print the length
-
-
-      # Print the last item
-
-
-    tests:
-      - type: output_contains
-        value: "3"
-      - type: output_contains
-        value: "Hydro"
-      - type: assert
-        code: |
-          assert energy_sources == ["Solar", "Wind", "Hydro"], f"Got {energy_sources}"
-          assert len(energy_sources) == 3
-        description: "energy_sources should contain Solar, Wind, Hydro in that order"
-    hints:
-      - "energy_sources.append(\"Solar\")"
-      - "print(len(energy_sources))"
-      - "print(energy_sources[-1])"
-    solution: |
-      energy_sources = []
-
-      energy_sources.append("Solar")
-      energy_sources.append("Wind")
-      energy_sources.append("Hydro")
-
-      print(len(energy_sources))
-      print(energy_sources[-1])
-
-  - id: create_dict
-    title: Creating Dictionaries
-    instructions: |
-      While lists let you access elements by their **position** (index), dictionaries let you access elements by a **meaningful label** (key). This is like a labelled box system: you give each box a special name and store a value in it.
-
-      ```python
-      technology_efficiency = {"Solar": 24, "Wind": 19, "Water": 22}
-      print(technology_efficiency["Solar"])  # prints 24
-      ```
-
-      A dictionary is a collection of **key-value pairs**, written with curly braces `{}`. You access a value using its key, not a number.
-
-      Use a dictionary when you want to look up items quickly by a **meaningful label**, not by a number. Dictionaries support very fast lookup by key, while with a list, searching by value can take much longer for large datasets.
-
-      To create a dictionary with initial data:
-
-      ```python
-      info = {
-          "name": "Alice",
-          "age": 30,
-          "job": "Data Scientist"
-      }
-      ```
-
-      **Your task:**
-      1. Create a dictionary `technology_efficiency` with these key-value pairs:
-         - `"Solar"` → `24`
-         - `"Wind"` → `19`
-         - `"Water"` → `22`
-      2. Print the efficiency of `"Solar"`
-      3. Print the efficiency of `"Wind"`
-    starter_code: |
-      technology_efficiency = {
-          # add your key-value pairs here
-      }
-
-      # Print the efficiency of Solar
-
-
-      # Print the efficiency of Wind
-
-
-    tests:
-      - type: output_equals
-        value: "24\n19"
-      - type: assert
-        code: |
-          assert technology_efficiency["Solar"] == 24
-          assert technology_efficiency["Wind"] == 19
-          assert technology_efficiency["Water"] == 22
-        description: "Dictionary should have Solar=24, Wind=19, Water=22"
-    hints:
-      - "\"Solar\": 24,, note the colon between key and value"
-      - "print(technology_efficiency[\"Solar\"])"
-    solution: |
-      technology_efficiency = {
-          "Solar": 24,
-          "Wind": 19,
-          "Water": 22,
-      }
-
-      print(technology_efficiency["Solar"])
-      print(technology_efficiency["Wind"])
-
-  - id: dict_operations
-    title: Working with Dictionaries
-    instructions: |
-      Dictionaries are mutable, you can add, update, or remove entries after creation:
-
-      ```python
-      info = {"name": "Alice", "age": 30}
-
-      # Add a new key
-      info["city"] = "Utrecht"
-
-      # Update an existing key
-      info["age"] = 31
-
-      # Check if a key exists
-      print("name" in info)   # True
-      ```
-
-      You can also loop over a dictionary:
-
-      ```python
-      for key, value in info.items():
-          print(f"{key}: {value}")
-      ```
-
-      **Your task:**
-      1. Create a dictionary `researcher` with:
-         - `"name"` → `"Alice"`
-         - `"age"` → `30`
-         - `"institution"` → `"Utrecht University"`
-      2. Add a new key `"field"` with the value `"Sustainability"`
-      3. Print the value of `"field"`
-      4. Print the total number of keys using `len()`
-    starter_code: |
-      researcher = {
-          "name": "Alice",
-          "age": 30,
-          "institution": "Utrecht University",
-      }
-
-      # Add the "field" key
-
-
-      # Print the value of "field"
-
-
-      # Print the number of keys
-
-
-    tests:
-      - type: output_contains
-        value: "Sustainability"
-      - type: output_contains
-        value: "4"
-      - type: assert
-        code: |
-          assert researcher["field"] == "Sustainability"
-          assert len(researcher) == 4
-        description: "researcher should have 4 keys including 'field'"
-    hints:
-      - "researcher[\"field\"] = \"Sustainability\""
-      - "print(researcher[\"field\"])"
-      - "print(len(researcher))"
-    solution: |
-      researcher = {
-          "name": "Alice",
-          "age": 30,
-          "institution": "Utrecht University",
-      }
-
-      researcher["field"] = "Sustainability"
-
-      print(researcher["field"])
-      print(len(researcher))
-
   - id: dict_iteration
     title: "Iterating Over a Dictionary"
     instructions: |
@@ -284,16 +12,26 @@ exercises:
       capitals = {"NL": "Amsterdam", "DE": "Berlin", "FR": "Paris"}
 
       for country, capital in capitals.items():
-          print(country, "→", capital)
+          print(f"The capital of {country} is {capital}")
+      ```
+
+      ```
+      The capital of NL is Amsterdam
+      The capital of DE is Berlin
+      The capital of FR is Paris
       ```
 
       This pattern is very common when you need to process or display every entry.
 
+      **Printing with f-strings**
+
+      In this lesson you print your results with **f-strings**, which you learned in lesson 5: put an `f` before the quotes, and the variables inside `{}`. That way your output says what each number means, instead of showing a bare number.
+
       **Your task:**
       Given the dictionary of annual CO₂ emissions (in millions of tons) below:
-      1. Loop over `.items()` and print each line as: `"DE emitted 680 Mt of CO2"`
-      2. In the same loop, accumulate `total` (the sum of all emissions)
-      3. After the loop, print: `"Total: 1760 Mt"`
+      1. Loop over `.items()` and, with an f-string, print each line as: `DE emitted 680 Mt of CO2`
+      2. In the same loop, add each amount to `total`
+      3. After the loop, print the total with an f-string as: `Total: 1760 Mt`
     starter_code: |
       emissions = {
           "NL": 150,
@@ -305,10 +43,13 @@ exercises:
 
       total = 0
       for country, amount in emissions.items():
-          print(f"{country} emitted {amount} Mt of CO2")
-          # add amount to total
+          # 1. Print "<country> emitted <amount> Mt of CO2" with an f-string
 
-      print(f"Total: {total} Mt")
+          # 2. Add amount to total
+          total += 0
+
+      # 3. Print "Total: <total> Mt" with an f-string
+
     tests:
       - type: output_contains
         value: "NL emitted 150 Mt of CO2"
@@ -321,8 +62,9 @@ exercises:
           assert total == 1760, f"Expected total 1760, got {total}"
         description: "total must equal 1760 (sum of all emissions)"
     hints:
-      - "total += amount , inside the for loop, after the print"
-      - "150 + 680 + 310 + 230 + 390 = 1760"
+      - "print(f\"{country} emitted {amount} Mt of CO2\"), inside the for loop"
+      - "total += amount, inside the for loop"
+      - "print(f\"Total: {total} Mt\"), after the loop (not indented)"
     solution: |
       emissions = {
           "NL": 150,
@@ -347,41 +89,45 @@ exercises:
       ```python
       temps = [22, 15, 30, 8, 25]
       print(temps[:3])    # [22, 15, 30], first 3
-      print(temps[2:])    # [30, 8, 25] , from index 2 onwards
-      print(temps[-2:])   # [8, 25]     , last 2 (negative = count from end)
+      print(temps[2:])    # [30, 8, 25], from index 2 onwards
+      print(temps[-2:])   # [8, 25], last 2 (negative = count from end)
       ```
 
       `sorted(my_list)` returns a new sorted list without changing the original.
 
+      An f-string can show a whole list too: `print(f"Warmest days: {temps[:3]}")` prints `Warmest days: [22, 15, 30]`.
+
       **Your task:**
-      Given 12 monthly average temperatures (Jan–Dec):
-      1. Create `first_quarter`, slice the first 3 months
-      2. Create `last_quarter`, slice the last 3 months using a negative start index
-      3. Create `sorted_temps = sorted(monthly_temps)` and print it
-      4. Compute `temp_range = max(...) - min(...)` and print it
+      Given 12 monthly average temperatures (Jan-Dec):
+      1. Create `first_quarter`, the first 3 months, and print it with an f-string as: `First quarter: [3, 5, 10]`
+      2. Create `last_quarter`, the last 3 months, using a negative start index, and print it as: `Last quarter: [14, 7, 4]`
+      3. Create `sorted_temps = sorted(monthly_temps)` and print it as: `Sorted: [3, 4, 5, ...]`
+      4. Compute `temp_range` (warmest minus coldest month, with `max()` and `min()`) and print it as: `Range: 25`
     starter_code: |
       monthly_temps = [3, 5, 10, 15, 20, 25, 28, 27, 22, 14, 7, 4]
 
-      # First 3 months (Jan-Mar)
-      first_quarter =
-      print("First quarter:", first_quarter)
+      # 1. First 3 months (Jan-Mar), then print "First quarter: ..."
+      first_quarter = []
 
-      # Last 3 months (Oct-Dec), use a negative start index
-      last_quarter =
-      print("Last quarter:", last_quarter)
 
-      # All months sorted coldest to warmest
+      # 2. Last 3 months (Oct-Dec), use a negative start index, then print "Last quarter: ..."
+      last_quarter = []
+
+
+      # 3. All months sorted coldest to warmest, then print "Sorted: ..."
       sorted_temps = sorted(monthly_temps)
-      print("Sorted:", sorted_temps)
 
-      # Range: warmest minus coldest
-      temp_range = max(monthly_temps) - min(monthly_temps)
-      print("Range:", temp_range)
+
+      # 4. Range: warmest minus coldest, then print "Range: ..."
+      temp_range = 0
+
     tests:
       - type: output_contains
-        value: "[3, 5, 10]"
+        value: "First quarter: [3, 5, 10]"
       - type: output_contains
-        value: "[14, 7, 4]"
+        value: "Last quarter: [14, 7, 4]"
+      - type: output_contains
+        value: "Sorted: [3, 4, 5, 7, 10, 14, 15, 20, 22, 25, 27, 28]"
       - type: output_contains
         value: "Range: 25"
       - type: assert
@@ -393,49 +139,57 @@ exercises:
     hints:
       - "monthly_temps[:3], stop at index 3 (not included)"
       - "monthly_temps[-3:], start 3 positions from the end"
+      - "temp_range = max(monthly_temps) - min(monthly_temps)"
+      - "print(f\"First quarter: {first_quarter}\"), and the same pattern for the other three"
     solution: |
       monthly_temps = [3, 5, 10, 15, 20, 25, 28, 27, 22, 14, 7, 4]
 
       first_quarter = monthly_temps[:3]
-      print("First quarter:", first_quarter)
+      print(f"First quarter: {first_quarter}")
 
       last_quarter = monthly_temps[-3:]
-      print("Last quarter:", last_quarter)
+      print(f"Last quarter: {last_quarter}")
 
       sorted_temps = sorted(monthly_temps)
-      print("Sorted:", sorted_temps)
+      print(f"Sorted: {sorted_temps}")
 
       temp_range = max(monthly_temps) - min(monthly_temps)
-      print("Range:", temp_range)
+      print(f"Range: {temp_range}")
 
   - id: practice_create_list
     title: "Practice: Creating and Accessing Lists"
     instructions: |
-      More practice creating and indexing a list.
+      More practice creating and indexing a list. You can put an index or a function call straight inside the `{}` of an f-string:
+
+      ```python
+      cities = ["Utrecht", "Groningen"]
+      print(f"First city: {cities[0]}")
+      print(f"Number of cities: {len(cities)}")
+      ```
 
       **Your task:**
       1. Create a list called `recycling_methods` with three items: `"Composting"`, `"Glass Recycling"`, `"Paper Recycling"`
-      2. Print the **second** element (index 1)
-      3. Print the **last** element using index `-1`
-      4. Print the **total number** of items using `len()`
+      2. Print the **second** element (index 1) with an f-string as: `Second method: Glass Recycling`
+      3. Print the **last** element using index `-1` as: `Last method: Paper Recycling`
+      4. Print the **total number** of items using `len()` as: `Number of methods: 3`
     starter_code: |
       recycling_methods = [        ]
 
-      # Print the second element
+      # Print "Second method: ..."
 
 
-      # Print the last element
+      # Print "Last method: ..."
 
 
-      # Print the number of items
+      # Print "Number of methods: ..."
 
     tests:
       - type: output_contains
-        value: "Glass Recycling"
+        value: "Second method: Glass Recycling"
       - type: output_contains
-        value: "Paper Recycling"
+        value: "Last method: Paper Recycling"
       - type: output_contains
-        value: "3"
+        value: "Number of methods: 3"
       - type: assert
         code: |
           assert recycling_methods == ["Composting", "Glass Recycling", "Paper Recycling"]
@@ -443,15 +197,15 @@ exercises:
         description: "recycling_methods should have exactly these 3 items"
     hints:
       - "recycling_methods = [\"Composting\", \"Glass Recycling\", \"Paper Recycling\"]"
-      - "print(recycling_methods[1])  # second element"
-      - "print(recycling_methods[-1])  # last element"
-      - "print(len(recycling_methods))  # count"
+      - "print(f\"Second method: {recycling_methods[1]}\")"
+      - "print(f\"Last method: {recycling_methods[-1]}\")"
+      - "print(f\"Number of methods: {len(recycling_methods)}\")"
     solution: |
       recycling_methods = ["Composting", "Glass Recycling", "Paper Recycling"]
 
-      print(recycling_methods[1])
-      print(recycling_methods[-1])
-      print(len(recycling_methods))
+      print(f"Second method: {recycling_methods[1]}")
+      print(f"Last method: {recycling_methods[-1]}")
+      print(f"Number of methods: {len(recycling_methods)}")
 
   - id: practice_list_operations
     title: "Practice: Building Lists Dynamically"
@@ -461,8 +215,8 @@ exercises:
       **Your task:**
       1. Create an empty list called `materials`
       2. Append these three items to it: `"Steel"`, `"Aluminum"`, `"Copper"`
-      3. Print the length of the list
-      4. Print the last item using index `-1`
+      3. Print the length of the list with an f-string as: `Number of materials: 3`
+      4. Print the last item using index `-1` as: `Last material: Copper`
     starter_code: |
       # Start with an empty list
       materials = []
@@ -470,16 +224,16 @@ exercises:
       # Append three items
 
 
-      # Print the length
+      # Print "Number of materials: ..."
 
 
-      # Print the last item
+      # Print "Last material: ..."
 
     tests:
       - type: output_contains
-        value: "3"
+        value: "Number of materials: 3"
       - type: output_contains
-        value: "Copper"
+        value: "Last material: Copper"
       - type: assert
         code: |
           assert materials == ["Steel", "Aluminum", "Copper"], f"Got {materials}"
@@ -487,8 +241,8 @@ exercises:
         description: "materials should contain Steel, Aluminum, Copper in that order"
     hints:
       - "materials.append(\"Steel\")"
-      - "print(len(materials))"
-      - "print(materials[-1])"
+      - "print(f\"Number of materials: {len(materials)}\")"
+      - "print(f\"Last material: {materials[-1]}\")"
     solution: |
       materials = []
 
@@ -496,34 +250,44 @@ exercises:
       materials.append("Aluminum")
       materials.append("Copper")
 
-      print(len(materials))
-      print(materials[-1])
+      print(f"Number of materials: {len(materials)}")
+      print(f"Last material: {materials[-1]}")
 
   - id: practice_create_dict
     title: "Practice: Creating Dictionaries"
     instructions: |
       More practice creating and looking up values in a dictionary.
 
+      **Watch the quotes in f-strings.** When you look up a key inside an f-string, use **single quotes** for the key if the f-string itself uses double quotes:
+
+      ```python
+      prices = {"Solar": 120}
+      print(f"Solar costs {prices['Solar']} euros")    # works
+      print(f"Solar costs {prices["Solar"]} euros")    # SyntaxError in older Python versions
+      ```
+
+      Python only sees where the text ends by looking at the quotes, so `"` inside `"..."` confuses it (only Python 3.12 and newer accept it). Single quotes inside always work.
+
       **Your task:**
       1. Create a dictionary `material_recyclability` with these key-value pairs:
          - `"Steel"` → `90`
          - `"Aluminum"` → `95`
          - `"Copper"` → `85`
-      2. Print the recyclability of `"Steel"`
-      3. Print the recyclability of `"Aluminum"`
+      2. Print the recyclability of `"Steel"` with an f-string as: `Steel: 90% recyclable`
+      3. Print the recyclability of `"Aluminum"` as: `Aluminum: 95% recyclable`
     starter_code: |
       material_recyclability = {
           # add your key-value pairs here
       }
 
-      # Print the recyclability of Steel
+      # Print "Steel: ...% recyclable"
 
 
-      # Print the recyclability of Aluminum
+      # Print "Aluminum: ...% recyclable"
 
     tests:
       - type: output_equals
-        value: "90\n95"
+        value: "Steel: 90% recyclable\nAluminum: 95% recyclable"
       - type: assert
         code: |
           assert material_recyclability["Steel"] == 90
@@ -531,8 +295,8 @@ exercises:
           assert material_recyclability["Copper"] == 85
         description: "Dictionary should have Steel=90, Aluminum=95, Copper=85"
     hints:
-      - "\"Steel\": 90,, note the colon between key and value"
-      - "print(material_recyclability[\"Steel\"])"
+      - "\"Steel\": 90, note the colon between key and value"
+      - "print(f\"Steel: {material_recyclability['Steel']}% recyclable\"), with single quotes around Steel"
     solution: |
       material_recyclability = {
           "Steel": 90,
@@ -540,22 +304,19 @@ exercises:
           "Copper": 85,
       }
 
-      print(material_recyclability["Steel"])
-      print(material_recyclability["Aluminum"])
+      print(f"Steel: {material_recyclability['Steel']}% recyclable")
+      print(f"Aluminum: {material_recyclability['Aluminum']}% recyclable")
 
   - id: practice_dict_operations
     title: "Practice: Working with Dictionaries"
     instructions: |
-      More practice adding a key to a dictionary and inspecting it.
+      More practice adding a key to a dictionary and inspecting it. Remember: single quotes for a key inside an f-string.
 
       **Your task:**
-      1. Create a dictionary `project` with:
-         - `"title"` → `"Solar Rollout"`
-         - `"budget"` → `50000`
-         - `"lead"` → `"Sam"`
+      1. The dictionary `project` is given below
       2. Add a new key `"status"` with the value `"In Progress"`
-      3. Print the value of `"status"`
-      4. Print the total number of keys using `len()`
+      3. Print the value of `"status"` with an f-string as: `Status: In Progress`
+      4. Print the total number of keys using `len()` as: `Number of keys: 4`
     starter_code: |
       project = {
           "title": "Solar Rollout",
@@ -566,16 +327,16 @@ exercises:
       # Add the "status" key
 
 
-      # Print the value of "status"
+      # Print "Status: ..."
 
 
-      # Print the number of keys
+      # Print "Number of keys: ..."
 
     tests:
       - type: output_contains
-        value: "In Progress"
+        value: "Status: In Progress"
       - type: output_contains
-        value: "4"
+        value: "Number of keys: 4"
       - type: assert
         code: |
           assert project["status"] == "In Progress"
@@ -583,8 +344,8 @@ exercises:
         description: "project should have 4 keys including 'status'"
     hints:
       - "project[\"status\"] = \"In Progress\""
-      - "print(project[\"status\"])"
-      - "print(len(project))"
+      - "print(f\"Status: {project['status']}\")"
+      - "print(f\"Number of keys: {len(project)}\")"
     solution: |
       project = {
           "title": "Solar Rollout",
@@ -594,8 +355,8 @@ exercises:
 
       project["status"] = "In Progress"
 
-      print(project["status"])
-      print(len(project))
+      print(f"Status: {project['status']}")
+      print(f"Number of keys: {len(project)}")
 
   - id: practice_dict_iteration
     title: "Practice: Iterating Over a Dictionary"
@@ -604,9 +365,9 @@ exercises:
 
       **Your task:**
       Given the dictionary of annual rainfall (in mm) below:
-      1. Loop over `.items()` and print each line as: `"DE received 700 mm of rain"`
-      2. In the same loop, accumulate `total` (the sum of all rainfall)
-      3. After the loop, print: `"Total: 3200 mm"`
+      1. Loop over `.items()` and, with an f-string, print each line as: `DE received 700 mm of rain`
+      2. In the same loop, add each amount to `total`
+      3. After the loop, print the total with an f-string as: `Total: 3200 mm`
     starter_code: |
       rainfall = {
           "NL": 800,
@@ -617,11 +378,11 @@ exercises:
       }
 
       total = 0
-      for country, amount in rainfall.items():
-          print(f"{country} received {amount} mm of rain")
-          # add amount to total
+      # Loop over rainfall.items(), print each line, and add to total
 
-      print(f"Total: {total} mm")
+
+      # Print "Total: <total> mm"
+
     tests:
       - type: output_contains
         value: "NL received 800 mm of rain"
@@ -634,8 +395,9 @@ exercises:
           assert total == 3200, f"Expected total 3200, got {total}"
         description: "total must equal 3200 (sum of all rainfall)"
     hints:
-      - "total += amount , inside the for loop, after the print"
-      - "800 + 700 + 650 + 450 + 600 = 3200"
+      - "for country, amount in rainfall.items():"
+      - "print(f\"{country} received {amount} mm of rain\") and total += amount, both indented inside the loop"
+      - "print(f\"Total: {total} mm\"), after the loop (not indented)"
     solution: |
       rainfall = {
           "NL": 800,
@@ -658,36 +420,37 @@ exercises:
       More practice with slicing, `sorted()`, `max()` and `min()`, this time with monthly rainfall.
 
       **Your task:**
-      Given 12 monthly rainfall totals (Jan–Dec, in mm):
-      1. Create `first_quarter`, slice the first 3 months
-      2. Create `last_quarter`, slice the last 3 months using a negative start index
-      3. Create `sorted_rainfall = sorted(monthly_rainfall)` and print it
-      4. Compute `rainfall_range = max(...) - min(...)` and print it
+      Given 12 monthly rainfall totals (Jan-Dec, in mm):
+      1. Create `first_quarter`, the first 3 months, and print it with an f-string as: `First quarter: [80, 65, 70]`
+      2. Create `last_quarter`, the last 3 months, using a negative start index, and print it as: `Last quarter: [60, 75, 90]`
+      3. Create `sorted_rainfall = sorted(monthly_rainfall)` and print it as: `Sorted: [20, 25, 30, ...]`
+      4. Compute `rainfall_range` (wettest minus driest month) and print it as: `Range: 70 mm`
     starter_code: |
       monthly_rainfall = [80, 65, 70, 55, 40, 30, 20, 25, 45, 60, 75, 90]
 
-      # First 3 months (Jan-Mar)
-      first_quarter =
-      print("First quarter:", first_quarter)
+      # 1. First 3 months (Jan-Mar), then print "First quarter: ..."
+      first_quarter = []
 
-      # Last 3 months (Oct-Dec), use a negative start index
-      last_quarter =
-      print("Last quarter:", last_quarter)
 
-      # All months sorted driest to wettest
-      sorted_rainfall = sorted(monthly_rainfall)
-      print("Sorted:", sorted_rainfall)
+      # 2. Last 3 months (Oct-Dec), use a negative start index, then print "Last quarter: ..."
+      last_quarter = []
 
-      # Range: wettest minus driest
-      rainfall_range = max(monthly_rainfall) - min(monthly_rainfall)
-      print("Range:", rainfall_range)
+
+      # 3. All months sorted driest to wettest, then print "Sorted: ..."
+
+
+      # 4. Range: wettest minus driest, then print "Range: ... mm"
+      rainfall_range = 0
+
     tests:
       - type: output_contains
-        value: "[80, 65, 70]"
+        value: "First quarter: [80, 65, 70]"
       - type: output_contains
-        value: "[60, 75, 90]"
+        value: "Last quarter: [60, 75, 90]"
       - type: output_contains
-        value: "Range: 70"
+        value: "Sorted: [20, 25, 30, 40, 45, 55, 60, 65, 70, 75, 80, 90]"
+      - type: output_contains
+        value: "Range: 70 mm"
       - type: assert
         code: |
           assert first_quarter == [80, 65, 70], f"Expected [80, 65, 70], got {first_quarter}"
@@ -697,17 +460,19 @@ exercises:
     hints:
       - "monthly_rainfall[:3], stop at index 3 (not included)"
       - "monthly_rainfall[-3:], start 3 positions from the end"
+      - "rainfall_range = max(monthly_rainfall) - min(monthly_rainfall)"
+      - "print(f\"Range: {rainfall_range} mm\")"
     solution: |
       monthly_rainfall = [80, 65, 70, 55, 40, 30, 20, 25, 45, 60, 75, 90]
 
       first_quarter = monthly_rainfall[:3]
-      print("First quarter:", first_quarter)
+      print(f"First quarter: {first_quarter}")
 
       last_quarter = monthly_rainfall[-3:]
-      print("Last quarter:", last_quarter)
+      print(f"Last quarter: {last_quarter}")
 
       sorted_rainfall = sorted(monthly_rainfall)
-      print("Sorted:", sorted_rainfall)
+      print(f"Sorted: {sorted_rainfall}")
 
       rainfall_range = max(monthly_rainfall) - min(monthly_rainfall)
-      print("Range:", rainfall_range)
+      print(f"Range: {rainfall_range} mm")
