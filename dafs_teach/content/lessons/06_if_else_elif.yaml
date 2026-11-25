@@ -1,5 +1,5 @@
 title: "If, Else and Elif"
-description: "Learn to make decisions in code — run different actions depending on whether a condition is true or false."
+description: "Learn to make decisions in code, run different actions depending on whether a condition is true or false."
 
 exercises:
 
@@ -57,9 +57,9 @@ exercises:
               print("Both conditions are met")
 
   - id: if_else
-    title: "If / Else — Two Outcomes"
+    title: "If / Else, Two Outcomes"
     instructions: |
-      The `if` statement only runs code when the condition is `True` — but what about when it is `False`? That is where `else` comes in.
+      The `if` statement only runs code when the condition is `True`, but what about when it is `False`? That is where `else` comes in.
 
       For example, if we grade students, we want a result to be `"Admitted"` if the grade is ≥ 5.5 and `"Fail"` when the grade is lower:
 
@@ -71,7 +71,7 @@ exercises:
           print("Fail")
       ```
 
-      The `else` block has the **same indentation as the `if`** — they are at the same level.
+      The `else` block has the **same indentation as the `if`**, they are at the same level.
 
       **Your task:**
       Write an if/else statement that:
@@ -111,7 +111,7 @@ exercises:
           print("Fail")
 
   - id: carbon_categories
-    title: "If / Elif / Else — Carbon Emissions"
+    title: "If / Elif / Else, Carbon Emissions"
     instructions: |
       When you need more than two outcomes, use `elif` (short for "else if"). Python checks each condition in order and runs the first one that is `True`:
 
@@ -176,7 +176,7 @@ exercises:
       print(categorize_emissions(8.5))
 
   - id: water_conservation
-    title: "If / Elif / Else — Water Conservation"
+    title: "If / Elif / Else, Water Conservation"
     instructions: |
       **Your task:**
       Write a function `rate_water_usage(daily_usage)` that takes the number of liters used per day and returns a conservation rating:
@@ -223,7 +223,7 @@ exercises:
       print(rate_water_usage(75))
 
   - id: temperature_advice
-    title: "If/Elif — Temperature Advisory"
+    title: "If/Elif, Temperature Advisory"
     instructions: |
       Practice if/elif/else chains with a real-world scenario.
 
@@ -235,7 +235,7 @@ exercises:
       | ≥ 20 | `"A t-shirt is fine."` |
       | ≥ 10 | `"Bring a jacket."` |
       | ≥ 0 | `"Wear a warm coat."` |
-      | < 0 | `"It's freezing — layer up!"` |
+      | < 0 | `"It's freezing, layer up!"` |
 
       Then call the function for each temperature in `[35, 22, 15, 5, -3]` and print each result.
     starter_code: |
@@ -263,18 +263,18 @@ exercises:
       - type: output_contains
         value: "Wear a warm coat."
       - type: output_contains
-        value: "It's freezing — layer up!"
+        value: "It's freezing, layer up!"
       - type: assert
         code: |
           assert temperature_advice(35) == "Wear light clothing and stay hydrated."
           assert temperature_advice(25) == "A t-shirt is fine."
           assert temperature_advice(10) == "Bring a jacket."
           assert temperature_advice(0) == "Wear a warm coat."
-          assert temperature_advice(-5) == "It's freezing — layer up!"
+          assert temperature_advice(-5) == "It's freezing, layer up!"
         description: "All five temperature categories must return the correct string"
     hints:
       - "return \"A t-shirt is fine.\" inside the elif temp >= 20 block"
-      - "return \"It's freezing — layer up!\" inside the else block"
+      - "return \"It's freezing, layer up!\" inside the else block"
     solution: |
       def temperature_advice(temp):
           if temp >= 30:
@@ -286,7 +286,7 @@ exercises:
           elif temp >= 0:
               return "Wear a warm coat."
           else:
-              return "It's freezing — layer up!"
+              return "It's freezing, layer up!"
 
       for temp in [35, 22, 15, 5, -3]:
           print(temperature_advice(temp))
@@ -294,7 +294,7 @@ exercises:
   - id: practice_basic_if
     title: "Practice: The If Statement"
     instructions: |
-      More practice with nested `if` statements — this time checking growing conditions.
+      More practice with nested `if` statements, this time checking growing conditions.
 
       **Your task:**
       1. Set `rainfall = 15` and `temperature = 22`
@@ -321,9 +321,9 @@ exercises:
               print("Good growing conditions")
 
   - id: practice_if_else
-    title: "Practice: If / Else — Two Outcomes"
+    title: "Practice: If / Else, Two Outcomes"
     instructions: |
-      More practice with if/else — this time grading an energy efficiency audit.
+      More practice with if/else, this time grading an energy efficiency audit.
 
       An audit `score` (out of 100) results in `"Pass"` if it's ≥ 60, and `"Fail"` otherwise:
 
@@ -373,9 +373,9 @@ exercises:
           print("Fail")
 
   - id: practice_carbon_categories
-    title: "Practice: If / Elif / Else — Recycling Rates"
+    title: "Practice: If / Elif / Else, Recycling Rates"
     instructions: |
-      More practice with `elif` chains — this time categorising a recycling rate.
+      More practice with `elif` chains, this time categorising a recycling rate.
 
       **Your task:**
       Write a function `categorize_recycling(rate)` that takes a recycling rate in percent and returns a category string:
@@ -428,7 +428,7 @@ exercises:
       print(categorize_recycling(65))
 
   - id: practice_water_conservation
-    title: "Practice: If / Elif / Else — Energy Efficiency"
+    title: "Practice: If / Elif / Else, Energy Efficiency"
     instructions: |
       **Your task:**
       Write a function `rate_energy_usage(daily_kwh)` that takes daily household energy use in kWh and returns an efficiency rating:
@@ -475,25 +475,25 @@ exercises:
       print(rate_energy_usage(7))
 
   - id: practice_temperature_advice
-    title: "Practice: If/Elif — Air Quality Advisory"
+    title: "Practice: If/Elif, Air Quality Advisory"
     instructions: |
-      More practice with if/elif/else chains — this time a real-world air quality scenario.
+      More practice with if/elif/else chains, this time a real-world air quality scenario.
 
       Write a function `air_quality_advice(aqi)` that returns advice based on the Air Quality Index:
 
       | AQI | Advice |
       |-----|--------|
-      | ≥ 300 | `"Hazardous — stay indoors."` |
-      | ≥ 200 | `"Very unhealthy — limit outdoor activity."` |
+      | ≥ 300 | `"Hazardous, stay indoors."` |
+      | ≥ 200 | `"Very unhealthy, limit outdoor activity."` |
       | ≥ 100 | `"Unhealthy for sensitive groups."` |
-      | ≥ 50 | `"Moderate — acceptable air quality."` |
-      | < 50 | `"Good air quality — enjoy the outdoors."` |
+      | ≥ 50 | `"Moderate, acceptable air quality."` |
+      | < 50 | `"Good air quality, enjoy the outdoors."` |
 
       Then call the function for each value in `[350, 150, 80, 30]` and print each result.
     starter_code: |
       def air_quality_advice(aqi):
           if aqi >= 300:
-              return "Hazardous — stay indoors."
+              return "Hazardous, stay indoors."
           elif aqi >= 200:
               # very unhealthy
           elif aqi >= 100:
@@ -507,36 +507,36 @@ exercises:
           print(air_quality_advice(aqi))
     tests:
       - type: output_contains
-        value: "Hazardous — stay indoors."
+        value: "Hazardous, stay indoors."
       - type: output_contains
         value: "Unhealthy for sensitive groups."
       - type: output_contains
-        value: "Moderate — acceptable air quality."
+        value: "Moderate, acceptable air quality."
       - type: output_contains
-        value: "Good air quality — enjoy the outdoors."
+        value: "Good air quality, enjoy the outdoors."
       - type: assert
         code: |
-          assert air_quality_advice(350) == "Hazardous — stay indoors."
-          assert air_quality_advice(200) == "Very unhealthy — limit outdoor activity."
+          assert air_quality_advice(350) == "Hazardous, stay indoors."
+          assert air_quality_advice(200) == "Very unhealthy, limit outdoor activity."
           assert air_quality_advice(150) == "Unhealthy for sensitive groups."
-          assert air_quality_advice(80) == "Moderate — acceptable air quality."
-          assert air_quality_advice(30) == "Good air quality — enjoy the outdoors."
+          assert air_quality_advice(80) == "Moderate, acceptable air quality."
+          assert air_quality_advice(30) == "Good air quality, enjoy the outdoors."
         description: "All five AQI categories must return the correct string"
     hints:
-      - "return \"Very unhealthy — limit outdoor activity.\" inside the elif aqi >= 200 block"
-      - "return \"Good air quality — enjoy the outdoors.\" inside the else block"
+      - "return \"Very unhealthy, limit outdoor activity.\" inside the elif aqi >= 200 block"
+      - "return \"Good air quality, enjoy the outdoors.\" inside the else block"
     solution: |
       def air_quality_advice(aqi):
           if aqi >= 300:
-              return "Hazardous — stay indoors."
+              return "Hazardous, stay indoors."
           elif aqi >= 200:
-              return "Very unhealthy — limit outdoor activity."
+              return "Very unhealthy, limit outdoor activity."
           elif aqi >= 100:
               return "Unhealthy for sensitive groups."
           elif aqi >= 50:
-              return "Moderate — acceptable air quality."
+              return "Moderate, acceptable air quality."
           else:
-              return "Good air quality — enjoy the outdoors."
+              return "Good air quality, enjoy the outdoors."
 
       for aqi in [350, 150, 80, 30]:
           print(air_quality_advice(aqi))

@@ -1,5 +1,5 @@
 title: "Reading Scripts: Working With DataFrames"
-description: "Practice reading and extending Python scripts that combine DataFrames, filtering, groupby and merging — the types of questions you may encounter in the exam."
+description: "Practice reading and extending Python scripts that combine DataFrames, filtering, groupby and merging, the types of questions you may encounter in the exam."
 
 exercises:
 
@@ -192,7 +192,7 @@ exercises:
   - id: wind_utilization
     title: "Wind Energy Utilisation Rate"
     instructions: |
-      The script below merges two datasets — wind generation and installed capacity — to compute a **utilisation rate** for each region:
+      The script below merges two datasets, wind generation and installed capacity, to compute a **utilisation rate** for each region:
 
       ```
       utilisation_rate = total_generation / (capacity_mw × 8760 hours/year)
@@ -261,7 +261,7 @@ exercises:
       - type: assert
         code: |
           assert best_region == "North", f"Expected North, got {best_region}"
-        description: "best_region should be North — highest utilisation rate in 2021"
+        description: "best_region should be North, highest utilisation rate in 2021"
     hints:
       - "The DataFrame is already sorted descending by utilization_rate"
       - "merged[\"region\"].iloc[0] gives the region in the first (highest) row"

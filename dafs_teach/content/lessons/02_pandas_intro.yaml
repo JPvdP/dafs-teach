@@ -1,5 +1,5 @@
 title: Introduction to Pandas
-description: Learn to load, explore, and manipulate tabular data with pandas — the core library for data analysis in Python.
+description: Learn to load, explore, and manipulate tabular data with pandas, the core library for data analysis in Python.
 
 exercises:
 
@@ -7,7 +7,7 @@ exercises:
     title: "Creating a DataFrame"
     instructions: |
       **pandas** is the go-to package for working with tabular data.
-      A `DataFrame` is like a spreadsheet — rows and columns. Unlike a NumPy matrix, each column can hold a different kind of data: one column of text, one of numbers, one of `True`/`False`.
+      A `DataFrame` is like a spreadsheet, rows and columns. Unlike a NumPy matrix, each column can hold a different kind of data: one column of text, one of numbers, one of `True`/`False`.
 
       As you saw in the previous lesson, you first **import** pandas, with its usual nickname `pd`:
 
@@ -53,7 +53,7 @@ exercises:
 
       A few details to watch:
       - Notice the round brackets `( )` *and* the curly brackets `{ }`: the dictionary `{ ... }` goes **inside** the function call `pd.DataFrame( ... )`.
-      - All lists must have the same length — every column needs a value for every row.
+      - All lists must have the same length, every column needs a value for every row.
       - The comma after the last column (`"column_b": ["x", "y", "z"],`) is **optional**. Python allows a comma after the last item in a dictionary or list, and both versions work. Many programmers keep it, so that adding another column later is just adding one more line.
 
       **Your task:**
@@ -102,21 +102,21 @@ exercises:
   - id: explore
     title: "Exploring a DataFrame"
     instructions: |
-      Before analysing data, you need to understand its shape and contents. For that you'll use the dot again — but in a new way.
+      Before analysing data, you need to understand its shape and contents. For that you'll use the dot again, but in a new way.
 
       **The dot, part 2: asking a DataFrame about itself**
 
-      In the previous exercise, the dot came after the **package** name: `pd.DataFrame` — "the `DataFrame` tool from pandas".
+      In the previous exercise, the dot came after the **package** name: `pd.DataFrame`, "the `DataFrame` tool from pandas".
 
       Now the dot comes after **your own variable**: `df.shape`. The dot still means "from" / "belonging to", but what's on the left of it has changed:
 
       | Code | What's left of the dot | Read it as |
       |------|------------------------|------------|
-      | `pd.DataFrame(...)` | `pd` — the pandas package | "use the `DataFrame` tool from pandas" |
-      | `df.shape` | `df` — your DataFrame | "the shape of `df`" |
-      | `df.head(3)` | `df` — your DataFrame | "show the first 3 rows of `df`" |
+      | `pd.DataFrame(...)` | `pd`, the pandas package | "use the `DataFrame` tool from pandas" |
+      | `df.shape` | `df`, your DataFrame | "the shape of `df`" |
+      | `df.head(3)` | `df`, your DataFrame | "show the first 3 rows of `df`" |
 
-      Why can you write things after `df.`? Because when `pd.DataFrame()` creates a DataFrame, pandas gives it a set of built-in information and tools. **Every** DataFrame gets them automatically, so `df.head()` works on any DataFrame you create. A plain number such as `score = 10` doesn't have them — `score.head()` would give an error.
+      Why can you write things after `df.`? Because when `pd.DataFrame()` creates a DataFrame, pandas gives it a set of built-in information and tools. **Every** DataFrame gets them automatically, so `df.head()` works on any DataFrame you create. A plain number such as `score = 10` doesn't have them, `score.head()` would give an error.
 
       **Rule of thumb:**
       - `pd.something` → you use a tool from the pandas package (for example, to *create* a DataFrame)
@@ -193,13 +193,13 @@ exercises:
     instructions: |
       pandas makes it easy to select columns and filter rows. All examples below use the products DataFrame from the previous exercise.
 
-      **Selecting one column — a Series**
+      **Selecting one column, a Series**
 
       ```python
       df["product"]
       ```
 
-      You put the column name in square brackets after `df` — just like looking up a key in a dictionary. The result is that single column, which pandas calls a **Series**.
+      You put the column name in square brackets after `df`, just like looking up a key in a dictionary. The result is that single column, which pandas calls a **Series**.
 
       A **Series** is one column of data: a list of values, together with the row labels (the index). Printing `df["product"]` shows:
 
@@ -216,9 +216,9 @@ exercises:
       - On the **right**: the values in the column
       - On the **last line**: the column's name, and its data type (`object` is how pandas usually shows text)
 
-      You can think of a DataFrame as several Series side by side, sharing the same row labels. A Series has its own methods too — you'll use `.sum()` and `.mean()` on Series in the next exercise.
+      You can think of a DataFrame as several Series side by side, sharing the same row labels. A Series has its own methods too, you'll use `.sum()` and `.mean()` on Series in the next exercise.
 
-      **Selecting several columns — double brackets `[[ ]]`**
+      **Selecting several columns, double brackets `[[ ]]`**
 
       ```python
       df[["product", "price"]]
@@ -239,7 +239,7 @@ exercises:
       4    Webcam   89.99
       ```
 
-      With single brackets, `df["product", "price"]` gives a `KeyError` — pandas then looks for *one* column with the strange name `("product", "price")`, and can't find it.
+      With single brackets, `df["product", "price"]` gives a `KeyError`, pandas then looks for *one* column with the strange name `("product", "price")`, and can't find it.
 
       **Filtering rows**
 
@@ -257,11 +257,11 @@ exercises:
          4    False
          Name: price, dtype: bool
          ```
-      2. `df[ ... ]` around it keeps only the rows where the value is `True` — here rows 0 (Laptop) and 3 (Monitor).
+      2. `df[ ... ]` around it keeps only the rows where the value is `True`, here rows 0 (Laptop) and 3 (Monitor).
 
       **Your task:**
       Using the products DataFrame:
-      1. Create `expensive` — a filtered DataFrame containing only products with `price > 100`
+      1. Create `expensive`, a filtered DataFrame containing only products with `price > 100`
       2. Print only the `product` column of `expensive` (this will be a Series)
     starter_code: |
       import pandas as pd
@@ -309,7 +309,7 @@ exercises:
   - id: aggregation
     title: "Aggregating Data"
     instructions: |
-      Now that you can select a column, you can summarise it — for example, calculate its total or its average.
+      Now that you can select a column, you can summarise it, for example, calculate its total or its average.
 
       **Doing math with whole columns**
 
@@ -325,7 +325,7 @@ exercises:
       **Summarising a column with methods**
 
       ```python
-      df["sold"].max()    # 120 — the largest number of items sold
+      df["sold"].max()    # 120, the largest number of items sold
       ```
 
       `.max()` is a **method**. pandas has methods for all the common summary statistics:
@@ -359,7 +359,7 @@ exercises:
 
       Which methods exist depends on the type of value. A Series has `.sum()`, `.mean()` and `.max()`, because pandas built those in. A list from the previous lesson doesn't have a `.mean()` method: `[1, 2, 3].mean()` gives an error.
 
-      Don't forget the parentheses: `df["sold"].sum` (without `()`) doesn't calculate anything — it just refers to the method without running it.
+      Don't forget the parentheses: `df["sold"].sum` (without `()`) doesn't calculate anything, it just refers to the method without running it.
 
       **Your task:**
       Using the products DataFrame:
@@ -450,7 +450,7 @@ exercises:
   - id: practice_explore
     title: "Practice: Exploring a DataFrame"
     instructions: |
-      Let's practice exploring a DataFrame, and add one more method to your toolkit: `df.tail(n)` — just like `df.head(n)`, but it shows the **last** n rows instead of the first.
+      Let's practice exploring a DataFrame, and add one more method to your toolkit: `df.tail(n)`, just like `df.head(n)`, but it shows the **last** n rows instead of the first.
 
       | Method / attribute | What it shows |
       |--------------------|---------------|
@@ -509,7 +509,7 @@ exercises:
   - id: practice_select_filter
     title: "Practice: Selecting and Filtering"
     instructions: |
-      More practice with selecting columns and filtering rows — this time with employee data.
+      More practice with selecting columns and filtering rows, this time with employee data.
 
       Reminder:
       ```python
@@ -518,7 +518,7 @@ exercises:
 
       **Your task:**
       Using the employees DataFrame below:
-      1. Create `high_earners` — a filtered DataFrame containing only employees with `salary > 50000`
+      1. Create `high_earners`, a filtered DataFrame containing only employees with `salary > 50000`
       2. Print the `name` column of `high_earners`
     starter_code: |
       import pandas as pd
@@ -564,7 +564,7 @@ exercises:
   - id: practice_aggregation
     title: "Practice: Aggregating Data"
     instructions: |
-      More practice with summary statistics — this time using `.mean()`, `.max()`, and `.min()` instead of `.sum()`.
+      More practice with summary statistics, this time using `.mean()`, `.max()`, and `.min()` instead of `.sum()`.
 
       | Method       | Result            |
       |--------------|-------------------|
@@ -574,9 +574,9 @@ exercises:
 
       **Your task:**
       Using the trips DataFrame below (distances in km):
-      1. Create `avg_distance` — the mean of `distance_km`. Print it rounded to 1 decimal place.
-      2. Create `max_distance` — the longest trip. Print it.
-      3. Create `min_distance` — the shortest trip. Print it.
+      1. Create `avg_distance`, the mean of `distance_km`. Print it rounded to 1 decimal place.
+      2. Create `max_distance`, the longest trip. Print it.
+      3. Create `min_distance`, the shortest trip. Print it.
     starter_code: |
       import pandas as pd
 

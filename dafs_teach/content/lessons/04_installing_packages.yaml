@@ -30,8 +30,8 @@ exercises:
 
       | Step | Where | How often |
       |------|-------|-----------|
-      | **Install** — download the package onto your computer | In the **terminal** (not in your Python script) | **Once** per computer |
-      | **Import** — load the package into your script | At the top of your **script** | **Every** script that uses it |
+      | **Install**, download the package onto your computer | In the **terminal** (not in your Python script) | **Once** per computer |
+      | **Import**, load the package into your script | At the top of your **script** | **Every** script that uses it |
 
       You install a package with `pip`, Python's package installer, in the terminal:
 
@@ -91,16 +91,16 @@ exercises:
   - id: finding_help
     title: "Finding Help With Functions"
     instructions: |
-      Nobody memorises every function and its arguments — knowing how to **look things up** is a core programming skill. Two easy ways to get help without leaving Python:
+      Nobody memorises every function and its arguments, knowing how to **look things up** is a core programming skill. Two easy ways to get help without leaving Python:
 
-      **1. The built-in `help()` function** — prints the official documentation for anything you pass it:
+      **1. The built-in `help()` function**, prints the official documentation for anything you pass it:
 
       ```python
       import pandas as pd
       help(pd.Series)
       ```
 
-      **2. Official online documentation** — search "pandas Series documentation", or go straight to the source: [pandas.pydata.org/docs](https://pandas.pydata.org/docs/). Every well-maintained package has official docs like this, and they're usually more reliable than random blog posts or forum answers.
+      **2. Official online documentation**, search "pandas Series documentation", or go straight to the source: [pandas.pydata.org/docs](https://pandas.pydata.org/docs/). Every well-maintained package has official docs like this, and they're usually more reliable than random blog posts or forum answers.
 
       **Your task:**
       1. Import `pandas` as `pd`
@@ -129,10 +129,10 @@ exercises:
 
       A help page always follows the same structure. The most useful parts are:
 
-      - **The first line**, e.g. `round(self, decimals: 'int' = 0, ...)` — the function's name and its **arguments**. `decimals = 0` means the argument is called `decimals`, and if you don't give it, it is `0`.
+      - **The first line**, e.g. `round(self, decimals: 'int' = 0, ...)`, the function's name and its **arguments**. `decimals = 0` means the argument is called `decimals`, and if you don't give it, it is `0`.
       - **The one-line summary** of what the function does.
-      - **Parameters** — an explanation of every argument.
-      - **Examples** — short pieces of code showing how it's used. Often the quickest way to understand a function.
+      - **Parameters**, an explanation of every argument.
+      - **Examples**, short pieces of code showing how it's used. Often the quickest way to understand a function.
 
       Here is part of the help page you get with `help(pd.Series.round)`:
 

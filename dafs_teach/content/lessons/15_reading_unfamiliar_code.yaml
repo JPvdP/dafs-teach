@@ -1,5 +1,5 @@
 title: "Reading Unfamiliar Code"
-description: "Explain in your own words what a script does — including functions you haven't seen before. Each new function is explained in the exercise, just like it would be on the exam."
+description: "Explain in your own words what a script does, including functions you haven't seen before. Each new function is explained in the exercise, just like it would be on the exam."
 
 exercises:
 
@@ -21,12 +21,12 @@ exercises:
       print(readings)
       print("Average PM2.5:", round(readings["pm25"].mean(), 1))
     instructions: |
-      In this lesson you won't write code. Instead, you'll **read** a script and **explain in your own words** what it does. Each script mixes things you already know with a few functions you haven't seen before. Those new functions are explained below the script — just like on the exam, where you'll also meet functions you don't know yet.
+      In this lesson you won't write code. Instead, you'll **read** a script and **explain in your own words** what it does. Each script mixes things you already know with a few functions you haven't seen before. Those new functions are explained below the script, just like on the exam, where you'll also meet functions you don't know yet.
 
       **A strategy that works:**
       1. Read the explanation of the new functions first.
       2. Go through the script top to bottom. After each line, ask yourself: *which variable changes, and what is in it now?*
-      3. Write down what you think gets printed — work out the actual values.
+      3. Write down what you think gets printed, work out the actual values.
 
       ---
 
@@ -34,12 +34,12 @@ exercises:
 
       **New functions in this script**
 
-      - **`None`** means "no value" — the measurement is missing. pandas shows a missing value as `NaN` ("Not a Number").
-      - **`.fillna(value)`** — fills in every missing value (`NaN`) in a column with `value`. All other values stay the same.
+      - **`None`** means "no value", the measurement is missing. pandas shows a missing value as `NaN` ("Not a Number").
+      - **`.fillna(value)`**, fills in every missing value (`NaN`) in a column with `value`. All other values stay the same.
         ```python
         pd.Series([1.0, None, 3.0]).fillna(0)    # 1.0, 0.0, 3.0
         ```
-      - **`.clip(lower=..., upper=...)`** — limits every value to a range. Values below `lower` become `lower`, values above `upper` become `upper`, everything in between stays the same.
+      - **`.clip(lower=..., upper=...)`**, limits every value to a range. Values below `lower` become `lower`, values above `upper` become `upper`, everything in between stays the same.
         ```python
         pd.Series([-5, 10, 99]).clip(lower=0, upper=50)   # 0, 10, 50
         ```
@@ -106,12 +106,12 @@ exercises:
 
       **New functions in this script**
 
-      - **`np.where(condition, value_if_true, value_if_false)`** — checks a condition for **every** value, and gives back one result per value: `value_if_true` where the condition is `True`, `value_if_false` where it is `False`.
+      - **`np.where(condition, value_if_true, value_if_false)`**, checks a condition for **every** value, and gives back one result per value: `value_if_true` where the condition is `True`, `value_if_false` where it is `False`.
         ```python
         temps = pd.Series([12, 25, 18])
         np.where(temps > 20, "warm", "cool")    # "cool", "warm", "cool"
         ```
-      - **The mean of `True`/`False` values** — when you calculate with booleans, Python counts `True` as `1` and `False` as `0`. So the mean of a column of `True`/`False` values is the **share** of values that are `True`.
+      - **The mean of `True`/`False` values**, when you calculate with booleans, Python counts `True` as `1` and `False` as `0`. So the mean of a column of `True`/`False` values is the **share** of values that are `True`.
         ```python
         pd.Series([True, False, True, True]).mean()   # 0.75 → 75% is True
         ```
@@ -180,11 +180,11 @@ exercises:
 
       **New functions in this script**
 
-      - **`.cumsum()`** — the *cumulative sum*, or running total: each value is added to everything that came before it.
+      - **`.cumsum()`**, the *cumulative sum*, or running total: each value is added to everything that came before it.
         ```python
         pd.Series([5, 3, 2]).cumsum()    # 5, 8, 10
         ```
-      - **`.pct_change()`** — the change compared to the **previous** value, as a fraction (0.5 means +50%). The first value has no previous value, so its result is missing (`NaN`).
+      - **`.pct_change()`**, the change compared to the **previous** value, as a fraction (0.5 means +50%). The first value has no previous value, so its result is missing (`NaN`).
         ```python
         pd.Series([100, 150, 120]).pct_change()   # NaN, 0.5, -0.2
         ```
@@ -257,11 +257,11 @@ exercises:
 
       **New functions in this script**
 
-      - **`.isin(list)`** — checks for every value whether it appears in the list, and gives `True` or `False`. It works like `==`, but for several allowed values at once.
+      - **`.isin(list)`**, checks for every value whether it appears in the list, and gives `True` or `False`. It works like `==`, but for several allowed values at once.
         ```python
         pd.Series(["NL", "BE", "US"]).isin(["NL", "BE", "DE"])   # True, True, False
         ```
-      - **`.nlargest(n)`** — keeps only the `n` largest values, sorted from largest to smallest.
+      - **`.nlargest(n)`**, keeps only the `n` largest values, sorted from largest to smallest.
         ```python
         pd.Series([4, 9, 1, 7]).nlargest(2)   # 9, 7
         ```
@@ -343,18 +343,18 @@ exercises:
 
       **New functions in this script**
 
-      - **`.str.title()`** — makes the first letter of every word a capital letter, and the rest lowercase. (You've already seen `.str.upper()`, which works the same way.)
+      - **`.str.title()`**, makes the first letter of every word a capital letter, and the rest lowercase. (You've already seen `.str.upper()`, which works the same way.)
         ```python
         pd.Series(["new york", "PARIS"]).str.title()   # "New York", "Paris"
         ```
-      - **`.apply(function)`** — calls `function` once for **every** value in a column, and collects the results in a new column. Note that you write the function's name **without** parentheses: `.apply()` does the calling for you.
+      - **`.apply(function)`**, calls `function` once for **every** value in a column, and collects the results in a new column. Note that you write the function's name **without** parentheses: `.apply()` does the calling for you.
         ```python
         def double(x):
             return x * 2
 
         pd.Series([1, 2, 3]).apply(double)   # 2, 4, 6
         ```
-      - **`zip(a, b)`** — walks through two lists (or other sequences) at the same time, giving you one item from each per step.
+      - **`zip(a, b)`**, walks through two lists (or other sequences) at the same time, giving you one item from each per step.
         ```python
         for name, age in zip(["Ana", "Ben"], [21, 34]):
             print(name, age)     # Ana 21, then Ben 34

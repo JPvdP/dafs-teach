@@ -4,7 +4,7 @@ description: "Practice the exam question types: reading code, tracing output, fi
 exercises:
 
   - id: dice_script
-    title: "Reading Code — Dice Roll While Loop"
+    title: "Reading Code, Dice Roll While Loop"
     instructions: |
       In the exam you will be asked to read a script and explain what each line does, and/or deduce the output.
 
@@ -70,7 +70,7 @@ exercises:
           assert even_sums == 3, "even_sums is not correct yet. Look at the printed attempts: how many of those sums are even?"
         description: "even_sums should count the even sums rolled before the 7"
     hints:
-      - "if sum_dice % 2 == 0: even_sums += 1 — inside the else block"
+      - "if sum_dice % 2 == 0: even_sums += 1, inside the else block"
       - "An even sum means the remainder when divided by 2 is 0"
     solution: |
       import random
@@ -96,7 +96,7 @@ exercises:
       print(f"Even sums before finding 7: {even_sums}")
 
   - id: student_grades
-    title: "Reading and Extending Code — Student Grades"
+    title: "Reading and Extending Code, Student Grades"
     instructions: |
       Another exam question type asks you to **extend** a script. Read the following code carefully, predict what it does, then run it:
 
@@ -205,7 +205,7 @@ exercises:
           print(student)
 
   - id: login_function
-    title: "Writing Code — Login System"
+    title: "Writing Code, Login System"
     instructions: |
       The final exam question type asks you to **write a short script** from scratch.
 
@@ -240,7 +240,7 @@ exercises:
                   # print success and stop
 
               if i >= 2:
-                  # 3rd attempt failed — print game over and stop
+                  # 3rd attempt failed, print game over and stop
 
               # wrong but not yet 3 failures
 
@@ -278,8 +278,8 @@ exercises:
           assert "Game Over!" not in out3
         description: "Must print Success! for correct password, Game Over! after 3 wrong attempts"
     hints:
-      - "print(\"Success!\") then return — inside the if attempt == correct_password block"
-      - "print(\"Game Over!\") then return — inside the if i >= 2 block"
+      - "print(\"Success!\") then return, inside the if attempt == correct_password block"
+      - "print(\"Game Over!\") then return, inside the if i >= 2 block"
       - "print(\"Wrong password!\") at the end of the loop body (no return)"
     solution: |
       def login_system(attempts, correct_password):
@@ -297,7 +297,7 @@ exercises:
       login_system(["x", "y", "z"], "secret")
 
   - id: debug_the_script
-    title: "Finding Errors — Debug the Script"
+    title: "Finding Errors, Debug the Script"
     instructions: |
       A key exam skill is **identifying and fixing bugs in existing code**. Read the script below carefully and find the two errors:
 
@@ -355,8 +355,8 @@ exercises:
           assert highest == 91, f"highest should be 91, got {highest}"
         description: "Average = 446/6 ≈ 74.3, Highest = 91"
     hints:
-      - "total += score — use += to accumulate, not = which overwrites"
-      - "if score > highest — change < to > to find the maximum"
+      - "total += score, use += to accumulate, not = which overwrites"
+      - "if score > highest, change < to > to find the maximum"
     solution: |
       scores = [72, 88, 55, 91, 63, 77]
 
@@ -375,16 +375,16 @@ exercises:
       print(f"Highest: {highest}")
 
   - id: unfamiliar_function
-    title: "Using an Unfamiliar Function — Handling Missing Data"
+    title: "Using an Unfamiliar Function, Handling Missing Data"
     instructions: |
-      In the exam — and in real datasets — you will sometimes need to use a function you haven't seen before. The skill being tested isn't memorisation, it's reading a short explanation of what a function does and correctly slotting it into existing code: the right import, the right call, the right arguments, in the right place.
+      In the exam, and in real datasets, you will sometimes need to use a function you haven't seen before. The skill being tested isn't memorisation, it's reading a short explanation of what a function does and correctly slotting it into existing code: the right import, the right call, the right arguments, in the right place.
 
-      Real-world data almost always has **missing values** — a sensor that failed, a field nobody filled in. In pandas, missing values show up as `NaN`, and here is the function you'll need to deal with them, explained the way you'd find it in documentation:
+      Real-world data almost always has **missing values**, a sensor that failed, a field nobody filled in. In pandas, missing values show up as `NaN`, and here is the function you'll need to deal with them, explained the way you'd find it in documentation:
 
       **`DataFrame.dropna(subset=None)`**
       - **Package:** `pandas` (already imported as `pd` below)
       - **What it does:** returns a **new** DataFrame with any row that has a missing value **removed**. It does not change the original DataFrame.
-      - **Argument `subset`** *(optional)*: a list of column names. If given, only rows with a missing value in **those** columns are dropped — missing values in other columns are ignored. If omitted, a row is dropped if **any** column is missing a value.
+      - **Argument `subset`** *(optional)*: a list of column names. If given, only rows with a missing value in **those** columns are dropped, missing values in other columns are ignored. If omitted, a row is dropped if **any** column is missing a value.
 
       ```python
       clean_df = df.dropna(subset=["pollution"])
@@ -393,7 +393,7 @@ exercises:
       This keeps every row whose `pollution` value is present, regardless of what's missing elsewhere.
 
       **Your task:**
-      The script below measures air pollution in several cities; some `pollution` readings are missing, and separately, some `notes` are missing too (that's expected and not a problem). There's a gap in the `clean_and_average` function, marked with a comment. Fill it in so that `clean_df` contains only the rows where `pollution` is **not missing** — rows missing only a `note` should be kept.
+      The script below measures air pollution in several cities; some `pollution` readings are missing, and separately, some `notes` are missing too (that's expected and not a problem). There's a gap in the `clean_and_average` function, marked with a comment. Fill it in so that `clean_df` contains only the rows where `pollution` is **not missing**, rows missing only a `note` should be kept.
 
       Expected output:
       ```
@@ -432,11 +432,11 @@ exercises:
         code: |
           result = clean_and_average(df)
           assert result == 21.12, f"Expected mean pollution 21.12, got {result}"
-        description: "clean_and_average(df) should return 21.12 — only rows missing 'pollution' should be dropped"
+        description: "clean_and_average(df) should return 21.12, only rows missing 'pollution' should be dropped"
     hints:
       - "The function you need is pandas' .dropna(), called on df"
-      - "Pass subset=[\"pollution\"] so it only checks that column — otherwise rows missing a 'notes' value get dropped too"
-      - "The line goes inside the function body — indent it to match the print() lines around it (4 spaces)"
+      - "Pass subset=[\"pollution\"] so it only checks that column, otherwise rows missing a 'notes' value get dropped too"
+      - "The line goes inside the function body, indent it to match the print() lines around it (4 spaces)"
       - "clean_df = df.dropna(subset=[\"pollution\"])"
     solution: |
       import pandas as pd
@@ -459,13 +459,13 @@ exercises:
       print(f"Mean pollution: {mean_pollution}")
 
   - id: unfamiliar_function_2
-    title: "Using an Unfamiliar Function — Removing Duplicate Readings"
+    title: "Using an Unfamiliar Function, Removing Duplicate Readings"
     instructions: |
       Another common data-cleaning problem: **duplicate rows**. A sensor might log the same reading twice, or a spreadsheet might get merged with itself by accident. Here's the function for it, again explained the way you'd find it in documentation:
 
       **`DataFrame.drop_duplicates(subset=None)`**
       - **Package:** `pandas` (already imported as `pd` below)
-      - **What it does:** returns a **new** DataFrame with duplicate rows removed. By default, a row only counts as a duplicate if **every column** matches another row exactly — the first occurrence is kept, later ones are dropped.
+      - **What it does:** returns a **new** DataFrame with duplicate rows removed. By default, a row only counts as a duplicate if **every column** matches another row exactly, the first occurrence is kept, later ones are dropped.
       - **Argument `subset`** *(optional)*: a list of column names. If given, rows are considered duplicates based on **just those columns**, ignoring the rest.
       - **Returns:** a new DataFrame (it does not change the original).
 
@@ -476,7 +476,7 @@ exercises:
       This keeps only the **first** row for each city, even if other columns differ between the repeats.
 
       **Your task:**
-      The script below logs energy readings per city. Some cities were measured more than once: a couple of entries are exact repeats (a logging glitch), but others share a city with a *different* reading (an updated measurement) — those should still count as duplicates for this task, and only the first one kept. There's a gap in `dedupe_and_average`, marked with a comment. Fill it in so `unique_df` keeps only the **first reading per city**.
+      The script below logs energy readings per city. Some cities were measured more than once: a couple of entries are exact repeats (a logging glitch), but others share a city with a *different* reading (an updated measurement), those should still count as duplicates for this task, and only the first one kept. There's a gap in `dedupe_and_average`, marked with a comment. Fill it in so `unique_df` keeps only the **first reading per city**.
 
       Expected output:
       ```
@@ -514,11 +514,11 @@ exercises:
         code: |
           result = dedupe_and_average(df)
           assert result == 165.0, f"Expected mean energy 165.0, got {result}"
-        description: "dedupe_and_average(df) should return 165.0 — only the first reading per city should be kept"
+        description: "dedupe_and_average(df) should return 165.0, only the first reading per city should be kept"
     hints:
       - "The function you need is pandas' .drop_duplicates(), called on df"
-      - "Pass subset=[\"city\"] so duplicates are identified by city alone — otherwise only rows that match on every column get removed"
-      - "The line goes inside the function body — indent it 4 spaces, matching the print() lines around it"
+      - "Pass subset=[\"city\"] so duplicates are identified by city alone, otherwise only rows that match on every column get removed"
+      - "The line goes inside the function body, indent it 4 spaces, matching the print() lines around it"
       - "unique_df = df.drop_duplicates(subset=[\"city\"])"
     solution: |
       import pandas as pd

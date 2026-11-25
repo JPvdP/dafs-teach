@@ -19,22 +19,22 @@
 # ─────────────────────────────────────────────────────────────
 
 title: Python Basics
-description: Your very first steps in Python — importing packages, creating and overwriting variables, text/number/boolean values, lists, NumPy arrays and matrices, dictionaries, and reading error messages.
+description: Your very first steps in Python, importing packages, creating and overwriting variables, text/number/boolean values, lists, NumPy arrays and matrices, dictionaries, and reading error messages.
 
 exercises:
 
   - id: import_packages
     title: "Importing Packages"
     instructions: |
-      Python comes with a set of basic, built-in **functions** — like `print()`, `len()`, and `max()`. A function is a ready-made tool that does one specific job. Think of Python as a basic toolbox with some essential tools available right away.
+      Python comes with a set of basic, built-in **functions**, like `print()`, `len()`, and `max()`. A function is a ready-made tool that does one specific job. Think of Python as a basic toolbox with some essential tools available right away.
 
       However, sometimes you need more specialized tools. Other people have written many extra functions for specific purposes, and they share them in **packages**. A package is like an extra toolbox full of new functions that someone else has created for a specific purpose.
 
       The three packages you'll use most in this course:
 
-      - **`pandas`** — for data in **tables** (like Excel). Each column in a table can hold a different kind of data: text, numbers, dates, or `True`/`False`. Most of your data analysis will happen in pandas.
-      - **`numpy`** — for **arrays and matrices**: grids of values that are all of the same type, which in practice means **numbers**. Because everything is a number, numpy can do math on large amounts of data very quickly. (pandas is actually built on top of numpy.)
-      - **`matplotlib`** — for making **graphs**.
+      - **`pandas`**, for data in **tables** (like Excel). Each column in a table can hold a different kind of data: text, numbers, dates, or `True`/`False`. Most of your data analysis will happen in pandas.
+      - **`numpy`**, for **arrays and matrices**: grids of values that are all of the same type, which in practice means **numbers**. Because everything is a number, numpy can do math on large amounts of data very quickly. (pandas is actually built on top of numpy.)
+      - **`matplotlib`**, for making **graphs**.
 
       Packages only need to be **installed once** (more on that in a later lesson). After that, you **import** them each time you start working:
 
@@ -108,12 +108,12 @@ exercises:
       A few rules for variable names:
       - Names can contain letters, numbers, and underscores (`_`)
       - Names cannot start with a number
-      - Names cannot contain spaces — use `student_name`, not `student name`
+      - Names cannot contain spaces, use `student_name`, not `student name`
       - Names are case-sensitive: `score` and `Score` are different variables
 
       **Showing a value with `print()`**
 
-      Creating a variable doesn't show anything on the screen — Python just stores the value quietly. To actually *see* a value, you use the `print()` function: write `print`, then put the thing you want to see between the parentheses `( )`.
+      Creating a variable doesn't show anything on the screen, Python just stores the value quietly. To actually *see* a value, you use the `print()` function: write `print`, then put the thing you want to see between the parentheses `( )`.
 
       This code:
 
@@ -200,11 +200,11 @@ exercises:
       |------|-----------|-------------------|---------|
       | text (`str`) | A piece of text | Between quotes `"..."` | `"hello"` |
       | number (`int`/`float`) | A whole or decimal number | Just the digits, no quotes | `42` or `3.14` |
-      | boolean (`bool`) | True or False | Exactly `True` or `False` — capital letter, no quotes | `True` |
+      | boolean (`bool`) | True or False | Exactly `True` or `False`, capital letter, no quotes | `True` |
 
-      The quotes matter a lot: `5` is a number you can do math with, but `"5"` is text — Python treats it completely differently (more on that in the next exercise).
+      The quotes matter a lot: `5` is a number you can do math with, but `"5"` is text, Python treats it completely differently (more on that in the next exercise).
 
-      Booleans represent yes/no or on/off situations — for example "is the course open for enrollment? `True`".
+      Booleans represent yes/no or on/off situations, for example "is the course open for enrollment? `True`".
 
       **Your task:**
       1. Create a variable `course` set to the text `"Data Analysis"`
@@ -234,7 +234,7 @@ exercises:
       - "Text always needs quotes: course = \"Data Analysis\""
       - "Numbers never need quotes: n_students = 25"
       - "True starts with a capital T and needs no quotes: is_open = True"
-      - "print(course), then print(n_students), then print(is_open) — one per line"
+      - "print(course), then print(n_students), then print(is_open), one per line"
     solution: |
       course = "Data Analysis"
       n_students = 25
@@ -253,7 +253,7 @@ exercises:
 
       ```python
       a = 30      # a number
-      b = "42"    # text — it only *looks* like a number
+      b = "42"    # text, it only *looks* like a number
       ```
 
       Now watch what the same operators do to each of them:
@@ -265,14 +265,14 @@ exercises:
       | `b + b` | `"4242"` | `+` on text glues the pieces together |
       | `a + b` | **`TypeError`** | Python refuses to add a number to text |
 
-      So `"42" * 2` doesn't give you `84` — it gives you `4242`, and Python won't warn you about it. That's what makes this mistake dangerous: your code runs, but the answer is wrong.
+      So `"42" * 2` doesn't give you `84`, it gives you `4242`, and Python won't warn you about it. That's what makes this mistake dangerous: your code runs, but the answer is wrong.
 
       **Why this matters for data:** when you load a spreadsheet or CSV file, a column of numbers is sometimes read in as text (for example because one cell contains `"n/a"` or a stray space). Calculations on that column then give strange results or errors.
 
       The fix is to **convert** the text to a number first, using `int()` (for whole numbers) or `float()` (for decimals):
 
       ```python
-      int(b)        # 42 — now a real number
+      int(b)        # 42, now a real number
       a + int(b)    # 72
       ```
 
@@ -310,7 +310,7 @@ exercises:
     hints:
       - "a = 30 has no quotes; b = \"42\" has quotes"
       - "double_a = a * 2 and double_b = b * 2"
-      - "a + b gives a TypeError — convert b first with int(b)"
+      - "a + b gives a TypeError, convert b first with int(b)"
       - "total = a + int(b)"
     solution: |
       a = 30
@@ -328,14 +328,14 @@ exercises:
   - id: overwriting_variables
     title: "Overwriting Variables"
     instructions: |
-      A variable holds **one** value at a time. If you assign a new value to a name that already exists, the old value is **replaced** — it's gone, and Python doesn't keep a copy.
+      A variable holds **one** value at a time. If you assign a new value to a name that already exists, the old value is **replaced**, it's gone, and Python doesn't keep a copy.
 
       ```python
       plop = 10
       print(plop)   # 10
 
       plop = 20
-      print(plop)   # 20 — the 10 has been overwritten
+      print(plop)   # 20, the 10 has been overwritten
       ```
 
       You can also use a variable's current value to calculate its new value:
@@ -347,14 +347,14 @@ exercises:
 
       Python first works out the right-hand side (`20 + 5`), and then stores the result back in `plop`.
 
-      **Why this matters for data:** later in the course you'll write things like `df = df[df["year"] > 2000]` — keeping only some rows of a dataset and storing the result under the *same* name. That's convenient, but the original data is now gone from that variable. If you make a mistake (filter the wrong rows, or run the same line twice), you can't simply "undo" it: you have to **go back and re-run your code from the beginning**, starting from loading the data.
+      **Why this matters for data:** later in the course you'll write things like `df = df[df["year"] > 2000]`, keeping only some rows of a dataset and storing the result under the *same* name. That's convenient, but the original data is now gone from that variable. If you make a mistake (filter the wrong rows, or run the same line twice), you can't simply "undo" it: you have to **go back and re-run your code from the beginning**, starting from loading the data.
 
-      This is especially tricky in Jupyter notebooks, where you can run cells one at a time and in any order. Running `plop = plop + 5` twice adds 5 twice! In this app, every click on **▶ Run** starts fresh from the top, so you won't have that problem here — but keep it in mind for later.
+      This is especially tricky in Jupyter notebooks, where you can run cells one at a time and in any order. Running `plop = plop + 5` twice adds 5 twice! In this app, every click on **▶ Run** starts fresh from the top, so you won't have that problem here, but keep it in mind for later.
 
       **Your task:**
       You're tracking a factory's yearly CO₂ emissions (in tonnes).
       1. Create `emissions` set to `120` and print it
-      2. The measurement was wrong — overwrite `emissions` with `95` and print it
+      2. The measurement was wrong, overwrite `emissions` with `95` and print it
       3. A new filter reduces emissions by 15: set `emissions` to `emissions - 15` and print it
     starter_code: |
       # 1. Create emissions and print it
@@ -397,18 +397,18 @@ exercises:
       ```
 
       **Where you'll use lists in practice:**
-      - **A column of data** — the daily rainfall measurements from a weather station are naturally a list of numbers. In the next lesson you'll see that a pandas table is built from lists like these.
-      - **A selection** — e.g. the list of countries you want to include in your analysis: `["Netherlands", "Germany", "Belgium"]`
-      - **Repeating work** — later you'll *loop* over a list to do the same calculation for every item (every year, every file, every country).
+      - **A column of data**, the daily rainfall measurements from a weather station are naturally a list of numbers. In the next lesson you'll see that a pandas table is built from lists like these.
+      - **A selection**, e.g. the list of countries you want to include in your analysis: `["Netherlands", "Germany", "Belgium"]`
+      - **Repeating work**, later you'll *loop* over a list to do the same calculation for every item (every year, every file, every country).
 
       A few things you can do with a list:
 
       ```python
       rainfall_mm = [4.2, 0.0, 11.5, 3.1]
 
-      rainfall_mm[0]     # 4.2  — the first item (Python counts from 0!)
-      len(rainfall_mm)   # 4    — how many items there are
-      sum(rainfall_mm)   # 18.8 — all items added up
+      rainfall_mm[0]     # 4.2 , the first item (Python counts from 0!)
+      len(rainfall_mm)   # 4   , how many items there are
+      sum(rainfall_mm)   # 18.8, all items added up
       ```
 
       **Your task:**
@@ -460,7 +460,7 @@ exercises:
       ```python
       prices = [10, 20, 30]
 
-      prices * 2   # [10, 20, 30, 10, 20, 30] — the list is repeated, just like text!
+      prices * 2   # [10, 20, 30, 10, 20, 30], the list is repeated, just like text!
       prices + 5   # TypeError: can only concatenate list (not "int") to list
       ```
 
@@ -483,7 +483,7 @@ exercises:
       np.array( ... )
       ```
 
-      Read the dot as **"from"**: `np.array` means *"the `array` function **from** numpy"*. The `np.` part tells Python which toolbox to look in. If you leave it out and write just `array( ... )`, Python doesn't know where to find it, and you get `NameError: name 'array' is not defined`. Every numpy function works this way — and in the next lesson, pandas works exactly the same: `pd.DataFrame( ... )`.
+      Read the dot as **"from"**: `np.array` means *"the `array` function **from** numpy"*. The `np.` part tells Python which toolbox to look in. If you leave it out and write just `array( ... )`, Python doesn't know where to find it, and you get `NameError: name 'array' is not defined`. Every numpy function works this way, and in the next lesson, pandas works exactly the same: `pd.DataFrame( ... )`.
 
       **What goes between the parentheses?**
 
@@ -535,7 +535,7 @@ exercises:
       - type: assert
         code: |
           import numpy as _np
-          assert isinstance(temps_c, _np.ndarray), 'temps_c should be a NumPy array — create it with np.array([...])'
+          assert isinstance(temps_c, _np.ndarray), 'temps_c should be a NumPy array, create it with np.array([...])'
           assert _np.allclose(temps_c, [12.0, 15.5, 9.0, 20.0]), 'temps_c should contain 12.0, 15.5, 9.0 and 20.0'
           assert _np.allclose(temps_f, [53.6, 59.9, 48.2, 68.0]), 'temps_f should be temps_c * 1.8 + 32'
         description: "temps_c should be a NumPy array, and temps_f the converted values"
@@ -582,7 +582,7 @@ exercises:
 
       If you forget the inner brackets and write `np.zeros(3, 3)`, numpy reads that as two separate arguments, and you get `TypeError: Cannot interpret '3' as a data type`.
 
-      Another example — 2 rows and 4 columns:
+      Another example, 2 rows and 4 columns:
 
       ```python
       print(np.zeros((2, 4)))
@@ -626,15 +626,15 @@ exercises:
   - id: matrix_operations
     title: "Matrix Operations: Overwrite or Keep?"
     instructions: |
-      Just like with numbers, you can do math on a whole matrix at once — the operation is applied to every value, as you saw with arrays.
+      Just like with numbers, you can do math on a whole matrix at once, the operation is applied to every value, as you saw with arrays.
 
       Remember from the "Overwriting Variables" exercise that assigning to an existing name replaces its old value. With matrices (and later with data tables) you always have a choice: **overwrite** the original variable, or **create a new one**.
 
       ```python
-      # Overwrites small_matrix — the original (all zeros) is lost
+      # Overwrites small_matrix, the original (all zeros) is lost
       small_matrix = small_matrix + 3
 
-      # Creates a new variable — both the original and the new one are kept
+      # Creates a new variable, both the original and the new one are kept
       small_matrix_3 = small_matrix + 3
       ```
 
@@ -662,7 +662,7 @@ exercises:
         value: "5."
       - type: assert
         code: |
-          assert (small_matrix == 0).all(), 'small_matrix should still be all zeros — store the result under a new name instead of overwriting it'
+          assert (small_matrix == 0).all(), 'small_matrix should still be all zeros, store the result under a new name instead of overwriting it'
           assert (small_matrix_5 == 5).all(), 'small_matrix_5 should be all fives'
           assert small_matrix_5.shape == (4, 4), 'small_matrix_5 should still be a 4x4 matrix'
         description: "small_matrix stays all zeros; small_matrix_5 is all fives"
@@ -768,7 +768,7 @@ exercises:
   - id: reading_error_messages
     title: "Reading Error Messages"
     instructions: |
-      Making mistakes is a normal part of programming — even experienced programmers see error messages every day. Learning to **read** one is one of the most useful skills you can build early on.
+      Making mistakes is a normal part of programming, even experienced programmers see error messages every day. Learning to **read** one is one of the most useful skills you can build early on.
 
       Two very common beginner mistakes:
 
@@ -806,7 +806,7 @@ exercises:
       Python is telling you it found an opening `(` but never found the matching `)`. The fix is to make sure every bracket you open is closed.
 
       **Your task:**
-      The code below has **two bugs**: a missing closing bracket, and text being combined with a number using `+`. Click Run, read the error message, fix the first bug, run again, read the next error, and fix that one too — until the code runs and prints `Price: 12`.
+      The code below has **two bugs**: a missing closing bracket, and text being combined with a number using `+`. Click Run, read the error message, fix the first bug, run again, read the next error, and fix that one too, until the code runs and prints `Price: 12`.
     starter_code: |
       price = 12
 
@@ -815,9 +815,9 @@ exercises:
       - type: output_equals
         value: "Price: 12"
     hints:
-      - "Run the code first and read the red error message carefully — it names the problem and the line it's on"
+      - "Run the code first and read the red error message carefully, it names the problem and the line it's on"
       - "The first error is a SyntaxError: '(' was never closed. Add the missing closing parenthesis to the print() call"
-      - "After fixing that, you'll get a TypeError — you can't add text and a number directly. Convert price to text first with str(price)"
+      - "After fixing that, you'll get a TypeError, you can't add text and a number directly. Convert price to text first with str(price)"
       - "print(\"Price: \" + str(price))"
     solution: |
       price = 12
@@ -829,7 +829,7 @@ exercises:
     instructions: |
       A tip for reading **any** error message: Python shows a lot of text, but the **last line** is the one that matters most. It always has the form `SomeErrorType: what went wrong`. Start there, then look up at the line number if you need more context.
 
-      One very common error is the **NameError**. It happens when you use a name Python doesn't recognize as an existing variable — usually a typo, or text you forgot to put in quotes.
+      One very common error is the **NameError**. It happens when you use a name Python doesn't recognize as an existing variable, usually a typo, or text you forgot to put in quotes.
 
       ```python
       favorite_color = blue
@@ -842,7 +842,7 @@ exercises:
       NameError: name 'blue' is not defined
       ```
 
-      Without quotes, Python assumes `blue` is meant to be a variable — and since no variable called `blue` exists, it gives up. The fix is to add quotes, since `blue` was meant to be text:
+      Without quotes, Python assumes `blue` is meant to be a variable, and since no variable called `blue` exists, it gives up. The fix is to add quotes, since `blue` was meant to be text:
 
       ```python
       favorite_color = "blue"
@@ -869,9 +869,9 @@ exercises:
       - type: output_equals
         value: "Amsterdam"
     hints:
-      - "Run the code and read the last line of the error message — it names exactly which word Python couldn't find"
+      - "Run the code and read the last line of the error message, it names exactly which word Python couldn't find"
       - "NameError: name 'Amsterdam' is not defined means Python thinks Amsterdam is a variable, not text"
-      - "Amsterdam was meant to be text — add quotes around it"
+      - "Amsterdam was meant to be text, add quotes around it"
       - 'city = "Amsterdam"'
     solution: |
       city = "Amsterdam"
@@ -895,10 +895,10 @@ exercises:
       ZeroDivisionError: division by zero
       ```
 
-      This error usually means a variable unexpectedly ended up being `0` — often because of a bug earlier in the code, or a case you didn't account for (like calculating an average before any data exists).
+      This error usually means a variable unexpectedly ended up being `0`, often because of a bug earlier in the code, or a case you didn't account for (like calculating an average before any data exists).
 
       **Your task:**
-      The code below calculates the average score of a class, but `n_students` has a bug — there are actually 5 students, not 0. Click Run, read the error message, and fix it so the code prints the correct average, `18.0`.
+      The code below calculates the average score of a class, but `n_students` has a bug, there are actually 5 students, not 0. Click Run, read the error message, and fix it so the code prints the correct average, `18.0`.
     starter_code: |
       total_score = 90
       n_students = 0
@@ -912,8 +912,8 @@ exercises:
         code: "assert n_students == 5, 'n_students should be 5, not 0'"
         description: "n_students should equal 5"
     hints:
-      - "Run the code and read the last line of the error message — ZeroDivisionError: division by zero means one of your numbers is 0 where it shouldn't be"
-      - "n_students is currently 0 — that's the bug, not the division itself"
+      - "Run the code and read the last line of the error message, ZeroDivisionError: division by zero means one of your numbers is 0 where it shouldn't be"
+      - "n_students is currently 0, that's the bug, not the division itself"
       - "There are 5 students in the class"
       - "n_students = 5"
     solution: |

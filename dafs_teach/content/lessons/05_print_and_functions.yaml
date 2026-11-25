@@ -6,14 +6,14 @@ exercises:
   - id: fstring_basics
     title: Print and F-strings
     instructions: |
-      The `print()` function is crucial in programming because it allows you to display information during the development process. It provides immediate feedback — helping you check the values of variables, verify the flow of execution, or ensure that certain conditions are met.
+      The `print()` function is crucial in programming because it allows you to display information during the development process. It provides immediate feedback, helping you check the values of variables, verify the flow of execution, or ensure that certain conditions are met.
 
       A very basic use is printing the value of a variable alongside a description:
 
       ```python
       plop = 42
       print(plop)           # prints the number
-      print("Step 3 done")  # prints text — remember to use "" for text
+      print("Step 3 done")  # prints text, remember to use "" for text
       ```
 
       To combine text and a variable in one line, use an **f-string** (formatted string). Put an `f` before the opening quote, and place variable names inside `{}`:
@@ -53,8 +53,8 @@ exercises:
     title: Random Numbers and F-strings
     instructions: |
       Python has a built-in `random` module for generating random numbers. Two useful functions:
-      - `random.uniform(a, b)` — generates a random **decimal** number between `a` and `b`
-      - `random.randint(a, b)` — generates a random **integer** between `a` and `b`
+      - `random.uniform(a, b)`, generates a random **decimal** number between `a` and `b`
+      - `random.randint(a, b)`, generates a random **integer** between `a` and `b`
 
       You can combine these with f-strings to print informative messages:
 
@@ -117,7 +117,7 @@ exercises:
       # Output: The sum of a and b is 13
       ```
 
-      You can put any expression inside `{}` — not just variable names.
+      You can put any expression inside `{}`, not just variable names.
 
       **Your task:**
       Set `a = 15` and `b = 7`, then print three sentences:
@@ -171,7 +171,7 @@ exercises:
 
       We create a function called `greet` which takes one argument `name`. It returns the text `"Hi, name!"`.
 
-      You do not need to write your own functions yet — but you do need to be able to **call** a function when you see one in a script.
+      You do not need to write your own functions yet, but you do need to be able to **call** a function when you see one in a script.
 
       To call it, you simply write the function name with the argument in parentheses:
 
@@ -203,7 +203,7 @@ exercises:
         code: "assert greet('Alice') == 'Hi, Alice!'"
         description: "greet() should return 'Hi, <name>!'"
     hints:
-      - "print(greet(\"Alice\"))  — replace Alice with your name"
+      - "print(greet(\"Alice\")) , replace Alice with your name"
       - "print(greet(\"World\"))"
     solution: |
       def greet(name):
@@ -287,7 +287,7 @@ exercises:
   - id: practice_arithmetic_sentences
     title: "Practice: Arithmetic Results in Sentences"
     instructions: |
-      More practice putting calculations directly inside f-strings — this time computing the area and perimeter of a rectangle.
+      More practice putting calculations directly inside f-strings, this time computing the area and perimeter of a rectangle.
 
       **Your task:**
       Set `length = 9` and `width = 4`, then print two sentences:
@@ -319,7 +319,7 @@ exercises:
   - id: practice_call_function
     title: "Practice: Calling a Custom Function"
     instructions: |
-      More practice calling an already-defined function — this time with a function that squares a number.
+      More practice calling an already-defined function, this time with a function that squares a number.
 
       **Your task:**
       The `square` function is already defined below. Call it **twice**:

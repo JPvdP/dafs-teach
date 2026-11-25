@@ -6,7 +6,7 @@ exercises:
   - id: read_csv_comma
     title: Reading a CSV File
     instructions: |
-      Data comes in many different formats. The most basic are `.txt` and `.csv`. **CSV** stands for "Comma Separated Values" — each column is separated by a comma `,`.
+      Data comes in many different formats. The most basic are `.txt` and `.csv`. **CSV** stands for "Comma Separated Values", each column is separated by a comma `,`.
 
       ```python
       import pandas as pd
@@ -15,7 +15,7 @@ exercises:
       print(df)
       ```
 
-      In a real project you pass the file path as a string. In this exercise, we simulate a CSV file using Python's `io.StringIO`, which lets you pass text directly to `pd.read_csv()` as if it were a file. The syntax for `pd.read_csv()` is **identical** — only the source changes.
+      In a real project you pass the file path as a string. In this exercise, we simulate a CSV file using Python's `io.StringIO`, which lets you pass text directly to `pd.read_csv()` as if it were a file. The syntax for `pd.read_csv()` is **identical**, only the source changes.
 
       **Your task:**
       The variable `csv_data` below contains comma-separated data. Use `pd.read_csv(StringIO(csv_data))` to load it into a DataFrame called `df`, then:
@@ -179,7 +179,7 @@ exercises:
       df = pd.read_csv("sample_data.csv", sep=";")
       ```
 
-      If you try to load a semicolon-separated file without specifying `sep=";"`, pandas will treat the entire row as a single column — a very common mistake.
+      If you try to load a semicolon-separated file without specifying `sep=";"`, pandas will treat the entire row as a single column, a very common mistake.
 
       **Your task:**
       The `csv_data` below is separated by semicolons. Load it into `df` with the correct `sep` argument, then:
@@ -204,7 +204,7 @@ exercises:
         value: "(3, 3)\n23"
       - type: assert
         code: |
-          assert df.shape == (3, 3), f"Expected (3, 3), got {df.shape} — did you set sep=\";\"?"
+          assert df.shape == (3, 3), f"Expected (3, 3), got {df.shape}, did you set sep=\";\"?"
           assert df["pollution"].iloc[1] == 23
         description: "df should have 3 rows and 3 columns"
     hints:
@@ -403,7 +403,7 @@ exercises:
   - id: practice_read_csv_separator
     title: "Practice: Reading Files with a Different Separator"
     instructions: |
-      More practice with a non-comma separator — this time semicolon-separated waste data.
+      More practice with a non-comma separator, this time semicolon-separated waste data.
 
       **Your task:**
       The `csv_data` below is separated by semicolons. Load it into `df` with the correct `sep` argument, then:
@@ -428,7 +428,7 @@ exercises:
         value: "(3, 3)\n510"
       - type: assert
         code: |
-          assert df.shape == (3, 3), f"Expected (3, 3), got {df.shape} — did you set sep=\";\"?"
+          assert df.shape == (3, 3), f"Expected (3, 3), got {df.shape}, did you set sep=\";\"?"
           assert df["waste_kg"].iloc[1] == 510
         description: "df should have 3 rows and 3 columns"
     hints:
@@ -449,7 +449,7 @@ exercises:
   - id: practice_read_tsv
     title: "Practice: Reading a TSV File (Tab-Separated)"
     instructions: |
-      More practice with tab-separated data — this time recycling rates.
+      More practice with tab-separated data, this time recycling rates.
 
       **Your task:**
       The `tsv_data` below is tab-separated. Load it into `df`, then:
@@ -493,7 +493,7 @@ exercises:
   - id: practice_export_csv
     title: "Practice: Exporting Data to CSV"
     instructions: |
-      More practice adding a computed column and exporting the result — this time water usage.
+      More practice adding a computed column and exporting the result, this time water usage.
 
       **Your task:**
       1. Create a DataFrame with 4 columns: `country`, `population`, `water_liters`, `water_per_capita`

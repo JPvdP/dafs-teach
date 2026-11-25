@@ -16,12 +16,12 @@ exercises:
       | `bool` | True or False | `True`, `False` |
 
       You can check the type of a variable in two ways:
-      - `isinstance(variable, int)` — returns `True` or `False`
-      - `type(variable)` — returns the type directly
+      - `isinstance(variable, int)`, returns `True` or `False`
+      - `type(variable)`, returns the type directly
 
       **Calculating a value is not the same as showing it**
 
-      A line like `isinstance(my_value, int)` does work out the answer (`True`), but it doesn't display it — Python calculates the result and then throws it away. To see the result, put `print( )` around it:
+      A line like `isinstance(my_value, int)` does work out the answer (`True`), but it doesn't display it, Python calculates the result and then throws it away. To see the result, put `print( )` around it:
 
       ```python
       isinstance(my_value, int)          # calculated, but nothing appears
@@ -32,8 +32,8 @@ exercises:
 
       **Your task:**
       1. Create a variable `my_value` with the integer `42`
-      2. Print `isinstance(my_value, int)` — should print `True`
-      3. Print `type(my_value)` — should print `<class 'int'>`
+      2. Print `isinstance(my_value, int)`, should print `True`
+      3. Print `type(my_value)`, should print `<class 'int'>`
     starter_code: |
       # Create the variable
       my_value =
@@ -198,7 +198,7 @@ exercises:
         value: "True"
       - type: assert
         code: |
-          assert result == True, 'result should be True — temperature=25>20 and humidity=40<50'
+          assert result == True, 'result should be True, temperature=25>20 and humidity=40<50'
         description: "result should be True"
     hints:
       - "result = temperature > 20 and humidity < 50"
@@ -213,12 +213,12 @@ exercises:
   - id: practice_numeric_types
     title: "Practice: Checking Numeric Types"
     instructions: |
-      More practice checking types — this time with a decimal number.
+      More practice checking types, this time with a decimal number.
 
       **Your task:**
       1. Create a variable `temperature` with the value `21.5`
-      2. Print `isinstance(temperature, float)` — should print `True`
-      3. Print `type(temperature)` — should print `<class 'float'>`
+      2. Print `isinstance(temperature, float)`, should print `True`
+      3. Print `type(temperature)`, should print `<class 'float'>`
     starter_code: |
       # Create the variable
 
@@ -248,7 +248,7 @@ exercises:
   - id: practice_type_conversion
     title: "Practice: Converting Between Types"
     instructions: |
-      More practice converting types — this time going the other way: from text to a number, using `int()`.
+      More practice converting types, this time going the other way: from text to a number, using `int()`.
 
       **Your task:**
       1. Create `count_text = "150"` (already done for you)
@@ -331,7 +331,7 @@ exercises:
   - id: practice_multiple_conditions
     title: "Practice: Combining Conditions"
     instructions: |
-      More practice combining conditions — this time deciding whether it's a good day for an outdoor measurement.
+      More practice combining conditions, this time deciding whether it's a good day for an outdoor measurement.
 
       **Your task:**
       1. Create `rainfall_mm = 5` and `wind_kmh = 15`
@@ -350,7 +350,7 @@ exercises:
         value: "True"
       - type: assert
         code: |
-          assert good_conditions == True, 'good_conditions should be True — rainfall=5<10 and wind=15<20'
+          assert good_conditions == True, 'good_conditions should be True, rainfall=5<10 and wind=15<20'
         description: "good_conditions should be True"
     hints:
       - "good_conditions = rainfall_mm < 10 and wind_kmh < 20"

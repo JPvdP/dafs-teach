@@ -1,5 +1,5 @@
 title: Loops with Data
-description: Apply for and while loops to real analytical tasks — finding multiples, filtering DataFrames row by row, and classifying data with conditional logic.
+description: Apply for and while loops to real analytical tasks, finding multiples, filtering DataFrames row by row, and classifying data with conditional logic.
 
 exercises:
 
@@ -74,7 +74,7 @@ exercises:
       print(total)
       ```
 
-      The loop adds values from `multiples` one by one. The moment `total` crosses 200, the `while` condition becomes `False` and the loop stops — then we print the final total.
+      The loop adds values from `multiples` one by one. The moment `total` crosses 200, the `while` condition becomes `False` and the loop stops, then we print the final total.
 
       **Your task:**
       Write the while loop described above and print the final `total` once the loop stops.
@@ -98,10 +98,10 @@ exercises:
         value: "225"
       - type: assert
         code: "assert total == 225, f'Expected 225, got {total}'"
-        description: "total should be 225 — the first time the cumulative sum exceeds 200"
+        description: "total should be 225, the first time the cumulative sum exceeds 200"
     hints:
       - "total += multiples[i]"
-      - "i += 1  — move to the next item each iteration"
+      - "i += 1 , move to the next item each iteration"
       - "The loop stops when total > 200; the last value added brings it to 225"
     solution: |
       multiples = [n for n in range(1, 51) if n % 3 == 0 or n % 5 == 0]
@@ -118,7 +118,7 @@ exercises:
   - id: iterrows_filter
     title: "Filtering DataFrame Rows with a Loop"
     instructions: |
-      In pandas, `df.iterrows()` lets you loop over a DataFrame row by row — each iteration gives you the row index and the row data as a Series:
+      In pandas, `df.iterrows()` lets you loop over a DataFrame row by row, each iteration gives you the row index and the row data as a Series:
 
       ```python
       for index, row in df.iterrows():
@@ -130,10 +130,10 @@ exercises:
       **Your task:**
       Using the energy DataFrame below:
 
-      **Part 1 — For loop:**
+      **Part 1, For loop:**
       Iterate through each row. If `Sustainable` is `True` **and** `EnergyUsage` is greater than 20, print the row's Region and EnergyUsage in the format: `"Region: A, Energy: 30"`
 
-      **Part 2 — While loop:**
+      **Part 2, While loop:**
       Use a while loop to add the `EnergyUsage` of sustainable rows to a running `cumulative` total. Stop as soon as `cumulative` exceeds 50 and print the final total.
     starter_code: |
       import pandas as pd
@@ -145,12 +145,12 @@ exercises:
       }
       df = pd.DataFrame(data)
 
-      # Part 1: for loop — print sustainable rows with EnergyUsage > 20,
+      # Part 1: for loop, print sustainable rows with EnergyUsage > 20,
       # in the format "Region: A, Energy: 30"
 
 
 
-      # Part 2: while loop — add up EnergyUsage of sustainable rows,
+      # Part 2: while loop, add up EnergyUsage of sustainable rows,
       # stop as soon as cumulative is above 50
       cumulative = 0
       i = 0   # position of the row you're looking at

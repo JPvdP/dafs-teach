@@ -1,5 +1,5 @@
 title: DataFrame Operations
-description: Learn to select columns, filter rows, add computed columns, merge datasets, and summarise data with groupby — the core skills of data analysis in Python.
+description: Learn to select columns, filter rows, add computed columns, merge datasets, and summarise data with groupby, the core skills of data analysis in Python.
 
 exercises:
 
@@ -66,7 +66,7 @@ exercises:
         description: "selected and by_index should both have columns Name and Age"
     hints:
       - "selected = df[[\"Name\", \"Age\"]]"
-      - "by_index = df.iloc[:, [0, 1]]  — the : means all rows"
+      - "by_index = df.iloc[:, [0, 1]] , the : means all rows"
     solution: |
       import pandas as pd
 
@@ -166,8 +166,8 @@ exercises:
 
       **Your task:**
       Using the same patents DataFrame:
-      1. Create `b60c_recent` — patents in domain `"B60C"` with `Year >= 2019`
-      2. Create `not_b60c` — all patents **not** in domain `"B60C"`
+      1. Create `b60c_recent`, patents in domain `"B60C"` with `Year >= 2019`
+      2. Create `not_b60c`, all patents **not** in domain `"B60C"`
       3. Print both, and print their lengths
     starter_code: |
       import pandas as pd
@@ -223,13 +223,13 @@ exercises:
   - id: add_column
     title: Adding a Computed Column
     instructions: |
-      In a DataFrame, we refer to columns by their name inside brackets `[]`. We can use the same notation to **create a new column** — just assign a value to a column name that does not yet exist:
+      In a DataFrame, we refer to columns by their name inside brackets `[]`. We can use the same notation to **create a new column**, just assign a value to a column name that does not yet exist:
 
       ```python
       Data["new_column"] = Data["Fuel_consumption"] / Data["Population"]
       ```
 
-      This creates a new column `"new_column"` where each value is `Fuel_consumption` divided by `Population`. By default, pandas applies this **row by row** — so each country gets its own GDP per capita.
+      This creates a new column `"new_column"` where each value is `Fuel_consumption` divided by `Population`. By default, pandas applies this **row by row**, so each country gets its own GDP per capita.
 
       **Your task:**
       Using the DataFrame below (GDP in billions, population in millions):
@@ -279,7 +279,7 @@ exercises:
   - id: groupby_agg
     title: Grouping and Summarising
     instructions: |
-      With real data we often need to regroup observations — by year, organisation, region, or any other entity. For example: if we have a database with patents and we want to know the earliest and latest patent per domain, we need to group by domain and compute `min` and `max` on the year.
+      With real data we often need to regroup observations, by year, organisation, region, or any other entity. For example: if we have a database with patents and we want to know the earliest and latest patent per domain, we need to group by domain and compute `min` and `max` on the year.
 
       In Python we do this with `groupby` and `agg`:
 
@@ -287,10 +287,10 @@ exercises:
       grouped = df.groupby("Domain")["Year"].agg(["min", "max"]).reset_index()
       ```
 
-      - `groupby("Domain")` — creates a group for each unique domain
-      - `["Year"]` — tells pandas to work on the Year column
-      - `.agg(["min", "max"])` — computes min and max within each group
-      - `.reset_index()` — turns the group labels back into a regular column
+      - `groupby("Domain")`, creates a group for each unique domain
+      - `["Year"]`, tells pandas to work on the Year column
+      - `.agg(["min", "max"])`, computes min and max within each group
+      - `.reset_index()`, turns the group labels back into a regular column
 
       To simply count observations per group, use `.count()`:
 
@@ -300,8 +300,8 @@ exercises:
 
       **Your task:**
       Using the patents DataFrame:
-      1. Create `year_range` — groupby Domain, get min and max Year. Print it.
-      2. Create `counts` — groupby Domain, count all columns. Print it.
+      1. Create `year_range`, groupby Domain, get min and max Year. Print it.
+      2. Create `counts`, groupby Domain, count all columns. Print it.
     starter_code: |
       import pandas as pd
 
@@ -353,7 +353,7 @@ exercises:
   - id: merge_dataframes
     title: Merging DataFrames
     instructions: |
-      When working with data we often need to merge information from different data sources. For example, we want to analyse the link between population density and air pollution. We find pollution data from the WHO, but population data comes from a different source — we end up with two datasets.
+      When working with data we often need to merge information from different data sources. For example, we want to analyse the link between population density and air pollution. We find pollution data from the WHO, but population data comes from a different source, we end up with two datasets.
 
       | Country | Pollution |    | Country | Population |
       |---------|-----------|    |---------|------------|
@@ -367,7 +367,7 @@ exercises:
       merged = pd.merge(df_1, df_2, on="Country")
       ```
 
-      There are multiple ways to merge — the `how` argument controls which rows to keep:
+      There are multiple ways to merge, the `how` argument controls which rows to keep:
 
       ```python
       pd.merge(df_1, df_2, on="Country", how="inner")   # only matching rows (default)
@@ -453,8 +453,8 @@ exercises:
 
       **Your task:**
       Using the country energy DataFrame below:
-      1. Sort by `"renewable_pct"` descending — store as `df_sorted` and print it
-      2. Select the top 3 countries — store as `top3` and print it
+      1. Sort by `"renewable_pct"` descending, store as `df_sorted` and print it
+      2. Select the top 3 countries, store as `top3` and print it
       3. Print the name of the country with the highest percentage using `top3.iloc[0]["country"]`
     starter_code: |
       import pandas as pd
@@ -482,7 +482,7 @@ exercises:
       - type: assert
         code: |
           assert df_sorted.iloc[0]["country"] == "NO", "First sorted row should be NO (98%)"
-          assert list(top3["country"]) == ["NO", "SE", "DE"], f"Top 3 should be NO, SE, DE — got {list(top3['country'])}"
+          assert list(top3["country"]) == ["NO", "SE", "DE"], f"Top 3 should be NO, SE, DE, got {list(top3['country'])}"
           assert best_country == "NO"
         description: "Norway (98%) is #1, Sweden (65%) #2, Germany (40%) #3"
     hints:
@@ -521,9 +521,9 @@ exercises:
 
       **Your task:**
       Using the cities DataFrame below:
-      1. Add `"city_upper"` — all city names in uppercase (already done — study it)
-      2. Add `"name_length"` — the number of characters in each city name
-      3. Create `long_names` — only rows where the name is **longer than 5 characters**
+      1. Add `"city_upper"`, all city names in uppercase (already done, study it)
+      2. Add `"name_length"`, the number of characters in each city name
+      3. Create `long_names`, only rows where the name is **longer than 5 characters**
       4. Print the full DataFrame, then print `long_names`
     starter_code: |
       import pandas as pd
@@ -533,7 +533,7 @@ exercises:
           "population": [700000, 900000, 3700000, 3300000, 2800000, 800000],
       })
 
-      # Uppercase city names (example — already done)
+      # Uppercase city names (example, already done)
       df["city_upper"] = df["city"].str.upper()
 
       # Number of characters in each city name
@@ -577,7 +577,7 @@ exercises:
   - id: practice_select_columns
     title: "Practice: Selecting Columns"
     instructions: |
-      More practice selecting columns by name and by index — this time with air quality data.
+      More practice selecting columns by name and by index, this time with air quality data.
 
       **Your task:**
       Using the DataFrame below:
@@ -617,7 +617,7 @@ exercises:
         description: "selected and by_index should both have columns City and AQI"
     hints:
       - "selected = df[[\"City\", \"AQI\"]]"
-      - "by_index = df.iloc[:, [0, 1]]  — the : means all rows"
+      - "by_index = df.iloc[:, [0, 1]] , the : means all rows"
     solution: |
       import pandas as pd
 
@@ -637,7 +637,7 @@ exercises:
   - id: practice_filter_rows
     title: "Practice: Filtering Rows"
     instructions: |
-      More practice with boolean indexing — this time filtering air quality readings by year.
+      More practice with boolean indexing, this time filtering air quality readings by year.
 
       **Your task:**
       Using the readings DataFrame below:
@@ -694,8 +694,8 @@ exercises:
 
       **Your task:**
       Using the same readings DataFrame:
-      1. Create `pm25_recent` — readings of `"PM2.5"` with `Year >= 2015`
-      2. Create `not_pm25` — all readings **not** of `"PM2.5"`
+      1. Create `pm25_recent`, readings of `"PM2.5"` with `Year >= 2015`
+      2. Create `not_pm25`, all readings **not** of `"PM2.5"`
       3. Print both, and print their lengths
     starter_code: |
       import pandas as pd
@@ -751,7 +751,7 @@ exercises:
   - id: practice_add_column
     title: "Practice: Adding a Computed Column"
     instructions: |
-      More practice adding a computed column — this time emissions per capita.
+      More practice adding a computed column, this time emissions per capita.
 
       **Your task:**
       Using the DataFrame below (emissions in Mt CO2, population in millions):
@@ -801,12 +801,12 @@ exercises:
   - id: practice_groupby_agg
     title: "Practice: Grouping and Summarising"
     instructions: |
-      More practice with `groupby` and `agg` — this time grouping pollution readings by pollutant.
+      More practice with `groupby` and `agg`, this time grouping pollution readings by pollutant.
 
       **Your task:**
       Using the readings DataFrame:
-      1. Create `year_range` — groupby Pollutant, get min and max Year. Print it.
-      2. Create `counts` — groupby Pollutant, count all columns. Print it.
+      1. Create `year_range`, groupby Pollutant, get min and max Year. Print it.
+      2. Create `counts`, groupby Pollutant, count all columns. Print it.
     starter_code: |
       import pandas as pd
 
@@ -858,7 +858,7 @@ exercises:
   - id: practice_merge_dataframes
     title: "Practice: Merging DataFrames"
     instructions: |
-      More practice merging two datasets — this time emissions and land area, to compute emissions per square kilometer.
+      More practice merging two datasets, this time emissions and land area, to compute emissions per square kilometer.
 
       **Your task:**
       1. Merge `df_emissions` and `df_area` on `"Country"` (inner join) into `merged`
@@ -924,12 +924,12 @@ exercises:
   - id: practice_sort_and_rank
     title: "Practice: Sorting and Top-N Selection"
     instructions: |
-      More practice sorting and selecting the top N rows — this time by recycling rate.
+      More practice sorting and selecting the top N rows, this time by recycling rate.
 
       **Your task:**
       Using the country recycling DataFrame below:
-      1. Sort by `"recycling_rate"` descending — store as `df_sorted` and print it
-      2. Select the top 3 countries — store as `top3` and print it
+      1. Sort by `"recycling_rate"` descending, store as `df_sorted` and print it
+      2. Select the top 3 countries, store as `top3` and print it
       3. Print the name of the country with the highest rate using `top3.iloc[0]["country"]`
     starter_code: |
       import pandas as pd
@@ -957,7 +957,7 @@ exercises:
       - type: assert
         code: |
           assert df_sorted.iloc[0]["country"] == "SE", "First sorted row should be SE (68%)"
-          assert list(top3["country"]) == ["SE", "NO", "NL"], f"Top 3 should be SE, NO, NL — got {list(top3['country'])}"
+          assert list(top3["country"]) == ["SE", "NO", "NL"], f"Top 3 should be SE, NO, NL, got {list(top3['country'])}"
           assert best_country == "SE"
         description: "Sweden (68%) is #1, Norway (62%) #2, Netherlands (54%) #3"
     hints:
@@ -984,13 +984,13 @@ exercises:
   - id: practice_string_operations
     title: "Practice: String Operations on Columns"
     instructions: |
-      More practice with the `.str` accessor — this time on Dutch province names.
+      More practice with the `.str` accessor, this time on Dutch province names.
 
       **Your task:**
       Using the provinces DataFrame below:
-      1. Add `"region_upper"` — all province names in uppercase (already done — study it)
-      2. Add `"name_length"` — the number of characters in each province name
-      3. Create `long_names` — only rows where the name is **longer than 7 characters**
+      1. Add `"region_upper"`, all province names in uppercase (already done, study it)
+      2. Add `"name_length"`, the number of characters in each province name
+      3. Create `long_names`, only rows where the name is **longer than 7 characters**
       4. Print the full DataFrame, then print `long_names`
     starter_code: |
       import pandas as pd
@@ -1000,7 +1000,7 @@ exercises:
           "population": [420000, 385000, 493000, 1160000, 1120000, 650000],
       })
 
-      # Uppercase province names (example — already done)
+      # Uppercase province names (example, already done)
       df["region_upper"] = df["region"].str.upper()
 
       # Number of characters in each province name

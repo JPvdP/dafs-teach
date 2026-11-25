@@ -1,10 +1,10 @@
 title: For Loops
-description: Learn how to automate repetitive tasks with for loops — iterating over ranges, lists, and using enumerate, custom steps, and break.
+description: Learn how to automate repetitive tasks with for loops, iterating over ranges, lists, and using enumerate, custom steps, and break.
 
 exercises:
 
   - id: range_basics
-    title: "Looping with range() — and Indentation"
+    title: "Looping with range(), and Indentation"
     instructions: |
       Loops are a fundamental part of programming in data science because they allow you to efficiently perform repetitive tasks on large datasets. Instead of writing repetitive code manually, loops enable automation by iterating over data structures.
 
@@ -15,7 +15,7 @@ exercises:
           print("Iteration", i)
       ```
 
-      This prints `Iteration 0` through `Iteration 4` — `range(5)` produces the numbers 0, 1, 2, 3, 4.
+      This prints `Iteration 0` through `Iteration 4`, `range(5)` produces the numbers 0, 1, 2, 3, 4.
 
       **Indentation matters.** Only the indented code runs inside the loop. Code at the same level as `for` runs once, after the loop finishes:
 
@@ -51,7 +51,7 @@ exercises:
   - id: loop_list
     title: "Looping over a List"
     instructions: |
-      You can loop over any sequence — not just numbers. Looping over a **list** is extremely common in data analysis, since datasets are often stored as lists of items:
+      You can loop over any sequence, not just numbers. Looping over a **list** is extremely common in data analysis, since datasets are often stored as lists of items:
 
       ```python
       fruits = ["apple", "banana", "cherry", "date"]
@@ -60,7 +60,7 @@ exercises:
           print("I like", fruit)
       ```
 
-      The variable `fruit` takes each value from the list in turn. You can name it anything — just be consistent inside the loop.
+      The variable `fruit` takes each value from the list in turn. You can name it anything, just be consistent inside the loop.
 
       **Your task:**
       1. Create the list `fruits = ["apple", "banana", "cherry", "date"]`
@@ -196,7 +196,7 @@ exercises:
       - type: output_equals
         value: "Processing 3\nProcessing 7\nProcessing 1\nFound 9. Exiting the loop.\nDone"
     hints:
-      - "print(\"Done\") with no indentation — it runs after the loop regardless of break"
+      - "print(\"Done\") with no indentation, it runs after the loop regardless of break"
     solution: |
       numbers = [3, 7, 1, 9, 4, 2]
 
@@ -209,7 +209,7 @@ exercises:
       print("Done")
 
   - id: accumulator_loop
-    title: "Accumulating Results — Total and Maximum"
+    title: "Accumulating Results, Total and Maximum"
     instructions: |
       A very common loop pattern is the **accumulator**: you initialise a value before the loop and update it on each iteration. The same pattern works for sums, maximums, and more:
 
@@ -228,9 +228,9 @@ exercises:
 
       **Your task:**
       Given 12 monthly rainfall values (mm), use a `for` loop with `enumerate` to:
-      1. Compute `total_rain` — the sum of all monthly values
-      2. Track `max_rain` — the highest monthly value
-      3. Track `max_month` — the **1-based** month number with the highest rainfall
+      1. Compute `total_rain`, the sum of all monthly values
+      2. Track `max_rain`, the highest monthly value
+      3. Track `max_month`, the **1-based** month number with the highest rainfall
 
       Expected output:
       ```
@@ -265,7 +265,7 @@ exercises:
           assert max_month == 4, f"Expected month 4, got {max_month}"
         description: "total=720, max=95 in month 4 (April)"
     hints:
-      - "total_rain += rain — add each value to the running total"
+      - "total_rain += rain, add each value to the running total"
       - "max_rain = rain and max_month = i + 1 inside the if block"
     solution: |
       rainfall = [45, 60, 80, 95, 75, 40, 30, 35, 55, 85, 70, 50]
@@ -284,9 +284,9 @@ exercises:
       print(f"Wettest month: {max_month} with {max_rain} mm")
 
   - id: nested_combinations
-    title: "Nested For Loops — All Combinations"
+    title: "Nested For Loops, All Combinations"
     instructions: |
-      Nested `for` loops pair every element of one list with every element of another — generating all combinations. The inner loop runs completely for every single step of the outer loop:
+      Nested `for` loops pair every element of one list with every element of another, generating all combinations. The inner loop runs completely for every single step of the outer loop:
 
       ```python
       colors = ["red", "blue"]
@@ -328,7 +328,7 @@ exercises:
         description: "4 regions x 3 products = 12 combinations"
     hints:
       - "print(f\"{region} - {product}\") inside the inner loop"
-      - "count += 1 inside the inner loop — one per combination"
+      - "count += 1 inside the inner loop, one per combination"
     solution: |
       regions  = ["North", "South", "East", "West"]
       products = ["Solar", "Wind", "Hydro"]
