@@ -41,9 +41,19 @@ def _run_file(path: str, timeout: int = TIMEOUT_SECONDS) -> tuple[str, str, bool
             env=_CHILD_ENV,
             timeout=timeout,
         )
-        return result.stdout, result.stderr, result.returncode != 0, False
     except subprocess.TimeoutExpired:
         return "", "", False, True
+    stderr = result.stderr
+    if result.returncode != 0 and not stderr.strip():
+        # Python itself always explains an error, so this is a hard crash or the
+        # process being stopped from outside. Show the exit code (on Windows e.g.
+        # 3221225477 = crash, 3221225786 = Ctrl+C) instead of an empty error box.
+        stderr = (
+            f"Python stopped unexpectedly, without an error message (exit code "
+            f"{result.returncode}). Click Run again. If this keeps happening, show "
+            f"this message to your teacher."
+        )
+    return result.stdout, stderr, result.returncode != 0, False
 
 
 def run_code(student_code: str, tests: List) -> RunResult:
